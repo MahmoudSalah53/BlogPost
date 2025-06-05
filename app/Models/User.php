@@ -22,6 +22,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'bio',
+        'avatar',
+        'email_verified_at',
     ];
 
     /**
@@ -56,5 +60,10 @@ class User extends Authenticatable
             ->explode(' ')
             ->map(fn (string $name) => Str::of($name)->substr(0, 1))
             ->implode('');
+    }
+
+    public function posts()
+    {
+        return $this->belongsToMany(Post::class);
     }
 }
