@@ -20,6 +20,6 @@ class Post extends Model
 
     public function authors()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class);
     }
 }

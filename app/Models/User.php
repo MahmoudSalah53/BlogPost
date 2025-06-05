@@ -62,8 +62,8 @@ class User extends Authenticatable
             ->implode('');
     }
 
-    public function posts()
+    public function post()
     {
-        return $this->belongsToMany(Post::class);
+        return $this->hasOne(Post::class);
     }
 }
