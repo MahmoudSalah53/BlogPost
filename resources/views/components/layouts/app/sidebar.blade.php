@@ -17,7 +17,17 @@
                                :current="request()->routeIs('profile')"
                                wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
             <flux:navlist.item class="mb-2" icon="save" :href="route('saved-posts')"
+                               :current="request()->routeIs('saved-posts')"
                                wire:navigate>{{ __('Saved Posts') }}</flux:navlist.item>
+            <flux:navlist.item class="mb-2" icon="like" :href="route('liked-posts')"
+                               :current="request()->routeIs('liked-posts')"
+                               wire:navigate>{{ __('Liked Posts') }}</flux:navlist.item>
+            <flux:navlist.item class="mb-2" icon="comments" :href="route('my-comments')"
+                               :current="request()->routeIs('my-comments')"
+                               wire:navigate>{{ __('My Comments') }}</flux:navlist.item>
+            <flux:navlist.item class="mb-2" icon="clock" :href="route('recently-viewed')"
+                               :current="request()->routeIs('recently-viewed')"
+                               wire:navigate>{{ __('Recently Viewed') }}</flux:navlist.item>
         </flux:navlist.group>
     </flux:navlist>
 
