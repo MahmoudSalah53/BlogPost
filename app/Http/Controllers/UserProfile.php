@@ -30,4 +30,14 @@ class UserProfile extends Controller
     {
         return view('profile.recently-viewed');
     }
+
+    public function following ()
+    {
+        return view('profile.following');
+    }
+
+    public function membership ()
+    {
+        return view('profile.membership');
+    }
 }

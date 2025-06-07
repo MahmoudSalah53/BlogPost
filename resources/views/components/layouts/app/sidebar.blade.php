@@ -28,6 +28,12 @@
             <flux:navlist.item class="mb-2" icon="clock" :href="route('recently-viewed')"
                                :current="request()->routeIs('recently-viewed')"
                                wire:navigate>{{ __('Recently Viewed') }}</flux:navlist.item>
+            <flux:navlist.item class="mb-2" icon="following" :href="route('following')"
+                               :current="request()->routeIs('following')"
+                               wire:navigate>{{ __('Following') }}</flux:navlist.item>
+            <flux:navlist.item class="mb-2" badge="Free" icon="membership" :href="route('membership')"
+                               :current="request()->routeIs('membership')"
+                               wire:navigate>{{ __('Membership') }}</flux:navlist.item>
         </flux:navlist.group>
     </flux:navlist>
 

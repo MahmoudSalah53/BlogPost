@@ -22,7 +22,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('saved-posts', 'savedPosts')->name('saved-posts');
         Route::get('liked-posts', 'likedPosts')->name('liked-posts');
         Route::get('my-comments', 'myComments')->name('my-comments');
+        Route::get('following', 'following')->name('following');
         Route::get('recently-viewed', 'recentlyViewed')->name('recently-viewed');
+        Route::get('membership', 'membership')->name('membership');
     });
 
     Route::get('settings/profile', Profile::class)->name('settings.profile');
