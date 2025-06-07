@@ -17,22 +17,20 @@ class Login extends Component
 {
     #[Validate('required|string|email')]
     public string $email = '';
-
     #[Validate('required|string')]
     public string $password = '';
-
     public bool $remember = false;
 
     /**
      * Handle an incoming authentication request.
      */
-    public function login(): void
+    public function login (): void
     {
         $this->validate();
 
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
+        if ( !Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember) ) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
@@ -43,15 +41,15 @@ class Login extends Component
         RateLimiter::clear($this->throttleKey());
         Session::regenerate();
 
-        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+        $this->redirectIntended(default: route('profile', absolute: false), navigate: true);
     }
 
     /**
      * Ensure the authentication request is not rate limited.
      */
-    protected function ensureIsNotRateLimited(): void
+    protected function ensureIsNotRateLimited (): void
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        if ( !RateLimiter::tooManyAttempts($this->throttleKey(), 5) ) {
             return;
         }
 
@@ -70,8 +68,8 @@ class Login extends Component
     /**
      * Get the authentication rate limiting throttle key.
      */
-    protected function throttleKey(): string
+    protected function throttleKey (): string
     {
-        return Str::transliterate(Str::lower($this->email).'|'.request()->ip());
+        return Str::transliterate(Str::lower($this->email) . '|' . request()->ip());
     }
 }

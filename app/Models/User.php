@@ -29,7 +29,6 @@ class User extends Authenticatable
         'avatar',
         'email_verified_at',
     ];
-
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -45,7 +44,7 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
-    protected function casts(): array
+    protected function casts (): array
     {
         return [
             'email_verified_at' => 'datetime',
@@ -58,7 +57,7 @@ class User extends Authenticatable
     /**
      * Get the user's initials
      */
-    public function initials(): string
+    public function initials (): string
     {
         return Str::of($this->name)
             ->explode(' ')
@@ -66,8 +65,13 @@ class User extends Authenticatable
             ->implode('');
     }
 
-    public function posts()
+    public function posts ()
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function savedPosts ()
+    {
+        return Post::where('user_id', $this->id);
     }
 }
