@@ -18,14 +18,18 @@ class Post extends Model
         'featured_image',
         'status'
     ];
-
     protected $casts = [
         'featured_image' => 'array',
         'status' => PostStatus::class,
     ];
 
-    public function author()
+    public function author ()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function savedByUsers ()
+    {
+        return $this->belongsToMany(User::class, 'saved_posts');
     }
 }

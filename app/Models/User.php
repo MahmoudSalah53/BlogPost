@@ -72,6 +72,6 @@ class User extends Authenticatable
 
     public function savedPosts ()
     {
-        return Post::where('user_id', $this->id);
+        return $this->belongsToMany(Post::class, 'saved_posts');
     }
 }
