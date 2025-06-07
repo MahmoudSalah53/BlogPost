@@ -29,6 +29,9 @@ class Register extends Component
      */
     public function register(): void
     {
+
+        $isFirstUser = User::count() === 0;
+
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
@@ -36,7 +39,7 @@ class Register extends Component
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
-        $validated['role'] = $this->role;
+        $validated['role'] = $isFirstUser ? UserRole::Admin->value : $this->role;
 
         event(new Registered(($user = User::create($validated))));
 
