@@ -1,4 +1,4 @@
-<div>
+<x-layouts.app :title="__('Saved Posts')">
     @forelse($savedPosts as $post)
         <div>
             {{ $post }}
@@ -8,4 +8,4 @@
             No Saved Posts Found!
         </div>
     @endforelse
-</div>
+</x-layouts.app>
