@@ -11,6 +11,6 @@ class SavedPosts extends Component
     public function render ()
     {
         $userSavedPosts = auth()->user()->savedPosts();
-        return view('livewire.saved-posts', ['savedPosts' => $userSavedPosts]);
+        return view('livewire.navigations.saved-posts', ['savedPosts' => $userSavedPosts]);
     }
 }
