@@ -15,19 +15,15 @@ use Livewire\Component;
 class Register extends Component
 {
     public string $name = '';
-
     public string $email = '';
-
     public string $password = '';
-
     public $role = UserRole::Reader->value;
-
     public string $password_confirmation = '';
 
     /**
      * Handle an incoming registration request.
      */
-    public function register(): void
+    public function register (): void
     {
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -42,6 +38,6 @@ class Register extends Component
 
         Auth::login($user);
 
-        $this->redirect(route('dashboard', absolute: false), navigate: true);
+        $this->redirect(route('profile', absolute: false), navigate: true);
     }
 }
