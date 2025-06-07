@@ -10,7 +10,7 @@ class SavedPosts extends Component
 {
     public function render ()
     {
-        $userSavedPosts = auth()->user()->savedPosts();
+        $userSavedPosts = auth()->user()->savedPosts()->latest()->get();
         return view('livewire.navigations.saved-posts', ['savedPosts' => $userSavedPosts]);
     }
 }

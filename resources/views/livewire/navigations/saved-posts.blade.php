@@ -1,6 +1,5 @@
 <div>
     @forelse($savedPosts as $post)
-        @dd($post)
         <div>
             {{ $post }}
         </div>
