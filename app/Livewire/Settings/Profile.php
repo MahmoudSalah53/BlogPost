@@ -15,6 +15,7 @@ class Profile extends Component
     public $user;
     public string $name = '';
     public string $email = '';
+    public $currentAvatar;
     public $avatar;
     public $bio;
 
@@ -26,8 +27,8 @@ class Profile extends Component
         $this->user = \Auth::user();
         $this->name = $this->user->name;
         $this->email = $this->user->email;
-        $this->avatar = $this->user->avatar ?? null;
-        $this->bio = $this->user->bio ?? null;
+        $this->currentAvatar = $this->user->avatar;
+        $this->bio = $this->user->bio;
     }
 
     /**
@@ -55,6 +56,8 @@ class Profile extends Component
         if ( $this->avatar ) {
             $path = $this->avatar->store('avatars', 'public');
             $validated['avatar'] = $path;
+            $this->currentAvatar = $path;
+            $this->avatar = null;
         }
         $this->user->fill($validated);
 

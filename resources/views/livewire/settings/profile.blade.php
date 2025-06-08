@@ -30,18 +30,25 @@
 
             {{--  Upload user avatar and prview it  --}}
             <div class="mt-2 flex items-end">
-                @if ($avatar)
-                    <img class="w-[40px] h-[40px] rounded-lg mr-1.5 shadow object-cover"
-                         src="{{ is_string($avatar) ? asset('storage/' . $avatar) : $avatar->temporaryUrl() }}" alt="">
+                @if ($currentAvatar)
+                    <img class="w-[60px] h-[60px] rounded-lg mr-1.5 shadow object-cover border-2 border-yellow-500"
+                         src="{{ asset('storage/' . $currentAvatar) }}" alt="">
                 @endif
+                @if ($avatar)
+                    <img class="w-[60px] h-[60px] rounded-lg mr-1.5 shadow object-cover border-2 border-emerald-500"
+                         src="{{ $avatar->temporaryUrl() }}" alt="">
+                @endif
+
                 <flux:input type="file" :label="__('Avatar')" wire:model="avatar"/>
                 <flux:icon.loading class="size-4 ml-1.5 mb-2.5" wire:loading wire:target="avatar"/>
+
 
             </div>
 
             {{--  User bio section --}}
             <div>
                 <flux:textarea
+                    wire:model="bio"
                     value="hello"
                     label="Bio"
                     placeholder="Write Your Bio Here..."
