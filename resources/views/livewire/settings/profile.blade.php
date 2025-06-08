@@ -30,9 +30,8 @@
 
             <div class="mt-2 flex items-end">
                 @if ($avatar)
-                    {{--                    <flux:avatar class="mr-1.5" src="{{ $avatar->temporaryUrl() }}"/>--}}
                     <img class="w-[40px] h-[40px] rounded-lg mr-1.5 shadow object-cover"
-                         src="{{ $avatar->temporaryUrl() }}" alt="">
+                         src="{{ is_string($avatar) ? asset('storage/' . $avatar) : $avatar->temporaryUrl() }}" alt="">
                 @endif
                 <flux:input type="file" :label="__('Avatar')" wire:model="avatar"/>
                 <flux:icon.loading class="size-4 ml-1.5 mb-2.5" wire:loading wire:target="avatar"/>
