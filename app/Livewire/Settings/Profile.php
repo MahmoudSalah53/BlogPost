@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 
 class Profile extends Component
@@ -15,7 +16,7 @@ class Profile extends Component
     public $user;
     public string $name = '';
     public string $email = '';
-    public $avatar;
+    public $avatar = null; 
     public $bio;
 
     /**
@@ -26,14 +27,21 @@ class Profile extends Component
         $this->user = \Auth::user();
         $this->name = $this->user->name;
         $this->email = $this->user->email;
-        $this->avatar = $this->user->avatar ?? null;
+        $this->avatar = $this->user->avatar;
         $this->bio = $this->user->bio ?? null;
+    }
+
+    public function updatedAvatar()
+    {
+        $this->validateOnly('avatar', [
+            'avatar' => 'image|mimes:jpeg,png,jpg,webp|max:2048',
+        ]);
     }
 
     /**
      * Update the profile information for the currently authenticated user.
      */
-    public function updateProfileInformation (): void
+    public function updateProfileInformation(): void
     {
 
         $validated = $this->validate([
@@ -49,16 +57,17 @@ class Profile extends Component
             ],
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
-        dd($this->avatar);
-
+        
         // upload user avatar
-        if ( $this->avatar ) {
+        
+        if ($this->avatar instanceof TemporaryUploadedFile) {
             $path = $this->avatar->store('avatars', 'public');
             $validated['avatar'] = $path;
         }
+
         $this->user->fill($validated);
 
-        if ( $this->user->isDirty('email') ) {
+        if ($this->user->isDirty('email')) {
             $this->user->email_verified_at = null;
         }
 
