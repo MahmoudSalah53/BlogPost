@@ -13,28 +13,46 @@
                 class="max-lg:hidden! hidden dark:flex "/>
     <flux:navbar class="-mb-px max-lg:hidden">
         <flux:navbar.item href="{{ route('home') }}" current>{{ __('Home') }}</flux:navbar.item>
-        <flux:navbar.item href="{{ route('home') }}">{{ __('Posts') }}</flux:navbar.item>
+        <flux:navbar.item href="#">{{ __('Posts') }}</flux:navbar.item>
         <flux:navbar.item href="#">{{ __('Categories') }}</flux:navbar.item>
+        <flux:navbar.item href="#">{{ __('Authors') }}</flux:navbar.item>
         <flux:navbar.item href="#">{{ __('Membership') }}</flux:navbar.item>
 
     </flux:navbar>
     <flux:spacer/>
     <flux:navbar class="me-4">
-        <flux:navbar.item icon="magnifying-glass" href="#" label="Search"/>
-        <flux:navbar.item class="max-lg:hidden" icon="cog-6-tooth" href="#" label="Settings"/>
-        <flux:navbar.item class="max-lg:hidden" icon="information-circle" href="#" label="Help"/>
+
+        {{--  login and signup buttons      --}}
+        @if(Auth::check())
+            <flux:dropdown position="top" align="start">
+                @if(Auth::user()->avatar)
+                    <flux:profile avatar="{{ asset('storage/' . Auth::user()->avatar) }}"
+                                  name="{{ Auth::user()->name }}"/>
+                @else
+                    <flux:profile name="{{ Auth::user()->name }}"/>
+                @endif
+                <flux:menu>
+                    <flux:menu.group>
+                        <flux:menu.item href="{{ route('profile') }}" icon="home">{{ __('Dashboard') }}</flux:menu.item>
+                        <flux:menu.item href="{{ route('settings.profile') }}"
+                                        icon="cog">{{ __('Settings') }}</flux:menu.item>
+                    </flux:menu.group>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <flux:menu.item type="submit" href="" icon="arrow-right-start-on-rectangle"
+                                        class="cursor-pointer">Logout
+                        </flux:menu.item>
+                    </form>
+
+                </flux:menu>
+            </flux:dropdown>
+        @else
+            <flux:button-or-link/>
+            <flux:button-or-link/>
+        @endif
+
     </flux:navbar>
-    <flux:dropdown position="top" align="start">
-        <flux:profile avatar="https://fluxui.dev/img/demo/user.png"/>
-        <flux:menu>
-            <flux:menu.radio.group>
-                <flux:menu.radio checked>Olivia Martin</flux:menu.radio>
-                <flux:menu.radio>Truly Delta</flux:menu.radio>
-            </flux:menu.radio.group>
-            <flux:menu.separator/>
-            <flux:menu.item icon="arrow-right-start-on-rectangle">Logout</flux:menu.item>
-        </flux:menu>
-    </flux:dropdown>
+
 </flux:header>
 <flux:sidebar stashable sticky
               class="lg:hidden bg-zinc-50 dark:bg-zinc-900 border rtl:border-r-0 rtl:border-l border-zinc-200 dark:border-zinc-700">
