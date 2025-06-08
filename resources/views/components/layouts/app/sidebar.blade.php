@@ -34,6 +34,9 @@
             <flux:navlist.item class="mb-2" badge="Free" icon="membership" :href="route('membership')"
                                :current="request()->routeIs('membership')"
                                wire:navigate>{{ __('Membership') }}</flux:navlist.item>
+            <flux:navlist.item class="mb-2" icon="cog" :href="route('settings.profile')"
+                               :current="request()->routeIs('settings.profile')"
+                               wire:navigate>{{ __('Settings') }}</flux:navlist.item>
         </flux:navlist.group>
     </flux:navlist>
 
