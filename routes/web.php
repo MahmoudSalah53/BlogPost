@@ -13,7 +13,7 @@ Route::get('/', function () {
 
 Route::get('/test', function () {
     return view('public.test');
-});
+})->name('homepage');
 
 // User profile routs
 Route::middleware(['auth'])->group(function () {
