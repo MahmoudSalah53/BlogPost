@@ -57,7 +57,8 @@ class Profile extends Component
             ],
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
-        
+        dd($this->avatar);
+
         // upload user avatar
         
         if ($this->avatar instanceof TemporaryUploadedFile) {
