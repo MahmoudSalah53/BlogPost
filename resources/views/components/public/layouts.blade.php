@@ -47,8 +47,9 @@
                 </flux:menu>
             </flux:dropdown>
         @else
-            <flux:button-or-link/>
-            <flux:button-or-link/>
+            <flux:button href="{{ route('login') }}" variant="primary">Login</flux:button>
+            <flux:button href="{{ route('register') }}">Signup</flux:button>
+
         @endif
 
     </flux:navbar>
