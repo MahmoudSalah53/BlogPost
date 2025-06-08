@@ -48,6 +48,7 @@ class Profile extends Component
                 Rule::unique(User::class)->ignore($this->user->id),
             ],
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'bio' => 'nullable|string',
         ]);
 
         // upload user avatar

@@ -28,6 +28,7 @@
                 @endif
             </div>
 
+            {{--  Upload user avatar and prview it  --}}
             <div class="mt-2 flex items-end">
                 @if ($avatar)
                     <img class="w-[40px] h-[40px] rounded-lg mr-1.5 shadow object-cover"
@@ -36,6 +37,15 @@
                 <flux:input type="file" :label="__('Avatar')" wire:model="avatar"/>
                 <flux:icon.loading class="size-4 ml-1.5 mb-2.5" wire:loading wire:target="avatar"/>
 
+            </div>
+
+            {{--  User bio section --}}
+            <div>
+                <flux:textarea
+                    value="hello"
+                    label="Bio"
+                    placeholder="Write Your Bio Here..."
+                />
             </div>
             <div class="flex items-center gap-4">
                 <div class="flex items-center justify-end">
