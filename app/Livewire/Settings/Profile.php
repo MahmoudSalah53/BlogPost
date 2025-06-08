@@ -26,8 +26,8 @@ class Profile extends Component
         $this->user = \Auth::user();
         $this->name = $this->user->name;
         $this->email = $this->user->email;
-//        $this->avatar = $this->user->avatar ?? null;
-//        $this->bio = $this->user->bio ?? null;
+        $this->avatar = $this->user->avatar ?? null;
+        $this->bio = $this->user->bio ?? null;
     }
 
     /**
