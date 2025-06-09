@@ -59,6 +59,8 @@
             <flux:button wire:navigate href="{{ route('register') }}">Signup</flux:button>
 
         @endif
+
+        {{--   light and dark mode switcher     --}}
         <flux:separator class="mx-2" vertical/>
         <div x-data="{ dark: $flux.dark }">
             <flux:button
