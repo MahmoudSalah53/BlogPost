@@ -16,8 +16,6 @@
     <div class="mr-4 cursor-pointer">
         <h2 class="font-bold align-left"> {{ __('BlogPost') }}</h2>
     </div>
-    <flux:brand href="{{ route('home') }}" name="Blog Post"
-                class="max-lg:hidden! hidden dark:flex "/>
     <flux:navbar class="-mb-px max-lg:hidden">
         <flux:navbar.item href="{{ route('home') }}" current>{{ __('Home') }}</flux:navbar.item>
         <flux:navbar.item href="#">{{ __('Posts') }}</flux:navbar.item>
