@@ -4,6 +4,11 @@
 <head>
     @include('partials.head')
 </head>
+<style>
+    [x-cloak] {
+        display: none !important;
+    }
+</style>
 
 <body class="min-h-screen bg-white dark:bg-zinc-800">
 <flux:header container class="bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
@@ -35,8 +40,9 @@
                 @endif
                 <flux:menu>
                     <flux:menu.group>
-                        <flux:menu.item href="{{ route('profile') }}" icon="home">{{ __('Dashboard') }}</flux:menu.item>
-                        <flux:menu.item href="{{ route('settings.profile') }}"
+                        <flux:menu.item wire:navigate href="{{ route('profile') }}"
+                                        icon="home">{{ __('Dashboard') }}</flux:menu.item>
+                        <flux:menu.item wire:navigate href="{{ route('settings.profile') }}"
                                         icon="cog">{{ __('Settings') }}</flux:menu.item>
                     </flux:menu.group>
                     <form method="POST" action="{{ route('logout') }}">
@@ -53,7 +59,25 @@
             <flux:button wire:navigate href="{{ route('register') }}">Signup</flux:button>
 
         @endif
-
+        <flux:separator class="mx-2" vertical/>
+        <div x-data="{ dark: $flux.dark }">
+            <flux:button
+                x-cloak
+                x-show="!dark"
+                x-on:click="dark = true; $flux.dark = dark"
+                icon="moon"
+                variant="subtle"
+                aria-label="Enable dark mode"
+            />
+            <flux:button
+                x-cloak
+                x-show="dark"
+                x-on:click="dark = false; $flux.dark = dark"
+                icon="sun"
+                variant="subtle"
+                aria-label="Disable dark mode"
+            />
+        </div>
     </flux:navbar>
 
 </flux:header>
