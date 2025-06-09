@@ -7,13 +7,10 @@ use App\Livewire\Settings\Profile;
 use Illuminate\Support\Facades\Route;
 
 // public routs
-Route::get('/', function () {
-    return view('public.welcome');
-})->name('home');
 
-Route::get('/test', function () {
-    return view('public.test');
-})->name('homepage');
+Route::get('/', function () {
+    return view('public.index');
+})->name('home');
 
 // User profile routs
 Route::middleware(['auth'])->group(function () {
