@@ -44,14 +44,11 @@
 
         </div>
     </div>
-
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 my-5">
-        <!-- New Posts carousel -->
-        <x-container class="mt-8 pt-10">
-            <x-carousel :title="__('New Posts')" :posts="$posts"></x-carousel>
-        </x-container>
-    </div>
-
+    
+    <!-- New Posts carousel -->
+    <x-container class="mt-8 pt-10">
+        <x-carousel :title="__('New Posts')" :posts="$posts"></x-carousel>
+    </x-container>
 
     <!-- Popular Categories -->
     <x-container>
