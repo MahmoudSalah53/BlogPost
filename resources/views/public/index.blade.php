@@ -1,40 +1,42 @@
 <x-public.layouts :title="__('Home')">
     <!-- Hero Section -->
-    <div class="relative bg-gradient-to-r from-blue-50 to-purple-50 pt-20 pb-13">
+    <div class="relative bg-zinc-100 dark:bg-zinc-900 pt-20 pb-13">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center">
                 <flux:heading
                     level="1"
-                    class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-                    Share Your Stories
+                    class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+                    {{ __('Share Your Stories') }}
                 </flux:heading>
 
                 <div class="flex justify-center gap-1">
-                    <flux:text class="text-xl text-gray-600">
-                        Connect with friends and the world around you on
+                    <flux:text class="text-xl text-zinc-800 dark:text-gray-300">
+                        {{ __('Connect with friends and the world around you on') }}
                     </flux:text>
-                    <flux:text variant="strong" class="text-xl text-black-50">
-                        BlogPost
+                    <flux:text variant="strong" class="text-xl text-black dark:text-white">
+                        {{ __('BlogPost') }}
                     </flux:text>
-                    <flux:text class="text-xl text-gray-600">.</flux:text>
+                    <flux:text class="text-xl text-gray-600 dark:text-white">.</flux:text>
                 </div>
 
                 <div class="flex flex-col sm:flex-row justify-center gap-4 mt-10">
                     @guest
                         <flux:button
+                            wire:navigate
                             variant="primary"
                             class="px-8 py-5"
                             href="{{route('register')}}">
                             <flux:icon.user-plus/>
-                            Join Now
+                            {{ __('Join Now') }}
                         </flux:button>
                     @endguest
                     @auth
                         <flux:button
+                            wire:navigate
                             class="px-8 py-5"
-                            href="#">
+                            href="{{ route('posts.index') }}">
                             <flux:icon.arrow-right-circle/>
-                            Explore Posts
+                            {{ __('Explore Posts') }}
                         </flux:button>
                     @endauth
                 </div>
