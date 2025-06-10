@@ -32,7 +32,7 @@
 
         {{-- login and signup buttons      --}}
         @if(Auth::check())
-            <flux:dropdown position="top" align="start">
+            <flux:dropdown class="max-lg:hidden" position="top" align="start">
                 @if(Auth::user()->avatar)
                     <flux:profile avatar="{{ asset('storage/' . Auth::user()->avatar) }}"
                                   name="{{ Auth::user()->name }}"/>
