@@ -12,6 +12,10 @@ Route::get('/', function () {
     return view('public.index');
 })->name('home');
 
+Route::get('/posts', function () {
+    return view('public.posts');
+})->name('posts');
+
 // User profile routs
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', function () {
