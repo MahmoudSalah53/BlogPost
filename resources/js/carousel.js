@@ -1,4 +1,4 @@
-// import Swiper core , navigation, paginationAdd commentMore actions
+// import Swiper core , navigation, pagination
 import Swiper from "swiper";
 import {Autoplay, Navigation, Pagination} from "swiper/modules";
 

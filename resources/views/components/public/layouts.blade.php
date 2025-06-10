@@ -86,7 +86,6 @@
 
 </flux:header>
 {{-- mobile sidebar toggle --}}
-{{-- sidebar menu --}}Add commentMore actions
 <flux:sidebar stashable sticky
               class="lg:hidden bg-zinc-50 dark:bg-zinc-900 border rtl:border-r-0 rtl:border-l border-zinc-200 dark:border-zinc-700">
     <flux:sidebar.toggle class="lg:hidden" icon="x-mark"/>

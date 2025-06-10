@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PublicPagesController;
 use App\Http\Controllers\UserProfile;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
@@ -7,11 +8,9 @@ use App\Livewire\Settings\Profile;
 use Illuminate\Support\Facades\Route;
 
 // public routs
-
-Route::get('/', function () {
-    return view('public.index');
-})->name('home');
-
+Route::controller(PublicPagesController::class)->group(function () {
+    Route::get('/', 'index')->name('home');
+});
 Route::get('/posts', function () {
     return view('public.posts');
 })->name('posts');
@@ -25,6 +24,7 @@ Route::middleware(['auth'])->group(function () {
     // User Profile Routes
     Route::controller(UserProfile::class)->group(function () {
 
+        Route::get('/profile', 'index')->name('profile');
         Route::get('saved-posts', 'savedPosts')->name('saved-posts');
         Route::get('liked-posts', 'likedPosts')->name('liked-posts');
         Route::get('my-comments', 'myComments')->name('my-comments');

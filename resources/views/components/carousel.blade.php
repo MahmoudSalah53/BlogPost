@@ -73,7 +73,7 @@
                         </div>
                     </div>
                 </div>
-            </div>Add commentMore actions
+            </div>
         @endforeach
     </div>
     <div class="swiper-pagination"></div>
