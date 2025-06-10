@@ -115,93 +115,87 @@
     </flux:navlist>
 </flux:sidebar>
 
-<div class="flex min-h-screen">
 
-    <!-- Sidebar -->
-    @if(request()->routeIs('posts'))
-        <flux:sidebar sticky stashable
-                      class="bg-zinc-50 dark:bg-zinc-900 border-r rtl:border-r-0 rtl:border-l border-zinc-200 dark:border-zinc-700 w-64">
+<!-- Sidebar -->
+@if(request()->routeIs('posts'))
+    <flux:sidebar sticky stashable
+                  class="bg-zinc-50 dark:bg-zinc-900 border-r rtl:border-r-0 rtl:border-l border-zinc-200 dark:border-zinc-700 w-64">
 
-            <div class="px-4 py-4 space-y-8">
+        <div class="px-4 py-4 space-y-8">
 
-                <div>
-                    <flux:text as="h3" size="lg" class="font-bold text-zinc-800 dark:text-white mb-3">
-                        Categories
-                    </flux:text>
-                    <flux:navlist variant="ghost" class="space-y-1">
-                        <flux:navlist.item icon="list-bullet" current>All</flux:navlist.item>
-                        <flux:navlist.item icon="server">Backend</flux:navlist.item>
-                        <flux:navlist.item icon="paint-brush">Frontend</flux:navlist.item>
-                        <flux:navlist.item icon="server">Database</flux:navlist.item>
-                    </flux:navlist>
-                </div>
-
-                <div>
-                    <flux:text as="h3" size="lg" class="font-bold text-zinc-800 dark:text-white mb-3">
-                        Tags
-                    </flux:text>
-                    <div class="flex flex-wrap gap-2">
-                        <flux:badge color="blue" clickable>#Laravel</flux:badge>
-                        <flux:badge color="emerald" clickable>#PHP</flux:badge>
-                        <flux:badge color="purple" clickable>#Vue</flux:badge>
-                        <flux:badge color="sky" clickable>#Tailwind</flux:badge>
-                        <flux:badge color="amber" clickable>#React</flux:badge>
-                        <flux:badge color="rose" clickable>#MySQL</flux:badge>
-                    </div>
-                </div>
-
-                <div>
-                    <flux:text as="h3" size="lg" class="font-bold text-zinc-800 dark:text-white mb-3">
-                        Date
-                    </flux:text>
-                    <flux:navlist variant="ghost" class="space-y-1">
-                        <flux:navlist.item icon="clock">Last 24 Hours</flux:navlist.item>
-                        <flux:navlist.item icon="calendar-days">This Week</flux:navlist.item>
-                        <flux:navlist.item icon="calendar">This Month</flux:navlist.item>
-                        <flux:navlist.item icon="calendar">This Year</flux:navlist.item>
-                    </flux:navlist>
-                </div>
-
-                <div class="pt-2">
-                    <flux:button variant="outline" icon="arrow-path">
-                        Reset All Filters
-                    </flux:button>
-                </div>
-
-            </div>
-        </flux:sidebar>
-    @endif
-
-    <div class="flex-1 flex flex-col">
-
-        <!-- main -->
-        <main class="flex-1">
-            {{ $slot }}
-        </main>
-
-        <!-- Footer -->
-        <footer class="bg-zinc-100 dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-700 py-8">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-600 dark:text-gray-400">
-                <flux:text>
-                    &copy; 2025 Your Company Name. All rights reserved.
+            <div>
+                <flux:text as="h3" size="lg" class="font-bold text-zinc-800 dark:text-white mb-3">
+                    Categories
                 </flux:text>
-                <div class="mt-4 space-x-6">
-                    <flux:link href="#" class="hover:text-indigo-600 dark:hover:text-indigo-400">
-                        {{ __('Privacy Policy') }}
-                    </flux:link>
-                    <flux:link href="#" class="hover:text-indigo-600 dark:hover:text-indigo-400">
-                        {{ __('Terms of Service') }}
-                    </flux:link>
-                    <flux:link href="#" class="hover:text-indigo-600 dark:hover:text-indigo-400">
-                        {{ __('Contact') }}
-                    </flux:link>
+                <flux:navlist variant="ghost" class="space-y-1">
+                    <flux:navlist.item icon="list-bullet" current>All</flux:navlist.item>
+                    <flux:navlist.item icon="server">Backend</flux:navlist.item>
+                    <flux:navlist.item icon="paint-brush">Frontend</flux:navlist.item>
+                    <flux:navlist.item icon="server">Database</flux:navlist.item>
+                </flux:navlist>
+            </div>
+
+            <div>
+                <flux:text as="h3" size="lg" class="font-bold text-zinc-800 dark:text-white mb-3">
+                    Tags
+                </flux:text>
+                <div class="flex flex-wrap gap-2">
+                    <flux:badge color="blue" clickable>#Laravel</flux:badge>
+                    <flux:badge color="emerald" clickable>#PHP</flux:badge>
+                    <flux:badge color="purple" clickable>#Vue</flux:badge>
+                    <flux:badge color="sky" clickable>#Tailwind</flux:badge>
+                    <flux:badge color="amber" clickable>#React</flux:badge>
+                    <flux:badge color="rose" clickable>#MySQL</flux:badge>
                 </div>
             </div>
-        </footer>
 
+            <div>
+                <flux:text as="h3" size="lg" class="font-bold text-zinc-800 dark:text-white mb-3">
+                    Date
+                </flux:text>
+                <flux:navlist variant="ghost" class="space-y-1">
+                    <flux:navlist.item icon="clock">Last 24 Hours</flux:navlist.item>
+                    <flux:navlist.item icon="calendar-days">This Week</flux:navlist.item>
+                    <flux:navlist.item icon="calendar">This Month</flux:navlist.item>
+                    <flux:navlist.item icon="calendar">This Year</flux:navlist.item>
+                </flux:navlist>
+            </div>
+
+            <div class="pt-2">
+                <flux:button variant="outline" icon="arrow-path">
+                    Reset All Filters
+                </flux:button>
+            </div>
+
+        </div>
+    </flux:sidebar>
+@endif
+
+<!-- main -->
+<main>
+    {{ $slot }}
+</main>
+
+<!-- Footer -->
+<footer class="bg-zinc-100 dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-700 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-600 dark:text-gray-400">
+        <flux:text>
+            &copy; 2025 Your Company Name. All rights reserved.
+        </flux:text>
+        <div class="mt-4 space-x-6">
+            <flux:link href="#" class="hover:text-indigo-600 dark:hover:text-indigo-400">
+                {{ __('Privacy Policy') }}
+            </flux:link>
+            <flux:link href="#" class="hover:text-indigo-600 dark:hover:text-indigo-400">
+                {{ __('Terms of Service') }}
+            </flux:link>
+            <flux:link href="#" class="hover:text-indigo-600 dark:hover:text-indigo-400">
+                {{ __('Contact') }}
+            </flux:link>
+        </div>
     </div>
+</footer>
 
-</div>
 
 @fluxScripts
 @stack('carousel')
