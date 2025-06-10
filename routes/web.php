@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\PublicPagesController;
 use App\Http\Controllers\UserProfile;
 use App\Livewire\Settings\Appearance;
@@ -11,9 +12,12 @@ use Illuminate\Support\Facades\Route;
 Route::controller(PublicPagesController::class)->group(function () {
     Route::get('/', 'index')->name('home');
 });
-Route::get('/posts', function () {
-    return view('public.posts');
-})->name('posts');
+
+// posts routes
+Route::controller(PostController::class)->group(function () {
+    Route::get('posts', 'index')->name('posts.index');
+    Route::get('posts/{post:slug}', 'show')->name('posts.show');
+});
 
 // User profile routs
 Route::middleware(['auth'])->group(function () {

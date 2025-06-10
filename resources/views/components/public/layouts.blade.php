@@ -21,8 +21,8 @@
     <flux:navbar class="-mb-px max-lg:hidden">
         <flux:navbar.item wire:navigate href="{{ route('home') }}"
                           :current="request()->routeIs('home')">{{ __('Home') }}</flux:navbar.item>
-        <flux:navbar.item wire:navigate href="{{ route('posts') }}"
-                          :current="request()->routeIs('posts')">{{ __('Posts') }}</flux:navbar.item>
+        <flux:navbar.item wire:navigate href="{{ route('posts.index') }}"
+                          :current="request()->routeIs('posts.index')">{{ __('Posts') }}</flux:navbar.item>
         <flux:navbar.item wire:navigate href="#">{{ __('Categories') }}</flux:navbar.item>
         <flux:navbar.item wire:navigate href="#">{{ __('Authors') }}</flux:navbar.item>
         <flux:navbar.item wire:navigate href="#">{{ __('Membership') }}</flux:navbar.item>
