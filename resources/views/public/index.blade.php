@@ -145,7 +145,7 @@
 
     <!-- Subscription Area -->
     <div
-        class="max-w-md mx-auto p-6 bg-white dark:bg-zinc-800 rounded-lg shadow-md border border-gray-200 dark:border-zinc-700">
+        class="max-w-md mx-auto p-6 mb-10 bg-white dark:bg-zinc-800 rounded-lg shadow-md border border-gray-200 dark:border-zinc-700">
         <flux:heading level="2" class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">
             Buy Subscription
         </flux:heading>
