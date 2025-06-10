@@ -200,6 +200,7 @@
 </div>
 
 @fluxScripts
+@stack('carousel')
 </body>
 
 </html>
