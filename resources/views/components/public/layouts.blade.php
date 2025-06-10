@@ -50,7 +50,9 @@
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <flux:menu.item type="submit" href="" icon="arrow-right-start-on-rectangle"
-                                        class="cursor-pointer">Logout
+                                        class="cursor-pointer"
+                        >
+                            {{ __('Logout') }}
                         </flux:menu.item>
                     </form>
 
@@ -181,13 +183,13 @@
                 </flux:text>
                 <div class="mt-4 space-x-6">
                     <flux:link href="#" class="hover:text-indigo-600 dark:hover:text-indigo-400">
-                        Privacy Policy
+                        {{ __('Privacy Policy') }}
                     </flux:link>
                     <flux:link href="#" class="hover:text-indigo-600 dark:hover:text-indigo-400">
-                        Terms of Service
+                        {{ __('Terms of Service') }}
                     </flux:link>
                     <flux:link href="#" class="hover:text-indigo-600 dark:hover:text-indigo-400">
-                        Contact
+                        {{ __('Contact') }}
                     </flux:link>
                 </div>
             </div>
