@@ -47,7 +47,7 @@
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 my-5">
         <!-- New Posts carousel -->
-        <x-container class="mt-8 py-12">
+        <x-container class="mt-8 pt-10">
             <x-carousel :title="__('New Posts')" :posts="$posts"></x-carousel>
         </x-container>
     </div>
@@ -56,55 +56,23 @@
     <!-- Popular Categories -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 my-5">
         <flux:heading level="2" class="text-3xl font-bold mb-8 text-gray-800 dark:text-white">
-            Popular Categories
+            {{ __(' Popular Categories') }}
         </flux:heading>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            <a href="#technology"
-               class="block p-5 bg-white dark:bg-zinc-800 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 text-center cursor-pointer">
-                <flux:text class="font-semibold text-lg text-gray-800 dark:text-white">
-                    Technology
-                </flux:text>
-                <flux:text class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                    24 posts
-                </flux:text>
-            </a>
-            <a href="#health"
-               class="block p-5 bg-white dark:bg-zinc-800 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 text-center cursor-pointer">
-                <flux:text class="font-semibold text-lg text-gray-800 dark:text-white">
-                    Health
-                </flux:text>
-                <flux:text class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                    18 posts
-                </flux:text>
-            </a>
-            <a href="#travel"
-               class="block p-5 bg-white dark:bg-zinc-800 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 text-center cursor-pointer">
-                <flux:text class="font-semibold text-lg text-gray-800 dark:text-white">
-                    Travel
-                </flux:text>
-                <flux:text class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                    12 posts
-                </flux:text>
-            </a>
-            <a href="#food"
-               class="block p-5 bg-white dark:bg-zinc-800 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 text-center cursor-pointer">
-                <flux:text class="font-semibold text-lg text-gray-800 dark:text-white">
-                    Food
-                </flux:text>
-                <flux:text class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                    9 posts
-                </flux:text>
-            </a>
-            <a href="#lifestyle"
-               class="block p-5 bg-white dark:bg-zinc-800 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 text-center cursor-pointer">
-                <flux:text class="font-semibold text-lg text-gray-800 dark:text-white">
-                    Lifestyle
-                </flux:text>
-                <flux:text class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                    15 posts
-                </flux:text>
-            </a>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            @for($i = 0; $i < 8; $i++)
+                <a
+                    wire:navigate
+                    href="#"
+                    class="block p-5 bg-white dark:bg-zinc-800 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 text-center cursor-pointer">
+                    <flux:text class="font-semibold text-lg text-gray-800 dark:text-white">
+                        Technology
+                    </flux:text>
+                    <flux:text class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                        24 posts
+                    </flux:text>
+                </a>
+            @endfor
         </div>
     </div>
 
@@ -112,138 +80,61 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 my-5">
         <div class="flex justify-between items-center mb-8">
             <flux:heading level="2" class="text-3xl font-bold text-gray-800 dark:text-white">
-                Preferred Posts
+                {{ __('Preferred Posts') }}
             </flux:heading>
-            <flux:link href="#"
-                       class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium gap-1"
-                       style="display:flex;">
-                View All
+            <flux:link
+                wire:navigate
+                href="#"
+                class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium gap-1"
+                style="display:flex;"
+            >
+                {{ __('View All') }}
                 <flux:icon.arrow-right variant="mini"/>
             </flux:link>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-            <!-- Post 1 -->
-            <div
-                class="bg-white dark:bg-zinc-800 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-100 dark:border-zinc-700">
-                <div class="relative h-48 w-full overflow-hidden rounded-t-xl">
-                    <img
-                        src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=600&h=400&fit=crop"
-                        alt="Tech Innovations"
-                        class="absolute inset-0 w-full h-full object-cover"/>
-                </div>
-                <div class="p-5">
-                    <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
-                        <flux:text>Technology</flux:text>
-                        <span class="mx-2">•</span>
-                        <flux:text>May 15, 2023</flux:text>
+            @for($i = 0; $i < 3; $i++)
+                <!-- Post 1 -->
+                <div
+                    class="bg-white dark:bg-zinc-800 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-100 dark:border-zinc-700">
+                    <div class="relative h-48 w-full overflow-hidden rounded-t-xl">
+                        <img
+                            src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=600&h=400&fit=crop"
+                            alt="Tech Innovations"
+                            class="absolute inset-0 w-full h-full object-cover"/>
                     </div>
-                    <flux:heading level="3" class="text-xl font-semibold text-gray-800 dark:text-white mb-2">
-                        Latest Tech Innovations
-                    </flux:heading>
-                    <flux:text class="text-gray-600 dark:text-gray-300 mb-4">
-                        Discover the newest technological breakthroughs that are changing our world...
-                    </flux:text>
-                    <div class="flex justify-between items-center">
-                        <flux:link href="#"
-                                   class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium">
-                            Read More
-                        </flux:link>
-                        <div class="flex space-x-4 text-gray-500 dark:text-gray-400">
+                    <div class="p-5">
+                        <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
+                            <flux:text>Technology</flux:text>
+                            <span class="mx-2">•</span>
+                            <flux:text>May 15, 2023</flux:text>
+                        </div>
+                        <flux:heading level="3" class="text-xl font-semibold text-gray-800 dark:text-white mb-2">
+                            Latest Tech Innovations
+                        </flux:heading>
+                        <flux:text class="text-gray-600 dark:text-gray-300 mb-4">
+                            Discover the newest technological breakthroughs that are changing our world...
+                        </flux:text>
+                        <div class="flex justify-between items-center">
+                            <flux:link href="#"
+                                       class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium">
+                                Read More
+                            </flux:link>
+                            <div class="flex space-x-4 text-gray-500 dark:text-gray-400">
                             <span class="flex items-center gap-1">
                                 <flux:icon.heart class="far"/>
                                 <flux:text>42</flux:text>
                             </span>
-                            <span class="flex items-center gap-1">
+                                <span class="flex items-center gap-1">
                                 <flux:icon.comments class="far"/>
                                 <flux:text>8</flux:text>
                             </span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Post 2 -->
-            <div
-                class="bg-white dark:bg-zinc-800 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-100 dark:border-zinc-700">
-                <div class="relative h-48 w-full overflow-hidden rounded-t-xl">
-                    <img
-                        src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&h=400&fit=crop"
-                        alt="Mountain Adventure"
-                        class="absolute inset-0 w-full h-full object-cover"/>
-                </div>
-                <div class="p-5">
-                    <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
-                        <flux:text>Travel</flux:text>
-                        <span class="mx-2">•</span>
-                        <flux:text>May 10, 2023</flux:text>
-                    </div>
-                    <flux:heading level="3" class="text-xl font-semibold text-gray-800 dark:text-white mb-2">
-                        Mountain Adventure Guide
-                    </flux:heading>
-                    <flux:text class="text-gray-600 dark:text-gray-300 mb-4">
-                        Essential tips for your next mountain hiking trip to ensure safety and enjoyment...
-                    </flux:text>
-                    <div class="flex justify-between items-center">
-                        <flux:link href="#"
-                                   class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium">
-                            Read More
-                        </flux:link>
-                        <div class="flex space-x-4 text-gray-500 dark:text-gray-400">
-                            <span class="flex items-center gap-1">
-                                <flux:icon.heart class="far"/>
-                                <flux:text>36</flux:text>
-                            </span>
-                            <span class="flex items-center gap-1">
-                                <flux:icon.comments class="far"/>
-                                <flux:text>5</flux:text>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Post 3 -->
-            <div
-                class="bg-white dark:bg-zinc-800 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-100 dark:border-zinc-700">
-                <div class="relative h-48 w-full overflow-hidden rounded-t-xl">
-                    <img
-                        src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&h=400&fit=crop"
-                        alt="Healthy Eating"
-                        class="absolute inset-0 w-full h-full object-cover"/>
-                </div>
-                <div class="p-5">
-                    <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
-                        <flux:text>Health</flux:text>
-                        <span class="mx-2">•</span>
-                        <flux:text>May 5, 2023</flux:text>
-                    </div>
-                    <flux:heading level="3" class="text-xl font-semibold text-gray-800 dark:text-white mb-2">
-                        Healthy Eating Habits
-                    </flux:heading>
-                    <flux:text class="text-gray-600 dark:text-gray-300 mb-4">
-                        Simple changes to your diet that can significantly improve your overall health and wellbeing...
-                    </flux:text>
-                    <div class="flex justify-between items-center">
-                        <flux:link href="#"
-                                   class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium">
-                            Read More
-                        </flux:link>
-                        <div class="flex space-x-4 text-gray-500 dark:text-gray-400">
-                            <span class="flex items-center gap-1">
-                                <flux:icon.heart class="far"/>
-                                <flux:text>29</flux:text>
-                            </span>
-                            <span class="flex items-center gap-1">
-                                <flux:icon.comments class="far"/>
-                                <flux:text>3</flux:text>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            @endfor
         </div>
     </div>
 
