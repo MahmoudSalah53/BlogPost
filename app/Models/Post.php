@@ -19,7 +19,6 @@ class Post extends Model
         'status'
     ];
     protected $casts = [
-        'featured_image' => 'array',
         'status' => PostStatus::class,
     ];
 
