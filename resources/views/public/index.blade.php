@@ -54,17 +54,18 @@
 
 
     <!-- Popular Categories -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 my-5">
-        <flux:heading level="2" class="text-3xl font-bold mb-8 text-gray-800 dark:text-white">
+    <x-container>
+        <flux:heading class="text-xl font-semibold mb-6">
             {{ __(' Popular Categories') }}
         </flux:heading>
-
+    </x-container>
+    <x-container>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             @for($i = 0; $i < 8; $i++)
                 <a
                     wire:navigate
                     href="#"
-                    class="block p-5 bg-white dark:bg-zinc-800 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 text-center cursor-pointer">
+                    class="block p-5 bg-white dark:bg-zinc-700 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-100 dark:border-zinc-700 text-center cursor-pointer">
                     <flux:text class="font-semibold text-lg text-gray-800 dark:text-white">
                         Technology
                     </flux:text>
@@ -74,7 +75,7 @@
                 </a>
             @endfor
         </div>
-    </div>
+    </x-container>
 
     <!-- Preferred Posts -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 my-5">

@@ -24,7 +24,6 @@
     $maxWidthClass = $maxWidthClasses[$maxWidth];
 @endphp
 
-<div {{ $attributes->merge(['class' => "{$maxWidthClass} mx-auto w-full {$padding} {$bg} {$darkBg} "]) }}>Add
-    commentMore actions
+<div {{ $attributes->merge(['class' => "{$maxWidthClass} mx-auto w-full {$padding} {$bg} {$darkBg} "]) }}>
     {{ $slot }}
 </div>
