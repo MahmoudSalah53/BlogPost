@@ -45,7 +45,7 @@
                         </div>
                         {{-- post title --}}
                         <flux:heading level="3"
-                                      class="text-xl font-semibold text-gray-800 dark:text-white mb-2"
+                                      class="text-xl font-semibold text-gray-800 dark:text-white mb-2 text-justify line-clamp-2"
                         >
                             {{ $post->title }}
                         </flux:heading>
