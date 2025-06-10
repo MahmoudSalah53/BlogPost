@@ -27,6 +27,21 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function categories ()
+    {
+        return $this->belongsToMany(Category::class, 'post_category');
+    }
+
+    public function tags ()
+    {
+        return $this->belongsToMany(Tag::class, 'post_tag');
+    }
+
+    public function comments ()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function savedByUsers ()
     {
         return $this->belongsToMany(User::class, 'saved_posts');
