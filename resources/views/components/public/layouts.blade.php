@@ -14,9 +14,8 @@
 
 <!-- Header -->
 <flux:header sticky container class="bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
-    <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left"/>
     <div class="mr-4 cursor-pointer">
-        <h2 class="font-bold align-left"> {{ __('BlogPost') }}</h2>
+        <a wire:navigate href="{{ route('home') }}"><h2 class="font-bold align-left"> {{ __('BlogPost') }}</h2></a>
     </div>
     <flux:navbar class="-mb-px max-lg:hidden">
         <flux:navbar.item wire:navigate href="{{ route('home') }}"
@@ -59,13 +58,17 @@
                 </flux:menu>
             </flux:dropdown>
         @else
-            <flux:button wire:navigate href="{{ route('login') }}" variant="primary">Login</flux:button>
-            <flux:button wire:navigate href="{{ route('register') }}">Signup</flux:button>
+            {{-- show auth button if user not auth for lg windows --}}
+            <flux:button class="max-lg:hidden" wire:navigate href="{{ route('login') }}"
+                         variant="primary"
+            >
+                {{ __('Login') }}
+            </flux:button>
 
         @endif
 
         {{-- light and dark mode switcher     --}}
-        <flux:separator class="mx-2" vertical/>
+        <flux:separator class="mx-2 max-lg:hidden" vertical/>
         <div x-data="{ dark: $flux.dark }">
             <flux:button
                 x-cloak
@@ -82,6 +85,8 @@
                 variant="subtle"
                 aria-label="Disable dark mode"/>
         </div>
+        {{-- sidebar toggle icon --}}
+        <flux:sidebar.toggle class="lg:hidden" icon="grid" inset="right"/>
     </flux:navbar>
 
 </flux:header>
