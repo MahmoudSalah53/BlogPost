@@ -1,7 +1,6 @@
 <div>
-
     @forelse($posts as $post)
-    <article class="border border-zinc-200 dark:border-zinc-700 rounded-2xl overflow-hidden bg-white dark:bg-zinc-800 shadow-sm">
+    <article class="border mb-8 border-zinc-200 dark:border-zinc-700 rounded-2xl overflow-hidden bg-white dark:bg-zinc-800 shadow-sm">
         <!-- Post Header with Author Info -->
         <div class="p-4 flex items-center gap-3 border-b border-zinc-100 dark:border-zinc-700">
             <flux:avatar
@@ -14,7 +13,7 @@
                     Ahmed Mohamed
                 </flux:text>
                 <flux:text size="sm" class="text-zinc-500 dark:text-zinc-400">
-                    Senior Laravel Developer • 2h ago
+                    Senior Laravel Developer • {{ $post->created_at->diffForHumans() }}
                 </flux:text>
             </div>
             <flux:button
@@ -28,12 +27,41 @@
         <!-- Post Content -->
         <div class="p-4">
             <flux:text as="h2" size="xl" class="font-bold mb-3 text-zinc-800 dark:text-white">
-                How to Master Laravel in 2025
+                {{ $post->title }}
             </flux:text>
-            <flux:text size="base" class="text-zinc-600 dark:text-zinc-300 mb-4">
-                After 5 years working with Laravel, I've compiled my top tips for mastering the framework in today's ecosystem. The key is understanding the lifecycle...
-            </flux:text>
-            <img src="https://source.unsplash.com/random/800x400?laravel" class="rounded-lg mb-4 w-full" alt="Laravel code example">
+            @php
+            $limit = 100;
+            $content = $post->content;
+            $isLong = strlen($content) > $limit;
+            $shortContent = $isLong ? substr($content, 0, $limit) : $content;
+            $defaultImage = "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=600&h=400&fit=crop";
+            $image = $post->featured_image ? asset('storage/'.$post->featured_image) : $defaultImage;
+            @endphp
+
+            <div x-data="{ expanded: false }">
+                <flux:text size="base" class="text-zinc-600 dark:text-zinc-300 mb-4">
+                    <span x-show="!expanded">
+                        {{ $shortContent }}
+                        @if($isLong)
+                        <span @click="expanded = true"
+                            class="text-indigo-600 dark:text-indigo-400 text-sm font-medium cursor-pointer">
+                            ... See More
+                        </span>
+                        @endif
+                    </span>
+
+                    <span x-show="expanded">
+                        {{ $content }}
+                        <span @click="expanded = false"
+                            class="text-indigo-600 dark:text-indigo-400 text-sm font-medium cursor-pointer ml-1">
+                            See Less
+                        </span>
+                    </span>
+                </flux:text>
+            </div>
+
+
+            <img src="{{ $image }}" class="rounded-lg mb-4 w-full" alt="{{ $post->title }}">
 
             <!-- Post Tags -->
             <div class="flex flex-wrap gap-2 mb-4">

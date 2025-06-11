@@ -15,7 +15,7 @@ class PostsList extends Component
 
     public function render()
     {
-        $posts = Post::latest()->paginate(5);
+        $posts = Post::where('status', 'published')->paginate(5);
 
         return view('livewire.posts-list', compact('posts'));
     }
