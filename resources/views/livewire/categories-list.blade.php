@@ -1,6 +1,6 @@
 <div>
     <!-- Hero Section -->
-    <section class="bg-zinc-100 dark:bg-zinc-800 py-12">
+    <section class="bg-zinc-100 dark:bg-zinc-900 py-12">
         <div class="max-w-4xl mx-auto px-4 text-center">
             <flux:text as="h1" size="5xl" class="font-bold mb-4 text-zinc-900 dark:text-white">
                 Browse Categories
