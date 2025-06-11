@@ -28,6 +28,16 @@
                 @endif
             </div>
 
+            {{-- User role --}}
+            <div class="mt-2">
+                <flux:label for="role">{{ __('User Role') }}</flux:label>
+                <flux:select class="mt-1" id="role" wire:model="role" placeholder="Choose role ...">
+                    <flux:select.option value="reader">Reader</flux:select.option>
+                    <flux:select.option value="author">Author</flux:select.option>
+                </flux:select>
+                <flux:error name="role"/>
+            </div>
+
             {{--  Upload user avatar and prview it  --}}
             <div class="mt-2 flex items-end">
                 @if ($currentAvatar)
