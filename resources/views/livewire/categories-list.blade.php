@@ -30,7 +30,7 @@
                     {{ $category->name }}
                 </flux:text>
                 <flux:badge color="blue">
-                    {{ $category->posts_count ?? 0 }}
+                    37
                 </flux:badge>
             </div>
             @empty
