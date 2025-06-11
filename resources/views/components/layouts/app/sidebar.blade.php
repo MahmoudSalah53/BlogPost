@@ -7,7 +7,7 @@
 <flux:sidebar sticky stashable class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
     <flux:sidebar.toggle class="lg:hidden" icon="x-mark"/>
 
-    <a href="{{ route('profile') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
+    <a href="{{ route('home') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
         <x-app-logo/>
     </a>
 
@@ -38,7 +38,11 @@
             {{-- author navlist --}}
             @author
             <flux:navlist.group :heading="__('Author')">
-                <flux:navbar.item></flux:navbar.item>
+                <flux:navlist.group expandable heading="Posts" class="hidden lg:grid">
+                    <flux:navlist.item class="mb-2" icon="home" :href="route('profile')"
+                               :current="request()->routeIs('profile')"
+                               wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+                </flux:navlist.group>
             </flux:navlist.group>
             @endauthor
         </flux:navlist.group>
