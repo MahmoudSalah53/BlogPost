@@ -38,11 +38,22 @@
             {{-- author navlist --}}
             @author
             <flux:navlist.group :heading="__('Author')">
-                <flux:navlist.group expandable heading="Posts" class="hidden lg:grid">
-                    <flux:navlist.item class="mb-2" icon="home" :href="route('profile')"
+                {{-- posts --}}
+                <flux:navlist.group expandable :heading="__('Posts')" class="hidden lg:grid">
+                    <flux:navlist.item class="mb-2" icon="posts" :href="route('profile')"
                                :current="request()->routeIs('profile')"
-                               wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+                               wire:navigate>{{ __('All Posts') }}
+                    </flux:navlist.item>
+                    <flux:navlist.item class="mb-2" icon="pencil-square" :href="route('profile')"
+                               :current="request()->routeIs('profile')"
+                               wire:navigate>{{ __('New Post') }}
+                    </flux:navlist.item>
+                    <flux:navlist.item class="mb-2" icon="comments" :href="route('profile')"
+                               :current="request()->routeIs('profile')"
+                               wire:navigate>{{ __('Comments') }}
+                    </flux:navlist.item>
                 </flux:navlist.group>
+                
             </flux:navlist.group>
             @endauthor
         </flux:navlist.group>
