@@ -1,5 +1,8 @@
 <?php
 
+use App\Livewire\EditPost;
+use App\Livewire\CreatePost;
+use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PublicPagesController;
@@ -27,11 +30,6 @@ Route::controller(CategoryController::class)->group(function () {
 
 // User profile routs
 Route::middleware(['auth'])->group(function () {
-    Route::get('/profile', function () {
-        return view('profile.index');
-    })->name('profile');
-
-    // User Profile Routes
     Route::controller(UserProfile::class)->group(function () {
 
         Route::get('/profile', 'index')->name('profile');
@@ -46,6 +44,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/profile', Profile::class)->name('settings.profile');
     Route::get('settings/password', Password::class)->name('settings.password');
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
+});
+
+
+// Author Routes
+Route::controller(AuthorController::class)->group(function ()  {
+    Route::get('/author/posts', 'posts')->name('author.posts.index');
+    Route::get('/author/posts/create', CreatePost::class)->name('author.posts.create');
+    Route::get('/author/posts/edit', EditPost::class)->name('author.posts.edit');
 });
 
 require __DIR__ . '/auth.php';
