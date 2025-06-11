@@ -116,7 +116,7 @@
 </flux:sidebar>
 
 
-
+{{-- main content --}}
     {{ $slot }}
 
 
