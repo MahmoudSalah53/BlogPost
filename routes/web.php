@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PublicPagesController;
 use App\Http\Controllers\UserProfile;
@@ -17,6 +18,11 @@ Route::controller(PublicPagesController::class)->group(function () {
 Route::controller(PostController::class)->group(function () {
     Route::get('posts', 'index')->name('posts.index');
     Route::get('posts/{post:slug}', 'show')->name('posts.show');
+});
+
+// categories routes
+Route::controller(CategoryController::class)->group(function () {
+    Route::get('categories', 'index')->name('categories.index');
 });
 
 // User profile routs
