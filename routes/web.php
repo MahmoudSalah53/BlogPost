@@ -50,7 +50,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/author/posts', AuthorPosts::class)->name('author.posts.index');
 Route::get('/author/posts/create', CreatePost::class)->name('author.posts.create');
-Route::get('/author/posts/edit', EditPost::class)->name('author.posts.edit');
+Route::get('/author/posts/edit/{id}', EditPost::class)->name('author.posts.edit');
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';
