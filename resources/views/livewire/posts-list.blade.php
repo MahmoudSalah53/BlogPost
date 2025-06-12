@@ -34,8 +34,6 @@
             $content = $post->content;
             $isLong = strlen($content) > $limit;
             $shortContent = $isLong ? substr($content, 0, $limit) : $content;
-            $defaultImage = "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=600&h=400&fit=crop";
-            $image = $post->featured_image ? asset('storage/'.$post->featured_image) : $defaultImage;
             @endphp
 
             <div x-data="{ expanded: false }">
@@ -60,9 +58,9 @@
                 </flux:text>
             </div>
 
-
-            <img src="{{ $image }}" class="rounded-lg mb-4 w-full" alt="{{ $post->title }}">
-
+            @if($post->featured_image !=null)
+            <img src="{{ asset('storage/'.$post->featured_image) }}" class="rounded-lg mb-4 w-full" alt="{{ $post->title }}">
+            @endif
             <!-- Post Tags -->
             <div class="flex flex-wrap gap-2 mb-4">
                 <flux:badge color="blue">#Laravel</flux:badge>
