@@ -1,12 +1,12 @@
 <?php
 
-use App\Livewire\EditPost;
-use App\Livewire\CreatePost;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PublicPagesController;
 use App\Http\Controllers\UserProfile;
+use App\Livewire\CreatePost;
+use App\Livewire\EditPost;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -46,13 +46,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
 });
 
-
 // Author Routes
-Route::controller(AuthorController::class)->group(function ()  {
-    Route::get('/author/posts', 'posts')->name('author.posts.index');
-    Route::get('/author/posts/create', CreatePost::class)->name('author.posts.create');
-    Route::get('/author/posts/edit', EditPost::class)->name('author.posts.edit');
-});
+
+Route::get('/author/posts', [AuthorController::class, 'posts'])->name('author.posts.index');
+Route::get('/author/posts/create', CreatePost::class)->name('author.posts.create');
+Route::get('/author/posts/edit', EditPost::class)->name('author.posts.edit');
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';
