@@ -3,12 +3,10 @@
 namespace App\Livewire;
 
 use App\Models\Post;
-use App\Models\Category;
-use App\Models\Tag;
-use App\Enums\PostStatus;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Str;
 
 class CreatePost extends Component
 {
@@ -18,87 +16,61 @@ class CreatePost extends Component
     public $slug;
     public $content;
     public $featured_image;
-    public $categories = [];
-    public $tags = [];
-    public $allCategories;
-    public $allTags;
+    public $categories;
+    public $selectedCategories;
+    public $tags;
+    public $selectedTags;
 
-    public function mount()
+    public function mount ()
     {
-        $this->allCategories = Category::all();
-        $this->allTags = Tag::all();
+        $this->categories = DB::table('categories')->get(['id', 'name']);
+        $this->tags = DB::table('tags')->get(['id', 'name']);
     }
 
-    public function generateSlug()
+    public function UpdatedTitle ($value)
     {
-        $random = rand(100, 999);
-        $random2 = rand(100, 999);
-        $baseSlug = Str::slug($this->title);
-        $this->slug = "{$baseSlug}-{$random}-{$random2}";
+        $this->slug = Str::slug($value);
+        $counter = 1;
+        if ( Post::where('slug', $this->slug)->exists() ) {
+            while ( Post::where('slug', $this->slug)->exists() ) {
+                $this->slug = $this->slug . '-' . $counter;
+                $counter++;
+            }
+        }
     }
 
-    public function changeCategory($value)
+    public function save ()
     {
-        $this->categories = $value;
-    }
 
-    public function changeTag($value)
-    {
-        $this->tags = $value;
-    }
-
-
-    public function save()
-    {
         $validated = $this->validate(
             [
                 'title' => 'required|string|max:255',
                 'slug' => 'required|string|max:255|unique:posts,slug',
-                'content' => 'required',
-                'featured_image' => 'nullable|image|max:2048',
-                'categories' => 'required|integer|min:1',
-                'tags' => 'required|integer|min:1',
-            ],
-            [
-                'categories.min' => 'The tags field is required.',
-                'tags.min' => 'The tags field is required.',
+                'content' => 'required|string',
+                'featured_image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+                'selectedCategories.*' => 'required|integer|exists:categories,id',
+                'selectedTags.*' => 'required|integer|exists:tags,id',
             ]
         );
 
-        if ($this->featured_image) {
-            $path = $this->featured_image->store('posts', 'public');
-            $validated['featured_image'] = $path;
-        } else {
-            $validated['featured_image'] = null;
-        }
-
+        //store image
+        $validated['featured_image'] = $this->featured_image->store('posts');
+        // create post
         $post = Post::create([
             'title' => $validated['title'],
             'slug' => $validated['slug'],
             'content' => $validated['content'],
-            'featured_image' => $validated['featured_image'] ?? null,
+            'featured_image' => $validated['featured_image'],
             'author_id' => auth()->id(),
         ]);
 
-        $post->categories()->attach($this->categories);
-        $post->tags()->attach($this->tags);
+        $post->categories()->attach($this->selectedCategories);
+        $post->tags()->attach($this->selectedTags);
 
-        session()->flash('success', 'Post created successfully. Please wait until your post is accepted.');
-        $this->reset([
-            'title',
-            'slug',
-            'content',
-            'featured_image',
-        ]);
-
-        $this->categories = 0;
-        $this->tags = 0;
-
-        $this->dispatch('resetSelects');
+        return $this->redirect(route('author.posts.index'), true);
     }
 
-
-    public function render()
+    public function render ()
     {
         return view('livewire.create-post');
     }

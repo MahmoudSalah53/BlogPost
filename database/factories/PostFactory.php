@@ -21,6 +21,7 @@ class PostFactory extends Factory
             'content' => $this->faker->paragraph(3),
             'slug' => $this->faker->slug(),
             'featured_image' => $this->faker->imageUrl(),
+            'author_id' => 1,
         ];
     }
 }

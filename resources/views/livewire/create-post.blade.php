@@ -1,97 +1,130 @@
-<div>
-    <div class="max-w-4xl mx-auto py-10">
-        @if (session()->has('success'))
-        <div class="p-4 mb-4 text-green-700 bg-green-100 rounded">
-            {{ session('success') }}
-        </div>
-        @endif
-
-        <form wire:submit.prevent="save" class="grid gap-6">
-
-            {{-- Title --}}
-            <div>
-                <flux:label for="title">Title</flux:label>
-                <flux:input id="title" wire:model.defer="title" type="text" placeholder="Post title" />
-                @error('title') <div class="text-red-500 text-sm">{{ $message }}</div> @enderror
-            </div>
-
-            {{-- Slug --}}
-            <div>
-                <flux:label for="slug">Slug</flux:label>
-                <div class="flex gap-2">
-                    <flux:input id="slug" wire:model.defer="slug" type="text" placeholder="Slug" />
-                    <flux:button type="button" wire:click="generateSlug" variant="outline">Generate</flux:button>
-                </div>
-                @error('slug') <div class="text-red-500 text-sm">{{ $message }}</div> @enderror
-            </div>
-
-            {{-- Content --}}
-            <div>
-                <flux:label for="content">Content</flux:label>
-                <flux:textarea id="content" wire:model.defer="content" rows="6" placeholder="Write your content..." />
-                @error('content') <div class="text-red-500 text-sm">{{ $message }}</div> @enderror
-            </div>
-
-            {{-- Featured Image --}}
-            <div>
-                <flux:label for="featured_image">Featured Image</flux:label>
-                <input type="file" id="featured_image" wire:model="featured_image"
-                    class="border border-gray-300 rounded-lg p-2 w-full dark:bg-zinc-800 dark:border-zinc-700">
-                @error('featured_image') <div class="text-red-500 text-sm">{{ $message }}</div> @enderror
-
-                @if ($featured_image)
-                <div class="mt-3">
-                    <img src="{{ $featured_image->temporaryUrl() }}" class="rounded-lg w-64">
-                </div>
-                @endif
-            </div>
-
-            {{-- Categories --}}
-            <div class="grid gap-2">
-                <flux:label for="categories">Categories</flux:label>
-                <flux:select id="categories" wire:model="categories" wire:change="changeCategory($event.target.value)">
-                    <option value="0" selected>-- Select Category --</option>
-                    @foreach ($allCategories as $category)
-                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @endforeach
-                </flux:select>
-                @error('categories')
-                <div class="text-red-500 text-sm">{{ $message }}</div>
-                @enderror
-            </div>
-
-            {{-- Tags --}}
-            <div class="grid gap-2">
-                <flux:label for="tags">Tags</flux:label>
-                <flux:select id="tags" wire:model="tags" wire:change="changeTag($event.target.value)">
-                    <option value="0" selected>-- Select Tag --</option>
-                    @foreach ($allTags as $tag)
-                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
-                    @endforeach
-                </flux:select>
-                @error('tags')
-                <div class="text-red-500 text-sm">{{ $message }}</div>
-                @enderror
-            </div>
-
-            @push('scripts')
-            <script>
-                document.addEventListener('livewire:initialized', () => {
-                    Livewire.on('resetSelects', () => {
-                        document.getElementById('categories').value = '0';
-                        document.getElementById('tags').value = '0';
-                    });
-                });
-            </script>
-            @endpush
-
-            {{-- Submit --}}
-            <div class="flex justify-end">
-                <flux:button type="submit">Save Post</flux:button>
-            </div>
-
-        </form>
-
+<div class="max-w-7xl mx-auto p-6" xmlns:flux="http://www.w3.org/1999/xlink">
+    <!-- Header -->
+    <div class="mb-6 flex items-center justify-between">
+        <h1 class="text-3xl font-bold mb-1 text-foreground">Create New Post</h1>
+        <flux:button>
+            <a wire:navigate href="{{ route('author.posts.index') }}"
+               class="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition">
+                <flux:icon.arrow-left class="size-2.5"/>
+                Back to Home
+            </a>
+        </flux:button>
     </div>
+    <form wire:submit.prevent="save">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Left Side -->
+            <div class="w-full lg:w-2/3 space-y-4">
+                <div class="space-y-1">
+                    <flux:field>
+                        <flux:label>Post Title</flux:label>
+                        <flux:input wire:model.live="title"/>
+                        <flux:text class="text-sm">Slug: {{ $slug ? $slug: '' }}</flux:text>
+                        <flux:error name="title"/>
+                    </flux:field>
+                </div>
 
+                <div class="space-y-1">
+                    <flux:field>
+                        <flux:textarea wire:model="content" rows="12" label="Post Content">
+
+                        </flux:textarea>
+                    </flux:field>
+                </div>
+                <div class="flex  mt-6">
+                    <flux:button type="submit">Save</flux:button>
+                </div>
+            </div>
+
+            <!-- Right Side -->
+            <div class="w-full lg:w-1/3 space-y-6 dark:bg-[#3C3C3C] px-6 py-6 rounded-md">
+                <!-- Publish Settings -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="font-bold text-2xl mb-2">Publish Settings</h2>
+                    </div>
+                    <div class=" space-y-4">
+                        <flux:separator/>
+                        {{-- Choose category --}}
+                        <div class="space-y-1">
+                            <flux:checkbox.group wire:model="selectedCategories" label="Choose Category">
+                                <div class="flex gap-4 *:gap-x-2 flex-wrap">
+                                    @foreach($categories as $category)
+                                        <flux:checkbox label="{{ $category->name }}" value="{{ $category->id }}"
+                                                       wire:key="{{ $category->id }}"/>
+                                    @endforeach
+                                </div>
+                            </flux:checkbox.group>
+                        </div>
+                    </div>
+                </div>
+                <flux:separator/>
+
+                <!-- Featured Image -->
+                <div class="card">
+                    <flux:fieldset>
+                        <flux:label> Featured Image</flux:label>
+                        @if($featured_image)
+                            <div class="relative mt-1">
+                                <img src="{{ $featured_image->temporaryUrl() }}"
+                                     class="rounded-lg border shadow w-full object-cover h-48"/>
+                                <button type="button"
+                                        class="absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full p-1">
+                                    <flux:icon.x-mark name="x" class="w-4 h-4"/>
+                                </button>
+                            </div>
+                        @else
+                            <div
+                                x-data="{ uploading: false, progress: 0 }"
+                                x-on:livewire-upload-start="uploading = true"
+                                x-on:livewire-upload-finish="uploading = false"
+                                x-on:livewire-upload-cancel="uploading = false"
+                                x-on:livewire-upload-error="uploading = false"
+                                x-on:livewire-upload-progress="progress = $event.detail.progress"
+                            >
+                                <div>
+                                    <label
+                                        class="cursor-pointer border-2 border-dashed rounded-lg p-4 text-center text-muted-foreground hover:border-primary block">
+                                        <div>
+                                            <flux:icon.arrow-up-tray class="mx-auto w-8 h-8"/>
+                                            <p class="mt-2 text-sm">Click to upload</p>
+                                        </div>
+                                        <input wire:model="featured_image" type="file" class="hidden">
+                                    </label>
+                                    <flux:error name="featured_image"/>
+                                </div>
+                                <!-- Progress Bar -->
+                                <template x-if="progress">
+                                    <div class="w-full mt-2">
+                                        <div
+                                            class="w-full bg-gray-200 dark:bg-green-100 rounded-full h-4 overflow-hidden">
+                                            <div
+                                                class="bg-green-500 h-full transition-all duration-500"
+                                                :style="'width: ' + progress + '%'">
+                                            </div>
+                                        </div>
+
+                                        <div class="text-center text-sm text-gray-700 dark:text-gray-300 mt-1">
+                                            <span x-text="progress + '%'"></span>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        @endif
+                    </flux:fieldset>
+                </div>
+                <flux:separator/>
+                <!-- Tags -->
+                <div class="card">
+                    <flux:checkbox.group wire:model="selectedTags" label="Tags">
+                        <div class="flex gap-4 *:gap-x-2 flex-wrap">
+                            @foreach($tags as $tag)
+                                <flux:checkbox label="{{ $tag->name }}" value="{{ $tag->id }}"
+                                               wire:key="{{ $tag->id }}"/>
+                            @endforeach
+                        </div>
+                    </flux:checkbox.group>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
