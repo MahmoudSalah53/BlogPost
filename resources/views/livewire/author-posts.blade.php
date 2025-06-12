@@ -77,7 +77,7 @@
             </tbody>
         </table>
         <div class="mt-4">
-            {{ $posts->links() }}
+            {{ $posts->links(data: ['scrollTo' => false]) }}
         </div>
     </div>
 
