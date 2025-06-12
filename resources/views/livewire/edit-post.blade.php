@@ -1,7 +1,7 @@
 <div class="max-w-7xl mx-auto p-6" xmlns:flux="http://www.w3.org/1999/xlink">
     <!-- Header -->
     <div class="mb-6 flex items-center justify-between">
-        <h1 class="text-3xl font-bold mb-1 text-foreground">Create New Post</h1>
+        <h1 class="text-3xl font-bold mb-1 text-foreground">Edit Post</h1>
         <flux:button>
             <a wire:navigate href="{{ route('author.posts.index') }}"
                class="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition">
