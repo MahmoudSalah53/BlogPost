@@ -4,16 +4,14 @@
         <!-- Post Header with Author Info -->
         <div class="p-4 flex items-center gap-3 border-b border-zinc-100 dark:border-zinc-700">
             <flux:avatar
-                src="https://randomuser.me/api/portraits/men/32.jpg"
-                size="md"
-                alt="Ahmed Mohamed"
-                class="ring-2 ring-blue-500" />
-            <div class="flex-1 text-left">
+                src="{{$post->author->avatar ? asset('storage/'.$post->author->avatar) : 'https://www.gravatar.com/avatar/?d=mp'}}"
+                alt="{{ $post->author->name }}" />
+            <div class="flex-1 text-left w-full h-full">
                 <flux:text as="h3" size="base" class="font-semibold text-zinc-800 dark:text-white">
-                    Ahmed Mohamed
+                    {{ $post->author->name }}
                 </flux:text>
                 <flux:text size="sm" class="text-zinc-500 dark:text-zinc-400">
-                    Senior Laravel Developer • {{ $post->updated_at->diffForHumans() }}
+                    {{ Str::limit($post->author->bio, 25, '...') }} • {{ $post->updated_at->diffForHumans() }}
                 </flux:text>
             </div>
             <flux:button
@@ -80,8 +78,8 @@
                         12 comments
                     </span>
                     <span class="flex items-center gap-1">
-                        <flux:icon name="arrow-path" size="sm" />
-                        3 shares
+                        <flux:icon name="save" size="sm" />
+                        3 saves
                     </span>
                 </div>
             </div>
@@ -107,8 +105,8 @@
                 variant="ghost"
                 size="sm"
                 class="flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
-                <flux:icon name="arrow-path" size="lg" />
-                Share
+                <flux:icon name="save" size="lg" />
+                Save
             </flux:button>
         </div>
     </article>
