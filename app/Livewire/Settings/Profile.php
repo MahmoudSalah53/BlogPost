@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
+use Livewire\Attributes\Lazy;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -75,6 +76,8 @@ class Profile extends Component
         $this->user->save();
 
         $this->dispatch('profile-updated', name: $this->user->name);
+        
+        redirect(route('settings.profile'));
     }
 
     /**
