@@ -18,10 +18,8 @@ class CreatePost extends Component
     public $slug;
     public $content;
     public $featured_image;
-    public $status = PostStatus::Draft;
     public $categories = [];
     public $tags = [];
-
     public $allCategories;
     public $allTags;
 
