@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Post;
 
 class AuthorController extends Controller
 {
-    public function posts()
+    public function posts ()
     {
-        return view('author.posts');
+        $posts = Post::where('author_id', auth()->id());
+        return view('author.posts', compact('posts'));
     }
 }

@@ -1,4 +1,4 @@
-<div class="max-w-7xl mx-auto p-6" xmlns:flux="http://www.w3.org/1999/xlink">
+<div class="max-w-7xl mx-auto p-6">
     <!-- Header -->
     <div class="mb-6 flex items-center justify-between">
         <h1 class="text-3xl font-bold mb-1 text-foreground">Create New Post</h1>
