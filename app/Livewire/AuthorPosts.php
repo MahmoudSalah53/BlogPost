@@ -21,7 +21,7 @@ class AuthorPosts extends Component
 
     public function render ()
     {
-        $posts = Post::with(['author', 'categories', 'tags'])->latest()->paginate(10);
+        $posts = Post::with(['author', 'categories', 'tags'])->where('author_id', auth()->id())->latest()->paginate(10);
         return view('livewire.author-posts', compact('posts'));
     }
 }
