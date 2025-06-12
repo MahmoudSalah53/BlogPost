@@ -16,7 +16,8 @@ class Post extends Model
         'slug',
         'content',
         'featured_image',
-        'status'
+        'status',
+        'author_id'
     ];
     protected $casts = [
         'status' => PostStatus::class,

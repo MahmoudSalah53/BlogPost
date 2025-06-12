@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Posts;
+namespace App\Livewire;
 
 use App\Models\Post;
 use App\Models\Category;
@@ -10,7 +10,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
 
-class Create extends Component
+class CreatePost extends Component
 {
     use WithFileUploads;
 
@@ -33,24 +33,45 @@ class Create extends Component
 
     public function generateSlug()
     {
-        $this->slug = Str::slug($this->title);
+        $random = rand(100, 999);
+        $random2 = rand(100, 999);
+        $baseSlug = Str::slug($this->title);
+        $this->slug = "{$baseSlug}-{$random}-{$random2}";
     }
+
+    public function changeCategory($value)
+    {
+        $this->categories = $value;
+    }
+
+    public function changeTag($value)
+    {
+        $this->tags = $value;
+    }
+
 
     public function save()
     {
-        $validated = $this->validate([
-            'title' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:posts,slug',
-            'content' => 'required',
-            'featured_image' => 'nullable|image|max:2048',
-            'status' => 'required|in:draft,published',
-            'categories' => 'array',
-            'tags' => 'array',
-        ]);
+        $validated = $this->validate(
+            [
+                'title' => 'required|string|max:255',
+                'slug' => 'required|string|max:255|unique:posts,slug',
+                'content' => 'required',
+                'featured_image' => 'nullable|image|max:2048',
+                'categories' => 'required|integer|min:1',
+                'tags' => 'required|integer|min:1',
+            ],
+            [
+                'categories.min' => 'The tags field is required.',
+                'tags.min' => 'The tags field is required.',
+            ]
+        );
 
         if ($this->featured_image) {
             $path = $this->featured_image->store('posts', 'public');
             $validated['featured_image'] = $path;
+        } else {
+            $validated['featured_image'] = null;
         }
 
         $post = Post::create([
@@ -58,16 +79,26 @@ class Create extends Component
             'slug' => $validated['slug'],
             'content' => $validated['content'],
             'featured_image' => $validated['featured_image'] ?? null,
-            'status' => $validated['status'],
             'author_id' => auth()->id(),
         ]);
 
         $post->categories()->attach($this->categories);
         $post->tags()->attach($this->tags);
 
-        session()->flash('success', 'Post created successfully.');
-        return redirect()->route('posts.index');
+        session()->flash('success', 'Post created successfully. Please wait until your post is accepted.');
+        $this->reset([
+            'title',
+            'slug',
+            'content',
+            'featured_image',
+        ]);
+
+        $this->categories = 0;
+        $this->tags = 0;
+
+        $this->dispatch('resetSelects');
     }
+
 
     public function render()
     {

@@ -49,7 +49,7 @@
                                wire:navigate>{{ __('New Post') }}
                     </flux:navlist.item>
                     <flux:navlist.item class="mb-2" icon="comments" :href="route('profile')"
-                               :current="request()->routeIs('profile')"
+                              
                                wire:navigate>{{ __('Comments') }}
                     </flux:navlist.item>
                 </flux:navlist.group>

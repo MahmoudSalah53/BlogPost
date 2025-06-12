@@ -13,7 +13,7 @@
                     Ahmed Mohamed
                 </flux:text>
                 <flux:text size="sm" class="text-zinc-500 dark:text-zinc-400">
-                    Senior Laravel Developer • {{ $post->created_at->diffForHumans() }}
+                    Senior Laravel Developer • {{ $post->updated_at->diffForHumans() }}
                 </flux:text>
             </div>
             <flux:button
