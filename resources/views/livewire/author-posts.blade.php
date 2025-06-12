@@ -64,7 +64,7 @@
                             <a wire:navigate href="{{ route('author.posts.edit') }}">
                                 <flux:icon.pencil-square class="hover:text-blue-500 w-full"/>
                             </a>
-                            <a wire:click="delete($post->id)">
+                            <a wire:click="delete({{ $post->id }})">
                                 <flux:icon.trash class="hover:text-red-500 cursor-pointer w-full"/>
                             </a>
                         </div>
