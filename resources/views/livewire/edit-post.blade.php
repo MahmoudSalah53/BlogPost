@@ -10,6 +10,16 @@
             </a>
         </flux:button>
     </div>
+    @if ($errors->any())
+        <div class="text-red-500">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form wire:submit.prevent="save">
         <div class="flex flex-col lg:flex-row gap-8">
             <!-- Left Side -->
@@ -46,9 +56,9 @@
                         <flux:separator/>
                         {{-- Choose category --}}
                         <div class="space-y-1">
-                            <flux:checkbox.group wire:model="selectedCategories" label="Choose Category">
+                            <flux:checkbox.group wire:model="categories" label="Choose Category">
                                 <div class="flex gap-4 *:gap-x-2 flex-wrap">
-                                    @foreach($categories as $category)
+                                    @foreach($allCategories as $category)
                                         <flux:checkbox label="{{ $category->name }}" value="{{ $category->id }}"
                                                        wire:key="{{ $category->id }}"/>
                                     @endforeach
@@ -63,11 +73,21 @@
                 <div class="card">
                     <flux:fieldset>
                         <flux:label> Featured Image</flux:label>
-                        @if($uploadedImage)
+                        @if($currentImage)
+                            <div class="relative mt-1">
+                                <input type="hidden" name="currentImg" value="{{ $currentImage }}"/>
+                                <img src="{{ asset('storage/' . $currentImage) }}"
+                                     class="rounded-lg border shadow w-full object-cover h-48"/>
+                                <button type="button" wire:click="rvCurrentImg"
+                                        class="absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full p-1">
+                                    <flux:icon.x-mark name="x" class="w-4 h-4"/>
+                                </button>
+                            </div>
+                        @elseif($uploadedImage)
                             <div class="relative mt-1">
                                 <img src="{{ $uploadedImage->temporaryUrl() }}"
                                      class="rounded-lg border shadow w-full object-cover h-48"/>
-                                <button type="button"
+                                <button type="button" wire:click="rvUploadedImg"
                                         class="absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full p-1">
                                     <flux:icon.x-mark name="x" class="w-4 h-4"/>
                                 </button>
@@ -110,15 +130,17 @@
                                 </template>
                             </div>
                         @endif
+                        <flux:error name="uploadedImage"/>
                     </flux:fieldset>
                 </div>
                 <flux:separator/>
                 <!-- Tags -->
                 <div class="card">
-                    <flux:checkbox.group wire:model="selectedTags" label="Tags">
+                    <flux:checkbox.group wire:model="tags" label="Tags">
                         <div class="flex gap-4 *:gap-x-2 flex-wrap">
-                            @foreach($tags as $tag)
-                                <flux:checkbox label="{{ $tag->name }}" value="{{ $tag->id }}"
+                            @foreach($allTags as $tag)
+                                <flux:checkbox label="{{ $tag->name }}"
+                                               value="{{ $tag->id }}"
                                                wire:key="{{ $tag->id }}"/>
                             @endforeach
                         </div>
