@@ -39,6 +39,11 @@ class CreatePost extends Component
         }
     }
 
+    public function deleteImage ()
+    {
+        $this->featured_image = null;
+    }
+
     public function save ()
     {
 

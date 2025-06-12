@@ -67,8 +67,8 @@
                             <div class="relative mt-1">
                                 <img src="{{ $featured_image->temporaryUrl() }}"
                                      class="rounded-lg border shadow w-full object-cover h-48"/>
-                                <button type="button"
-                                        class="absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full p-1">
+                                <button type="button" wire:click="deleteImage"
+                                        class="absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 cursor-pointer">
                                     <flux:icon.x-mark name="x" class="w-4 h-4"/>
                                 </button>
                             </div>
