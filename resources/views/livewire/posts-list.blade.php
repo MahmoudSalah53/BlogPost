@@ -80,8 +80,8 @@
                         12 comments
                     </span>
                     <span class="flex items-center gap-1">
-                        <flux:icon name="arrow-path" size="sm" />
-                        3 shares
+                        <flux:icon name="save" size="sm" />
+                        3 saves
                     </span>
                 </div>
             </div>
@@ -107,8 +107,8 @@
                 variant="ghost"
                 size="sm"
                 class="flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
-                <flux:icon name="arrow-path" size="lg" />
-                Share
+                <flux:icon name="save" size="lg" />
+                Save
             </flux:button>
         </div>
     </article>
