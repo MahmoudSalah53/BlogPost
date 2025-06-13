@@ -9,7 +9,7 @@ use Livewire\WithPagination;
 class PostsList extends Component
 {
     use WithPagination;
-    
+
     protected $paginationTheme = 'tailwind';
     public $perPage = 5;
     public $loading = false;
@@ -23,13 +23,8 @@ class PostsList extends Component
     public function render()
     {
         $posts = Post::where('status', 1)
-                   ->orderBy('updated_at', 'desc')
-                   ->paginate($this->perPage);
-
-        if ($this->loading) {
-            $this->loading = false;
-            return view('livewire.posts-list', ['posts' => $posts]);
-        }
+            ->orderBy('updated_at', 'desc')
+            ->paginate($this->perPage);
 
         return view('livewire.posts-list', compact('posts'));
     }
