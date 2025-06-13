@@ -2,11 +2,13 @@
 
 namespace App\Livewire;
 
+use App\Enums\PostStatus;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Enum;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -39,7 +41,7 @@ class EditPost extends Component
         $this->currentImage = $this->post->featured_image;
         $this->tags = $this->post->tags->pluck('id')->toArray();
         $this->categories = $this->post->categories->pluck('id')->toArray();
-        $this->status = $this->post->status->value;
+        $this->status = $this->post->status->value ? true : false;
     }
 
     public function updatedTitle ()
@@ -63,7 +65,6 @@ class EditPost extends Component
 
     public function save ()
     {
-        dd($this);
         $validated = $this->validate([
             'title' => 'required|string|max:255',
             'slug' => 'required|string|unique:posts,slug,' . $this->post->id,
@@ -72,6 +73,7 @@ class EditPost extends Component
             'tags.*' => 'required|integer|exists:tags,id',
             'currentImage' => 'nullable|string',
             'uploadedImage' => 'nullable|required_if:currentImage,null|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'status' => ['required', 'boolean', new Enum(PostStatus::class)],
         ]);
 
         if ( $this->uploadedImage ) {
@@ -85,6 +87,7 @@ class EditPost extends Component
             'slug' => $validated['slug'],
             'content' => $validated['content'],
             'featured_image' => $validated['featured_image'],
+            'status' => $validated['status'],
             'author_id' => auth()->user()->id,
         ]);
 
