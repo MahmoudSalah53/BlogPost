@@ -6,20 +6,10 @@
             <a wire:navigate href="{{ route('author.posts.index') }}"
                class="flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition">
                 <flux:icon.arrow-left class="size-2.5"/>
-                Back to Home
+                Back to posts
             </a>
         </flux:button>
     </div>
-    @if ($errors->any())
-        <div class="text-red-500">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <form wire:submit.prevent="save">
         <div class="flex flex-col lg:flex-row gap-8">
             <!-- Left Side -->
@@ -53,6 +43,10 @@
                         <h2 class="font-bold text-2xl mb-2">Publish Settings</h2>
                     </div>
                     <div class=" space-y-4">
+                        <div class="space-y-1">
+                            <flux:switch label="publish" wire:model="status"/>
+                            <flux:error name="status"/>
+                        </div>
                         <flux:separator/>
                         {{-- Choose category --}}
                         <div class="space-y-1">
@@ -75,20 +69,20 @@
                         <flux:label> Featured Image</flux:label>
                         @if($currentImage)
                             <div class="relative mt-1">
-                                <input type="hidden" name="currentImg" value="{{ $currentImage }}"/>
+                                <input type="hidden" name="currentImage" value="{{ $currentImage }}"/>
                                 <img src="{{ asset('storage/' . $currentImage) }}"
                                      class="rounded-lg border shadow w-full object-cover h-48"/>
                                 <button type="button" wire:click="rvCurrentImg"
-                                        class="absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full p-1">
+                                        class="absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 cursor-pointer">
                                     <flux:icon.x-mark name="x" class="w-4 h-4"/>
                                 </button>
                             </div>
-                        @elseif($featured_image)
+                        @elseif($uploadedImage)
                             <div class="relative mt-1">
-                                <img src="{{ $featured_image->temporaryUrl() }}"
+                                <img src="{{ $uploadedImage->temporaryUrl() }}"
                                      class="rounded-lg border shadow w-full object-cover h-48"/>
                                 <button type="button" wire:click="rvUploadedImg"
-                                        class="absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full p-1">
+                                        class="absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 cursor-pointer">
                                     <flux:icon.x-mark name="x" class="w-4 h-4"/>
                                 </button>
                             </div>
@@ -108,9 +102,9 @@
                                             <flux:icon.arrow-up-tray class="mx-auto w-8 h-8"/>
                                             <p class="mt-2 text-sm">Click to upload</p>
                                         </div>
-                                        <input wire:model="featured_image" type="file" class="hidden">
+                                        <input wire:model="uploadedImage" type="file" class="hidden">
                                     </label>
-                                    <flux:error name="featured_image"/>
+                                    <flux:error name="uploadedImage"/>
                                 </div>
                                 <!-- Progress Bar -->
                                 <template x-if="progress">
@@ -130,7 +124,6 @@
                                 </template>
                             </div>
                         @endif
-                        <flux:error name="featured_image"/>
                     </flux:fieldset>
                 </div>
                 <flux:separator/>

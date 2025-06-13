@@ -2,10 +2,8 @@
 
 namespace App\Enums;
 
-enum PostStatus: string
+enum PostStatus: int
 {
-    case Draft = 'draft';
-    case Published = 'published';
-    case Pending = 'pending';
-    case Rejected = 'rejected';
+    case draft = 0;
+    case published = 1;
 }
