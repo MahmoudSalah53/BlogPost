@@ -140,5 +140,9 @@
         @endif
     </div>
 
+    <script>
+        window.history.scrollRestoration = 'manual';
+    </script>
+
 
 </div>
