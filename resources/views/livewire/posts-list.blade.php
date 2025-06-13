@@ -133,4 +133,15 @@
         </div>
         @endif
     </div>
+
+    <script>
+        let loading = false;
+        window.addEventListener('scroll', () => {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100 && !loading) {
+                loading = true;
+                Livewire.dispatch('load-more');
+            }
+        });
+        Livewire.on('loaded', () => loading = false);
+    </script>
 </div>

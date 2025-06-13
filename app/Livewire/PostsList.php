@@ -8,20 +8,28 @@ use Livewire\WithPagination;
 
 class PostsList extends Component
 {
-
     use WithPagination;
     
     protected $paginationTheme = 'tailwind';
     public $perPage = 5;
+    public $loading = false;
 
     public function loadMore()
     {
+        $this->loading = true;
         $this->perPage += 5;
     }
 
     public function render()
     {
-        $posts = Post::where('status', 'published')->orderBy('updated_at', 'desc')->paginate($this->perPage);
+        $posts = Post::where('status', 'published')
+                   ->orderBy('updated_at', 'desc')
+                   ->paginate($this->perPage);
+
+        if ($this->loading) {
+            $this->loading = false;
+            return view('livewire.posts-list', ['posts' => $posts]);
+        }
 
         return view('livewire.posts-list', compact('posts'));
     }
