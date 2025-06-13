@@ -26,7 +26,7 @@ class EditPost extends Component
     public $tags;
     public $categories;
 
-    public function mount ($id)
+    public function mount($id)
     {
         $this->post = Post::with(['categories', 'tags'])->findOrFail($id);
         Gate::authorize('update', $this->post);
@@ -41,26 +41,26 @@ class EditPost extends Component
         $this->categories = $this->post->categories->pluck('id')->toArray();
     }
 
-    public function updatedTitle ()
+    public function updatedTitle()
     {
         $this->slug = Str::slug($this->title);
         $counter = 2;
-        while ( Post::where('slug', $this->slug)->where('id', '!=', $this->post->id)->exists() ) {
+        while (Post::where('slug', $this->slug)->where('id', '!=', $this->post->id)->exists()) {
             $this->slug = $this->slug . '-' . $counter;
         }
     }
 
-    public function rvCurrentImg ()
+    public function rvCurrentImg()
     {
         $this->currentImage = null;
     }
 
-    public function rvUploadedImg ()
+    public function rvUploadedImg()
     {
         $this->uploadedImage = null;
     }
 
-    public function save ()
+    public function save()
     {
         $validated = $this->validate([
             'title' => 'required|string|max:255',
@@ -69,14 +69,23 @@ class EditPost extends Component
             'categories.*' => 'required|integer|exists:categories,id',
             'tags.*' => 'required|integer|exists:tags,id',
             'currentImage' => 'nullable|string',
-            'uploadedImage' => 'nullable|required_if:currentImage,null|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'featured_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
-        if ( $this->uploadedImage ) {
-            $validated['featured_image'] = $this->uploadedImage->store('posts');
+        if ($this->featured_image) {
+            $validated['featured_image'] = $this->featured_image->store('posts');
         } else {
             $validated['featured_image'] = $this->currentImage ?? null;
         }
+
+        // Check for changes
+        $hasChanges =
+            $validated['title'] !== $this->post->title ||
+            $validated['slug'] !== $this->post->slug ||
+            $validated['content'] !== $this->post->content ||
+            $validated['featured_image'] !== $this->post->featured_image ||
+            array_diff($this->categories, $this->post->categories->pluck('id')->toArray()) ||
+            array_diff($this->tags, $this->post->tags->pluck('id')->toArray());
 
         $this->post->update([
             'title' => $validated['title'],
@@ -84,16 +93,16 @@ class EditPost extends Component
             'content' => $validated['content'],
             'featured_image' => $validated['featured_image'],
             'author_id' => auth()->user()->id,
+            'status' => $hasChanges ? 'draft' : $this->post->status,
         ]);
 
         $this->post->categories()->sync($this->categories);
         $this->post->tags()->sync($this->tags);
 
         $this->redirect(route('author.posts.index'), true);
-
     }
 
-    public function render ()
+    public function render()
     {
         return view('livewire.edit-post');
     }

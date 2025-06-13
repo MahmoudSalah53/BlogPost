@@ -83,9 +83,9 @@
                                     <flux:icon.x-mark name="x" class="w-4 h-4"/>
                                 </button>
                             </div>
-                        @elseif($uploadedImage)
+                        @elseif($featured_image)
                             <div class="relative mt-1">
-                                <img src="{{ $uploadedImage->temporaryUrl() }}"
+                                <img src="{{ $featured_image->temporaryUrl() }}"
                                      class="rounded-lg border shadow w-full object-cover h-48"/>
                                 <button type="button" wire:click="rvUploadedImg"
                                         class="absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full p-1">
@@ -130,7 +130,7 @@
                                 </template>
                             </div>
                         @endif
-                        <flux:error name="uploadedImage"/>
+                        <flux:error name="featured_image"/>
                     </flux:fieldset>
                 </div>
                 <flux:separator/>
