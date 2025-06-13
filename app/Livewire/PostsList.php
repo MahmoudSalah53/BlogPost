@@ -22,7 +22,7 @@ class PostsList extends Component
 
     public function render()
     {
-        $posts = Post::where('status', 'published')
+        $posts = Post::where('status', 1)
                    ->orderBy('updated_at', 'desc')
                    ->paginate($this->perPage);
 
