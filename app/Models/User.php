@@ -74,8 +74,8 @@ class User extends Authenticatable
         return $this->belongsToMany(Post::class, 'saved_posts');
     }
 
-    public function likedPosts ()
-    {
-        return $this->belongsToMany(Post::class, 'like_posts');
-    }
+    public function likedPosts()
+{
+    return $this->belongsToMany(Post::class, 'like_posts');
+}
 }
