@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('slug')->unique();
             $table->longText('content');
             $table->string('featured_image')->nullable();
-            $table->string('status')->default('0');
+            $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
     }
