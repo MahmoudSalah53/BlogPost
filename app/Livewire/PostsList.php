@@ -23,7 +23,10 @@ class PostsList extends Component
 
     public function toggleLike($postId)
     {
-        if (!Auth::check()) return;
+        if (!Auth::check())
+        {
+            return redirect(route('login'));
+        }
 
         $post = Post::findOrFail($postId);
         $user = Auth::user();
