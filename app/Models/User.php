@@ -44,7 +44,7 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
-    protected function casts (): array
+    protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
@@ -56,26 +56,26 @@ class User extends Authenticatable
     /**
      * Get the user's initials
      */
-    public function initials (): string
+    public function initials(): string
     {
         return Str::of($this->name)
             ->explode(' ')
-            ->map(fn (string $name) => Str::of($name)->substr(0, 1))
+            ->map(fn(string $name) => Str::of($name)->substr(0, 1))
             ->implode('');
     }
 
-    public function posts ()
+    public function posts()
     {
         return $this->hasMany(Post::class);
     }
 
-    public function savedPosts ()
+    public function savedPosts()
     {
         return $this->belongsToMany(Post::class, 'saved_posts');
     }
 
     public function likedPosts()
-{
-    return $this->belongsToMany(Post::class, 'like_posts');
-}
+    {
+        return $this->belongsToMany(Post::class, 'like_posts');
+    }
 }

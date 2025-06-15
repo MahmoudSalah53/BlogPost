@@ -19,6 +19,7 @@
         @forelse($posts as $post)
         @php
         $isLiked = $post->likedByUsers->isNotEmpty();
+        $isSaved = $post->savedByUsers->isNotEmpty();
         @endphp
 
         <article x-data="{ showComments: false }" class="border mb-8 border-zinc-200 dark:border-zinc-700 rounded-2xl overflow-hidden bg-white dark:bg-zinc-800 shadow-sm">
@@ -90,7 +91,7 @@
                         </span>
                         <span class="flex items-center gap-1">
                             <flux:icon name="save" size="sm" />
-                            3 saves
+                            {{ $post->saved_by_users_count }} saves
                         </span>
                     </div>
                 </div>
@@ -168,10 +169,10 @@
                     Comment
                 </flux:button>
 
-                <flux:button variant="ghost" size="sm" class="flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
+                <button wire:click="toggleSave({{ $post->id }})" class=" cursor-pointer flex items-center gap-2 {{ $isSaved ? 'text-violet-500' : 'text-zinc-700 dark:text-zinc-300' }}">
                     <flux:icon name="save" size="lg" />
                     Save
-                </flux:button>
+                </button>
             </div>
 
         </article>

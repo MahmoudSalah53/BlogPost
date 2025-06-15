@@ -47,6 +47,22 @@ class PostsList extends Component
         }
     }
 
+    public function toggleSave($postId)
+    {
+        if (!Auth::check()) {
+            return redirect(route('login'));
+        }
+
+        $post = Post::findOrFail($postId);
+        $user = Auth::user();
+
+        if ($post->savedByUsers()->where('user_id', $user->id)->exists()) {
+            $user->savedPosts()->detach($post->id);
+        } else {
+            $user->savedPosts()->attach($post->id);
+        }
+    }
+
     public function addComment($postId)
     {
         $this->validate([
@@ -62,20 +78,26 @@ class PostsList extends Component
 
 
         $this->newCommentContent[$postId] = '';
-        
+
         $this->commentsPerPage[$postId] += 1;
     }
 
 
     public function render()
     {
-        $posts = Post::withCount(['likedByUsers', 'comments'])
-        ->with(['likedByUsers' => function ($q) {
-            $q->where('user_id', Auth::id());
-        }, 'comments'])
-        ->where('status', 1)
-        ->orderBy('updated_at', 'desc')
-        ->paginate($this->perPage);
+        $posts = Post::withCount(['likedByUsers', 'comments', 'savedByUsers'])
+            ->with([
+                'likedByUsers' => function ($q) {
+                    $q->where('user_id', Auth::id());
+                },
+                'savedByUsers' => function ($q) {
+                    $q->where('user_id', Auth::id());
+                },
+                'comments'
+            ])
+            ->where('status', 1)
+            ->orderBy('updated_at', 'desc')
+            ->paginate($this->perPage);
 
         foreach ($posts as $post) {
             if (!isset($this->commentsPerPage[$post->id])) {
