@@ -54,36 +54,7 @@
 
         <div class="flex-1 flex flex-col">
             <main class="flex-1">
-                <!-- Hero Section -->
-                <section class="bg-zinc-100 dark:bg-zinc-800 py-12">
-                    <div class="max-w-4xl mx-auto px-4 text-center">
-                        <flux:text as="h1" size="5xl" class="font-bold mb-4 text-zinc-900 dark:text-white">
-                            Community Posts
-                        </flux:text>
-
-                        <flux:text size="lg" class="text-zinc-600 dark:text-zinc-300 mb-8">
-                            Discover what our community is sharing. Engage with developers worldwide.
-                        </flux:text>
-
-                        <div class="max-w-xl mx-auto">
-                            <flux:input
-                                type="text"
-                                placeholder="Search posts..."
-                                icon="magnifying-glass"
-                                size="lg"
-                                class="w-full" />
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Posts Feed -->
-                <section class="py-8 bg-white dark:bg-zinc-900">
-                    <div class="max-w-2xl mx-auto px-4 space-y-6">
-
-                        <livewire:posts-list />
-                    </div>
-                </section>
-
+                <livewire:posts-list />
             </main>
 
 

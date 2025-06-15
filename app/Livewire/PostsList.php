@@ -18,6 +18,13 @@ class PostsList extends Component
     public $commentsPerPage = [];
     public $newCommentContent = [];
     public $loading = false;
+    public $search = '';
+
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
 
     public function loadMore()
     {
@@ -95,6 +102,11 @@ class PostsList extends Component
                 },
                 'comments'
             ])
+            ->where(function($quere)
+            {
+                $quere->where('title', 'like', '%' . $this->search . '%')
+                      ->orWhere('content', 'like', '%' . $this->search . '%');
+            })
             ->where('status', 1)
             ->orderBy('updated_at', 'desc')
             ->paginate($this->perPage);
