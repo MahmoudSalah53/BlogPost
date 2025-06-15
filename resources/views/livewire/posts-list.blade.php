@@ -21,7 +21,7 @@
         $isLiked = $post->likedByUsers->isNotEmpty();
         @endphp
 
-        <article class="border mb-8 border-zinc-200 dark:border-zinc-700 rounded-2xl overflow-hidden bg-white dark:bg-zinc-800 shadow-sm">
+        <article x-data="{ showComments: false }" class="border mb-8 border-zinc-200 dark:border-zinc-700 rounded-2xl overflow-hidden bg-white dark:bg-zinc-800 shadow-sm">
 
             <!-- Post Header with Author Info -->
             <div class="p-4 flex items-center gap-3 border-b border-zinc-100 dark:border-zinc-700">
@@ -86,7 +86,7 @@
                     <div class="flex items-center gap-4">
                         <span class="flex items-center gap-1">
                             <flux:icon name="chat-bubble-left" size="sm" />
-                            12 comments
+                            {{ $post->comments_count }} comments
                         </span>
                         <span class="flex items-center gap-1">
                             <flux:icon name="save" size="sm" />
@@ -96,6 +96,65 @@
                 </div>
             </div>
 
+            <div x-show="showComments" x-transition class="mt-6 space-y-5">
+
+                <!-- Existing comments -->
+                @foreach ($post->comments->take($commentsPerPage[$post->id]) as $comment)
+                <div class="flex items-start gap-3 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow duration-300">
+
+                    <flux:avatar
+                        size="sm"
+                        src="{{$post->author->avatar ? asset('storage/'.$post->author->avatar) : 'https://www.gravatar.com/avatar/?d=mp'}}"
+                        alt="{{ $comment->name }}" />
+
+                    <div class="flex-1">
+                        <div class="flex justify-between items-center mb-1">
+                            <flux:text size="sm" class="font-semibold text-zinc-900 dark:text-white">
+                                {{ $comment->name }}
+                            </flux:text>
+                            <flux:text size="xs" class="text-zinc-400 dark:text-zinc-500">
+                                {{ $comment->created_at->diffForHumans() }}
+                            </flux:text>
+                        </div>
+                        <flux:text size="base" class="text-zinc-700 dark:text-zinc-300 leading-relaxed">
+                            {{ $comment->content }}
+                        </flux:text>
+                    </div>
+                </div>
+                @endforeach
+
+                <!-- See More button -->
+                @if ($post->comments->count() > $commentsPerPage[$post->id])
+                <div class="text-center">
+                    <flux:button
+                        size="sm"
+                        variant="primary"
+                        wire:click="loadMoreComments({{ $post->id }})"
+                        class="rounded-full px-6 py-2 cursor-pointer ">
+                        See More Comments
+                    </flux:button>
+                </div>
+                @endif
+
+                <!-- Add new comment -->
+                <form wire:submit.prevent="addComment({{ $post->id }})" class="flex items-center gap-3 mt-4">
+                    <flux:input
+                        type="text"
+                        wire:model.defer="newCommentContent.{{ $post->id }}"
+                        placeholder="Write a comment..."
+                        autocomplete="off"
+                        class="flex-1 rounded-full px-4 py-3" />
+                    <flux:button
+                        type="submit"
+                        variant="primary"
+                        class="rounded-full px-6 py-3 cursor-pointer">
+                        Post
+                    </flux:button>
+                </form>
+
+            </div>
+
+
             <!-- Post Actions -->
             <div class="px-4 py-2 border-t border-zinc-100 dark:border-zinc-700 flex justify-between">
                 <button wire:click="toggleLike({{ $post->id }})" class="flex cursor-pointer items-center gap-2 {{ $isLiked ? 'text-red-500' : 'text-zinc-700 dark:text-zinc-300' }}">
@@ -103,7 +162,8 @@
                     Like
                 </button>
 
-                <flux:button variant="ghost" size="sm" class="flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
+                <flux:button variant="ghost" size="sm" class=" cursor-pointer flex items-center gap-2 text-zinc-700 dark:text-zinc-300"
+                    @click="showComments = !showComments">
                     <flux:icon name="chat-bubble-left" size="lg" />
                     Comment
                 </flux:button>
