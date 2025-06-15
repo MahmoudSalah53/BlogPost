@@ -54,7 +54,7 @@
 
                 <div x-data="{ expanded: false }">
                     <flux:text size="base" class="text-zinc-600 dark:text-zinc-300 mb-4">
-                        <span x-show="!expanded">
+                        <span x-show="!expanded" x-cloak>
                             {{ $shortContent }}
                             @if($isLong)
                             <span @click="expanded = true"
@@ -64,7 +64,7 @@
                             @endif
                         </span>
 
-                        <span x-show="expanded">
+                        <span x-show="expanded" x-cloak>
                             {{ $content }}
                             <span @click="expanded = false"
                                 class="text-indigo-600 dark:text-indigo-400 text-sm font-medium cursor-pointer ml-1">
@@ -97,7 +97,7 @@
                 </div>
             </div>
 
-            <div x-show="showComments" x-transition class="mt-6 space-y-5">
+            <div x-show="showComments" x-cloak x-transition class="mt-6 space-y-5">
 
                 <!-- Existing comments -->
                 @foreach ($post->comments->take($commentsPerPage[$post->id]) as $comment)
