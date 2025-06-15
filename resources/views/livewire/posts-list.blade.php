@@ -15,11 +15,10 @@
                 });
             }
         }"
-        x-init="init()"
-    >
+        x-init="init()">
         @forelse($posts as $post)
         @php
-            $isLiked = $post->likedByUsers->isNotEmpty();
+        $isLiked = $post->likedByUsers->isNotEmpty();
         @endphp
 
         <article class="border mb-8 border-zinc-200 dark:border-zinc-700 rounded-2xl overflow-hidden bg-white dark:bg-zinc-800 shadow-sm">
@@ -46,10 +45,10 @@
                 </flux:text>
 
                 @php
-                    $limit = 100;
-                    $content = $post->content;
-                    $isLong = strlen($content) > $limit;
-                    $shortContent = $isLong ? substr($content, 0, $limit) : $content;
+                $limit = 100;
+                $content = $post->content;
+                $isLong = strlen($content) > $limit;
+                $shortContent = $isLong ? substr($content, 0, $limit) : $content;
                 @endphp
 
                 <div x-data="{ expanded: false }">
@@ -100,7 +99,7 @@
             <!-- Post Actions -->
             <div class="px-4 py-2 border-t border-zinc-100 dark:border-zinc-700 flex justify-between">
                 <button wire:click="toggleLike({{ $post->id }})" class="flex cursor-pointer items-center gap-2 {{ $isLiked ? 'text-red-500' : 'text-zinc-700 dark:text-zinc-300' }}">
-                    <flux:icon name="heart" size="lg" />
+                    <flux:icon name="heart" variant="solid" size="lg" />
                     Like
                 </button>
 
