@@ -29,11 +29,10 @@
 
             @forelse($authors as $author)
             <div class="flex flex-col items-center bg-zinc-50 dark:bg-zinc-800 p-6 rounded-2xl border border-zinc-200 dark:border-zinc-700 shadow-sm hover:shadow-md transition">
-                <flux:avatar
-                    size="xl"
+                <img
                     src="{{ $author->avatar ? asset('storage/'.$author->avatar) : 'https://www.gravatar.com/avatar/?d=mp'}}"
                     alt="John Doe"
-                    class="mb-4" />
+                    class="mb-4 w-[50px] h-[50px] object-cover rounded-xl ring-2 ring-blue-500" />
                 <flux:text size="xl" class="font-bold text-zinc-900 dark:text-white mb-2">
                     {{ $author->name }}
                 </flux:text>
