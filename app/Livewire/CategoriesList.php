@@ -25,6 +25,7 @@ class CategoriesList extends Component
             ->when($this->search, function ($query) {
                 $query->where('name', 'like', '%' . $this->search . '%');
             })
+            ->withCount('posts')
             ->paginate(8);
 
         return view('livewire.categories-list', compact('categories'));
