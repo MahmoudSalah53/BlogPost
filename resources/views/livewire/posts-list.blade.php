@@ -14,7 +14,7 @@
                 <flux:input
                     type="text"
                     wire:model.live="search"
-                    placeholder="Search posts..."
+                    placeholder="Search..."
                     icon="magnifying-glass"
                     autocomplete="off"
                     size="lg"

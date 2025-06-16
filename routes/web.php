@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PublicPagesController;
@@ -26,6 +27,11 @@ Route::controller(PostController::class)->group(function () {
 // categories routes
 Route::controller(CategoryController::class)->group(function () {
     Route::get('categories', 'index')->name('categories.index');
+});
+
+// authors routes
+Route::controller(AuthorController::class)->group(function () {
+    Route::get('authors', 'index')->name('authors.index');
 });
 
 // User profile routs
