@@ -12,6 +12,8 @@ class PostsList extends Component
     use WithPagination;
 
     protected $paginationTheme = 'tailwind';
+    protected $listeners = ['categorySelected' => 'filterByCategory'];
+
     public $perPage = 5;
     public $perComment = 5;
     public $commentsPerPageDefault = 5;
@@ -19,7 +21,12 @@ class PostsList extends Component
     public $newCommentContent = [];
     public $loading = false;
     public $search = '';
+    public ?int $selectedCategory = null;
 
+    public function filterByCategory($categoryId)
+    {
+        $this->selectedCategory = $categoryId;
+    }
 
     public function updatingSearch()
     {
@@ -73,7 +80,7 @@ class PostsList extends Component
     public function addComment($postId)
     {
 
-        if(!Auth::check()) {
+        if (!Auth::check()) {
             return redirect(route('login'));
         }
 
@@ -107,10 +114,14 @@ class PostsList extends Component
                 },
                 'comments'
             ])
-            ->where(function($quere)
-            {
-                $quere->where('title', 'like', '%' . $this->search . '%')
-                      ->orWhere('content', 'like', '%' . $this->search . '%');
+            ->where(function ($query) {
+                $query->where('title', 'like', '%' . $this->search . '%')
+                    ->orWhere('content', 'like', '%' . $this->search . '%');
+            })
+            ->when($this->selectedCategory, function ($query) {
+                $query->whereHas('categories', function ($q) {
+                    $q->where('categories.id', $this->selectedCategory);
+                });
             })
             ->where('status', 1)
             ->orderBy('updated_at', 'desc')
