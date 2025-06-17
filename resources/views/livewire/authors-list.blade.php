@@ -7,7 +7,7 @@
             </flux:text>
 
             <flux:text size="lg" class="text-zinc-600 dark:text-zinc-300 mb-8">
-                Discover the beautiful works of your favorite authors.
+                Discover your favorite authors from everywhere.
             </flux:text>
 
             <div class="max-w-xl mx-auto mb-8">
@@ -31,7 +31,7 @@
             <div class="flex flex-col items-center bg-zinc-50 dark:bg-zinc-800 p-6 rounded-2xl border border-zinc-200 dark:border-zinc-700 shadow-sm hover:shadow-md transition">
                 <img
                     src="{{ $author->avatar ? asset('storage/'.$author->avatar) : 'https://www.gravatar.com/avatar/?d=mp'}}"
-                    alt="John Doe"
+                    alt="{{ $author->name }}"
                     class="mb-4 w-[50px] h-[50px] object-cover rounded-xl ring-2 ring-blue-500" />
                 <flux:text size="xl" class="font-bold text-zinc-900 dark:text-white mb-2">
                     {{ $author->name }}

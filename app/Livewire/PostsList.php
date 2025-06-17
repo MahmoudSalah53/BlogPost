@@ -72,6 +72,11 @@ class PostsList extends Component
 
     public function addComment($postId)
     {
+
+        if(!Auth::check()) {
+            return redirect(route('login'));
+        }
+
         $this->validate([
             "newCommentContent.$postId" => 'required|string|max:500',
         ]);

@@ -25,7 +25,7 @@
                             wire:navigate
                             variant="primary"
                             class="px-8 py-5"
-                            href="{{route('register')}}">
+                            href="{{route('login')}}">
                             <flux:icon.user-plus/>
                             {{ __('Join Now') }}
                         </flux:button>
