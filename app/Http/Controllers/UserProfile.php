@@ -11,8 +11,7 @@ class UserProfile extends Controller
 
     public function savedPosts ()
     {
-        $userSavedPosts = auth()->user()->savedPosts()->latest()->get();
-        return view('profile.saved-posts', ['savedPosts' => $userSavedPosts]);
+        return view('profile.saved-posts');
     }
 
     public function likedPosts ()
