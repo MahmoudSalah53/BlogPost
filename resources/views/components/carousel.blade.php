@@ -55,7 +55,7 @@
                         </flux:text>
                         {{-- post footer [links , likes, comments] --}}
                         <div class="flex justify-between items-center mt-auto">
-                            <flux:link wire:navigate href="{{ route('posts.show', [$post->slug]) }}"
+                            <flux:link href="{{ route('posts.show', $post->slug) }}"
                                        class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium">
                                 {{ __('Read More') }}
                             </flux:link>

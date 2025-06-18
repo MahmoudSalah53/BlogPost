@@ -30,7 +30,7 @@ class SavedPosts extends Component
                     ->orWhere('content', 'like', '%' . $this->search . '%')
                     ->orWhereHas('author', fn($q) => $q->where('name', 'like', '%' . $this->search . '%'));
             })
-            ->paginate(6);
+            ->paginate(8);
         return view('livewire.saved-posts', compact('userSavedPosts'));
     }
 }
