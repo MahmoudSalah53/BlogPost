@@ -67,7 +67,7 @@
                             <a wire:navigate href="{{ route('author.posts.edit', $post->id) }}">
                                 <flux:icon.pencil-square class="hover:text-blue-500 w-full" />
                             </a>
-                            <a wire:click="delete({{ $post->id }})">
+                            <a x-on:click.prevent="if (confirm('Are you sure?')) { $wire.delete({{ $post->id }}) }">
                                 <flux:icon.trash class="hover:text-red-500 cursor-pointer w-full" />
                             </a>
                         </div>
