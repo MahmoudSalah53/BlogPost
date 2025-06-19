@@ -3,8 +3,8 @@
         <!-- Header with Search -->
         <div class="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
-                <h1 class="text-3xl font-bold mb-1 text-foreground">Saved Posts</h1>
-                <flex:text>Posts you saved for later</flex:text>
+                <h1 class="text-3xl font-bold mb-1 text-foreground">Liked Posts</h1>
+                <flex:text>Posts you Liked</flex:text>
             </div>
 
             <!-- Search Bar -->
@@ -23,7 +23,7 @@
 
         <!-- Saved Posts Cards -->
         <div class="grid gap-6 mt-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            @forelse($userSavedPosts as $post)
+            @forelse($userLikedPosts as $post)
             <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm hover:shadow-md transition">
                 <div class="p-4 space-y-3">
                     <!-- Image Preview -->
@@ -63,15 +63,15 @@
                         Read More
                     </a>
                     <flux:icon name="trash" class="hover:text-red-500 cursor-pointer" x-data
-                        x-on:click="if (confirm('Are you sure you want to remove this Save ?')) { $wire.removeSavedPost({{ $post->id }}) }" />
+                        x-on:click="if (confirm('Are you sure you want to remove this Like ?')) { $wire.removeLikedPost({{ $post->id }}) }" />
                 </div>
             </div>
             @empty
             <div class="col-span-full text-center py-20">
                 <flux:icon name="book-open" class="mx-auto mb-4 w-10 h-10 text-zinc-400" />
-                <flux:text as="h3" size="lg" class="font-semibold text-zinc-600 dark:text-zinc-400">No saved posts found</flux:text>
+                <flux:text as="h3" size="lg" class="font-semibold text-zinc-600 dark:text-zinc-400">No liked posts found</flux:text>
                 <flux:text size="sm" class="text-zinc-500 dark:text-zinc-500">
-                    Try searching for something else or save posts to see them here.
+                    Try searching for something else or like posts to see them here.
                 </flux:text>
             </div>
             @endforelse
@@ -79,6 +79,6 @@
         </div>
     </div>
     <div class="mt-4">
-        {{ $userSavedPosts->links(data: ['scrollTo' => false]) }}
+        {{ $userLikedPosts->links(data: ['scrollTo' => false]) }}
     </div>
 </div>

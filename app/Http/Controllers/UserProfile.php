@@ -16,8 +16,7 @@ class UserProfile extends Controller
 
     public function likedPosts ()
     {
-        $userLikedPosts = auth()->user()->likedPosts()->latest()->get();
-        return view('profile.liked-posts', ['likedPosts' => $userLikedPosts]);
+        return view('profile.liked-posts');
     }
 
     public function myComments ()
