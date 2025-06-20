@@ -183,8 +183,9 @@
               <livewire:follow-author-component :author="$post->author" />
             @endif
           </div>
-            <div class="flex items-center">
+            <div class="flex items-center space-x-4">
                 <livewire:save-post-component :post="$post"/>
+                <livewire:liked-post-component :post="$post" />
             </div>
         </div>
         {{-- Featured image --}}
