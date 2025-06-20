@@ -24,7 +24,7 @@ class AddCommentComponent extends Component
 
         Comment::create([
             'content' => $this->content,
-            'user_id' => 1,
+            'user_id' => auth()->id(),
             'post_id' => $this->postId,
         ]);
     }
