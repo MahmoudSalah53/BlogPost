@@ -212,7 +212,7 @@
 
         {{-- نبذة عن الكاتب --}}
         <div class="mt-10 p-6 bg-gray-100 dark:bg-gray-800 rounded-2xl flex items-center gap-4">
-            <img src="{{ $post->author->avatar }}" alt="author" class="w-16 h-16 rounded-full object-cover">
+            <img src="{{ $post->author->avatar ? asset('storage/'.$post->author->avatar) : 'https://www.gravatar.com/avatar/?d=mp'}}" class="w-16 h-16 rounded-full object-cover">
             <div>
                 <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ $post->author->name }}</h3>
                 <p class="text-sm text-gray-600 dark:text-gray-400">{{ $post->author->bio }}</p>
