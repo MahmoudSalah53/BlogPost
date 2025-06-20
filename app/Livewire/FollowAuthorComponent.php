@@ -35,6 +35,7 @@ class FollowAuthorComponent extends Component
 
     public function render()
     {
-        return view('livewire.follow-author-component');
+        $followers = $this->author->followers()->count();
+        return view('livewire.follow-author-component', compact('followers'));
     }
 }
