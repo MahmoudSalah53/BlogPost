@@ -197,27 +197,10 @@
         <article class="prose dark:prose-invert max-w-none text-lg">
             {{ $post->content }}
         </article>
-
-        {{-- buttons --}}
-        <div class="flex gap-4 pt-4 border-t dark:border-gray-800">
-            <button class="flex items-center gap-2 text-gray-600 hover:text-black dark:text-gray-300 dark:hover:text-white">
-{{--                <x-lucide-heart class="w-4 h-4" /> إعجاب--}}
-            </button>
-            <button class="flex items-center gap-2 text-gray-600 hover:text-black dark:text-gray-300 dark:hover:text-white">
-{{--                <x-lucide-share-2 class="w-4 h-4" /> مشاركة--}}
-            </button>
-            <button class="flex items-center gap-2 text-gray-600 hover:text-black dark:text-gray-300 dark:hover:text-white">
-{{--                <x-lucide-bookmark class="w-4 h-4" /> قراءة لاحقًا--}}
-            </button>
-        </div>
-
-        {{-- نبذة عن الكاتب --}}
-        <div class="mt-10 p-6 bg-gray-100 dark:bg-gray-800 rounded-2xl flex items-center gap-4">
-            <img src="{{ $post->author->avatar ? asset('storage/'.$post->author->avatar) : 'https://www.gravatar.com/avatar/?d=mp'}}" class="w-16 h-16 rounded-full object-cover">
-            <div>
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ $post->author->name }}</h3>
-                <p class="text-sm text-gray-600 dark:text-gray-400">{{ $post->author->bio }}</p>
-            </div>
-        </div>
+        {{-- comments section --}}
+        <livewire:add-comment-component :post-id="$post->id"/>
     </div>
+
+
+
 </x-public.layouts>
