@@ -17,8 +17,9 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show (Post $post)
+    public function show ($slug)
     {
+        $post = Post::with('author')->where('slug', $slug)->firstOrFail();
         return view('public.posts.show', compact('post'));
     }
 }
