@@ -183,6 +183,9 @@
               <livewire:follow-author-component :author="$post->author" />
             @endif
           </div>
+            <div class="flex items-center">
+                <livewire:save-post-component :post="$post"/>
+            </div>
         </div>
         {{-- Featured image --}}
         @if($post->featured_image)
