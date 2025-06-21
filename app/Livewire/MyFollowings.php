@@ -11,9 +11,26 @@ class MyFollowings extends Component
 
     protected $paginationTheme = 'tailwind';
 
+    public $search = '';
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
-        $myFollowings = auth()->user()->followings;
+        $myFollowings = auth()->user()
+            ->followings()
+            ->when($this->search, function ($query) {
+                $query->where(function ($q) {
+                    $q->where('name', 'like', '%' . $this->search . '%')
+                        ->orWhere('bio', 'like', '%' . $this->search . '%');
+                });
+            })
+            ->latest()
+            ->paginate(6);
+
         return view('livewire.my-followings', compact('myFollowings'));
     }
 }
