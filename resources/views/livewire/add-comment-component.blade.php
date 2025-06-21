@@ -42,7 +42,7 @@
         <flux:textarea style="resize: none;" wire:model.defer="content" required placeholder="Write your comment..."
             class="bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-600 text-zinc-800 dark:text-zinc-100 rounded-xl shadow-sm px-4 py-3" />
 
-        <div class="text-right">
+        <div>
             <flux:button type="submit" variant="primary">
                 Submit
             </flux:button>
