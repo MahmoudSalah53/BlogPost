@@ -41,6 +41,6 @@ class Register extends Component
 
         Auth::login($user);
 
-        $this->redirect(route('home', absolute: false), navigate: true);
+        $this->redirect(route('settings.profile', absolute: false), navigate: true);
     }
 }
