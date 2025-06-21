@@ -11,6 +11,8 @@ class MyComments extends Component
 
     protected $paginationTheme = 'tailwind';
 
+    protected $listeners = ['commentDeleted' => '$refresh'];
+
     public function render()
     {
         $comments = auth()->user()->comments()->latest()->paginate(10);

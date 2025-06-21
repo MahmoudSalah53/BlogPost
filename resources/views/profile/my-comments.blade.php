@@ -1,5 +1,3 @@
 <x-layouts.app :title="__('My Comments')">
-    <div>
-        You don't have any comments
-    </div>
+    <livewire:my-comments />
 </x-layouts.app>
