@@ -2,9 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\Comment;
 use App\Models\Post;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -12,22 +10,9 @@ class PostsList extends Component
 {
     use WithPagination;
 
-    protected $paginationTheme = 'tailwind';
-    protected $listeners = ['categorySelected' => 'filterByCategory'];
-
     public $perPage = 5;
-    public $perComment = 5;
-    public $commentsPerPageDefault = 5;
-    public $commentsPerPage = [];
-    public $newCommentContent = [];
     public $loading = false;
     public $search = '';
-    public ?int $selectedCategory = null;
-
-    public function filterByCategory($categoryId)
-    {
-        $this->selectedCategory = $categoryId;
-    }
 
     public function updatingSearch()
     {
@@ -40,98 +25,16 @@ class PostsList extends Component
         $this->perPage += 5;
     }
 
-    public function loadMoreComments($postId)
-    {
-        $this->commentsPerPage[$postId] += 5;
-    }
-
-
-    public function toggleLike($postId)
-    {
-        if (!Auth::check()) {
-            return redirect(route('login'));
-        }
-
-        $post = Post::findOrFail($postId);
-        $user = Auth::user();
-
-        if ($post->likedByUsers()->where('user_id', $user->id)->exists()) {
-            $user->likedPosts()->detach($post->id);
-        } else {
-            $user->likedPosts()->attach($post->id);
-        }
-    }
-
-    public function toggleSave($postId)
-    {
-        if (!Auth::check()) {
-            return redirect(route('login'));
-        }
-
-        $post = Post::findOrFail($postId);
-        $user = Auth::user();
-
-        if ($post->savedByUsers()->where('user_id', $user->id)->exists()) {
-            $user->savedPosts()->detach($post->id);
-        } else {
-            $user->savedPosts()->attach($post->id);
-        }
-    }
-
-    public function addComment($postId)
-    {
-
-        if (!Auth::check()) {
-            return redirect(route('login'));
-        }
-
-        $this->validate([
-            "newCommentContent.$postId" => 'required|string|max:500',
-        ]);
-
-        Comment::create([
-            'post_id' => $postId,
-            'user_id' => auth()->id(),
-            'content' => $this->newCommentContent[$postId],
-        ]);
-
-
-        $this->newCommentContent[$postId] = '';
-
-        $this->commentsPerPage[$postId] += 1;
-    }
-
-
     public function render()
     {
-        $posts = Post::withCount(['likedByUsers', 'comments', 'savedByUsers'])
-            ->with([
-                'likedByUsers' => function ($q) {
-                    $q->where('user_id', Auth::id());
-                },
-                'savedByUsers' => function ($q) {
-                    $q->where('user_id', Auth::id());
-                },
-                'comments'
-            ])
+        $posts = Post::with('author')->withCount(['likedByUsers', 'comments', 'savedByUsers'])
             ->where(function ($query) {
                 $query->where('title', 'like', '%' . $this->search . '%')
                     ->orWhere('content', 'like', '%' . $this->search . '%');
             })
-            ->when($this->selectedCategory, function ($query) {
-                $query->whereHas('categories', function ($q) {
-                    $q->where('categories.id', $this->selectedCategory);
-                });
-            })
             ->where('status', 1)
-            ->orderBy('updated_at', 'desc')
-            ->paginate($this->perPage);
-
-        foreach ($posts as $post) {
-            if (!isset($this->commentsPerPage[$post->id])) {
-                $this->commentsPerPage[$post->id] = $this->commentsPerPageDefault;
-            }
-        }
+            ->latest()
+            ->paginate(10);
 
         return view('livewire.posts-list', compact('posts'));
     }

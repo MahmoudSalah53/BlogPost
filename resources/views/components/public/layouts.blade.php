@@ -119,7 +119,8 @@
 
 
 {{-- main content --}}
-    {{ $slot }}
+
+{{ $slot }}
 
 
 <!-- Footer -->
