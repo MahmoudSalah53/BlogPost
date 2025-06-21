@@ -62,7 +62,7 @@
                             </div>
                             @if(auth()->id() !== $post->author->id)
                                 <div>
-                                    <livewire:follow-author-component :author="$post->author"/>
+                                    <livewire:follow-author-component :author="$post->author" :key="'follow-author-' . $post->author->id . '-' . uniqid()" />
                                 </div>
                             @endif
                                 </div>
