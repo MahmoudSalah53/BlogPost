@@ -1,5 +1,3 @@
 <x-layouts.app :title="__('Following')">
-    <div>
-        You Don't Follow any Author
-    </div>
+    <livewire:my-followings />
 </x-layouts.app>
