@@ -139,7 +139,7 @@
                             <div class="flex-1">
                                 <div class="flex justify-between items-center mb-1">
                                     <flux:text size="sm" class="font-semibold text-zinc-900 dark:text-white">
-                                        {{ $comment->name }}
+                                        {{ $comment->user->name }}
                                     </flux:text>
                                     <flux:text size="xs" class="text-zinc-400 dark:text-zinc-500">
                                         {{ $comment->created_at->diffForHumans() }}

@@ -27,6 +27,8 @@ class AddCommentComponent extends Component
             'user_id' => auth()->id(),
             'post_id' => $this->postId,
         ]);
+
+        $this->content = '';
     }
 
     public function render()

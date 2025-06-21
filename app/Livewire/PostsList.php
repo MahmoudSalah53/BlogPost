@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -88,10 +89,9 @@ class PostsList extends Component
             "newCommentContent.$postId" => 'required|string|max:500',
         ]);
 
-        \App\Models\Comment::create([
+        Comment::create([
             'post_id' => $postId,
-            'name' => Auth::user()->name,
-            'email' => Auth::user()->email,
+            'user_id' => auth()->id(),
             'content' => $this->newCommentContent[$postId],
         ]);
 
