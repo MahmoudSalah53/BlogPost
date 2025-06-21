@@ -48,7 +48,7 @@
                         x-init="init()"
             >
                 @forelse($posts as $post)
-                    <div class="border mb-8 border-zinc-200 dark:border-zinc-700 rounded-2xl overflow-hidden bg-white dark:bg-zinc-800 shadow-sm">
+                    <div wire:key="{{ $post->id }}" class="border mb-8 border-zinc-200 dark:border-zinc-700 rounded-2xl overflow-hidden bg-white dark:bg-zinc-800 shadow-sm">
 
                         <!-- Post Header with Author Info -->
                         <div class="p-4 flex items-center justify-between border-b border-zinc-100 dark:border-zinc-700">
@@ -62,7 +62,7 @@
                             </div>
                             @if(auth()->id() !== $post->author->id)
                                 <div>
-                                    <livewire:follow-author-component :author="$post->author" :key="'follow-author-' . $post->author->id . '-' . uniqid()" />
+                                    <livewire:follow-author-component :author="$post->author" :key="$post->id" />
                                 </div>
                             @endif
                                 </div>
