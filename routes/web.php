@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PublicPagesController;
 use App\Http\Controllers\UserProfile;
@@ -32,6 +33,11 @@ Route::controller(CategoryController::class)->group(function () {
 // authors routes
 Route::controller(AuthorController::class)->group(function () {
     Route::get('authors', 'index')->name('authors.index');
+});
+
+// membership routes
+Route::controller(MembershipController::class)->group(function () {
+    Route::get('memberships', 'index')->name('membership.index');
 });
 
 // User profile routs

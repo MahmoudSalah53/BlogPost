@@ -26,7 +26,8 @@
                         :current="request()->routeIs('categories.index')">{{ __('Categories') }}</flux:navbar.item>
         <flux:navbar.item wire:navigate href="{{ route('authors.index') }}"
                         :current="request()->routeIs('authors.index')">{{ __('Authors') }}</flux:navbar.item>
-        <flux:navbar.item wire:navigate href="#">{{ __('Membership') }}</flux:navbar.item>
+        <flux:navbar.item wire:navigate href="{{ route('membership.index') }}"
+                        :current="request()->routeIs('membership.index')">{{ __('Membership') }}</flux:navbar.item>
 
     </flux:navbar>
     <flux:spacer/>
