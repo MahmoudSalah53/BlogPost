@@ -96,8 +96,6 @@
                                                 <flux:icon name="chat-bubble-left" size="sm" />
                                                 {{ $post->comments_count }} comments
                                             </span>
-                                        </div>
-                                        <div class="flex items-center gap-4">
                                             <span class="flex items-center gap-1">
                                                 <flux:icon name="save" size="sm" />
                                                 {{ $post->saved_by_users_count }} saves
