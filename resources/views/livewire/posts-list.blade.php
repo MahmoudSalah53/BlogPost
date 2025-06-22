@@ -1,24 +1,55 @@
 <div>
     <!-- Hero Section -->
     <section class="bg-zinc-100 dark:bg-zinc-800 py-12">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <h2 class="text-2xl font-bold my-2 ">
-                Community Posts
-            </h2>
+        <div class="max-w-5xl mx-auto px-4">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-2 text-zinc-800 dark:text-white">
+                    Community Posts
+                </h2>
+                <flux:text size="lg" class="text-zinc-600 dark:text-zinc-300">
+                    Discover what our community is sharing. Engage with developers worldwide.
+                </flux:text>
+            </div>
 
-            <flux:text size="lg" class="text-zinc-600 dark:text-zinc-300 mb-8">
-                Discover what our community is sharing. Engage with developers worldwide.
-            </flux:text>
-
-            <div class="max-w-xl mx-auto">
+            <!-- Search Input -->
+            <div class="mb-6">
                 <flux:input
                     type="text"
                     wire:model.live="search"
-                    placeholder="Search..."
+                    placeholder="Search posts..."
                     icon="magnifying-glass"
                     autocomplete="off"
                     size="lg"
                     class="w-full" />
+            </div>
+
+            <!-- Filters -->
+            <div class="bg-zinc-100 dark:bg-zinc-800 p-4 rounded-2xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                <!-- Tag Filter -->
+                <flux:select wire:model.live="selectedTag" class="w-full">
+                    <option value="">All Tags</option>
+                    @foreach(App\Models\Tag::all() as $tag)
+                    <option value="{{ $tag->name }}">{{ $tag->name }}</option>
+                    @endforeach
+                </flux:select>
+
+                <!-- Category Filter -->
+                <flux:select wire:model.live="selectedCategoryId" class="w-full">
+                    <option value="">All Categories</option>
+                    @foreach(App\Models\Category::all() as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </flux:select>
+
+                <!-- Date Filter -->
+                <flux:select wire:model.live="selectedDate" class="w-full">
+                    <option value="">All Dates</option>
+                    <option value="today">Today</option>
+                    <option value="this_week">This Week</option>
+                    <option value="this_month">This Month</option>
+                    <option value="this_year">This Year</option>
+                </flux:select>
             </div>
         </div>
     </section>
