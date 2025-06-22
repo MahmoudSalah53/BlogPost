@@ -27,7 +27,7 @@ class PostsList extends Component
 
     public function render()
     {
-        $posts = Post::with('author')->withCount(['likedByUsers', 'comments', 'savedByUsers'])
+        $posts = Post::with('author', 'tags')->withCount(['likedByUsers', 'comments', 'savedByUsers'])
             ->where(function ($query) {
                 $query->where('title', 'like', '%' . $this->search . '%')
                     ->orWhere('content', 'like', '%' . $this->search . '%');
@@ -35,6 +35,7 @@ class PostsList extends Component
             ->where('status', 1)
             ->latest()
             ->paginate($this->perPage);
+        
 
         return view('livewire.posts-list', compact('posts'));
     }
