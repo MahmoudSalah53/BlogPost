@@ -34,7 +34,7 @@ class PostsList extends Component
             })
             ->where('status', 1)
             ->latest()
-            ->paginate(10);
+            ->paginate($this->perPage);
 
         return view('livewire.posts-list', compact('posts'));
     }
