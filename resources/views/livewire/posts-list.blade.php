@@ -122,7 +122,7 @@
                                 $index = crc32($tag->name) % count($colors);
                                 $color = $colors[$index];
                                 @endphp
-                                <flux:badge color="{{ $color }}" variant="subtle" class="float-right ml-2 mb-2">
+                                <flux:badge color="{{ $color }}" variant="subtle" class="float-right ml-2 mb-3">
                                     {{ $tag->name }}
                                 </flux:badge>
                                 @endforeach

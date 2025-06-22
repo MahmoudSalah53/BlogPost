@@ -32,6 +32,25 @@
         @if($post->featured_image)
         <img src="{{ asset('storage/'. $post->featured_image) }}" alt="{{ $post->title }}" class="rounded-2xl w-full max-h-[500px] object-cover shadow">
         @endif
+        {{-- Tags --}}
+        @if($post->tags->count())
+        <div class="flex flex-wrap gap-2 mt-4">
+            @php
+            $colors = ['blue', 'green', 'red', 'yellow', 'purple', 'pink', 'indigo'];
+            @endphp
+
+            @foreach($post->tags as $tag)
+            @php
+            $index = crc32($tag->name) % count($colors);
+            $color = $colors[$index];
+            @endphp
+            <flux:badge color="{{ $color }}" variant="subtle" size="lg">
+                {{ $tag->name }}
+            </flux:badge>
+            @endforeach
+        </div>
+        @endif
+
 
         {{-- post content --}}
         <article class="prose dark:prose-invert max-w-none text-lg">
