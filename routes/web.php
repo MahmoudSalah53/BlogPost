@@ -67,4 +67,3 @@ Route::middleware(['isAuthor'])->group(function () {
 });
 
 require __DIR__ . '/auth.php';
-require __DIR__ . '/admin.php';
