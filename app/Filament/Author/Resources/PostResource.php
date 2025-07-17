@@ -14,6 +14,7 @@ use Filament\Forms\Components\Section;
 use App\Filament\Author\Resources\PostResource\Pages;
 use App\Filament\Author\Resources\PostResource\RelationManagers;
 use Filament\Forms\Set;
+use Illuminate\Support\Str;
 
 class PostResource extends Resource
 {
@@ -31,6 +32,16 @@ class PostResource extends Resource
                             ->schema([
                                 Forms\Components\TextInput::make('title')
                                     ->required()
+                                    ->live(true)
+                                    ->afterStateUpdated(function(Set $set,?string $state){
+                                        $slug = Str::slug($state);
+                                        $i = 1;
+                                        while (Post::where('slug', $slug)->exists()){
+                                            $slug = $slug . '-'. $i;
+                                            $i++;
+                                        }
+                                        $set('slug', $slug);
+                                    })
                                     ->maxLength(255),
                                 Forms\Components\TextInput::make('slug')
                                     ->required()
@@ -64,7 +75,7 @@ class PostResource extends Resource
                                     ->collapsed(),
                                 Section::make('Tag')
                                     ->schema([
-                                        Forms\Components\Select::make('Tag')
+                                        Forms\Components\Select::make('tag')
                                             ->label('')
                                             ->relationship('tags', 'name')
                                             ->multiple()
@@ -88,6 +99,16 @@ class PostResource extends Resource
 
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
+                    ->color(function ($state){
+                            return match (trim($state)) {
+                                'published' => 'success',
+                                'pending' => 'gray',
+                                'draft' => 'warning',
+                                'rejected' => 'danger',
+                                'reviewing' => 'info',
+                                default => 'primary',
+                            };
+                    })
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -117,19 +138,6 @@ class PostResource extends Resource
         return [
             //
         ];
-    }
-
-    protected function mutateFormDataBeforeCreate (array $data)
-    {
-         $data['status'] = $data['status'] ?  'reviewing' : 'draft';
-         return $data;
-    }
-
-    protected function mutateFormDataBeforeUpdate (array $data)
-    {
-        $data['author_id'] = Auth::id();
-         $data['status'] = $data['status'] ?  'reviewing' : 'draft';
-         return $data;
     }
 
     public static function getPages(): array
