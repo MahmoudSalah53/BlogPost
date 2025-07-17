@@ -2,16 +2,18 @@
 
 namespace App\Filament\Author\Resources;
 
+use Filament\Forms;
+use App\Models\Post;
+use Filament\Tables;
+use Filament\Forms\Form;
+use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Grid;
+use Illuminate\Support\Facades\Auth;
+use Filament\Forms\Components\Section;
 use App\Filament\Author\Resources\PostResource\Pages;
 use App\Filament\Author\Resources\PostResource\RelationManagers;
-use App\Models\Post;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Set;
 
 class PostResource extends Resource
 {
@@ -23,24 +25,55 @@ class PostResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('author_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('slug')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('content')
-                    ->required()
-                    ->columnSpanFull(),
-                Forms\Components\FileUpload::make('featured_image')
-                    ->image(),
-                Forms\Components\Select::make('status')
-                ->options([])
-                    ->required()
-                    ->default(0),
+                Grid::make(6)
+                    ->schema([
+                        Section::make()
+                            ->schema([
+                                Forms\Components\TextInput::make('title')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('slug')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\RichEditor::make('content')
+                                    ->required(),
+                            ])->columnSpan(4),
+                        Section::make()
+                            ->schema([
+                                Section::make('Status')
+                                    ->schema([
+                                        Forms\Components\Toggle::make('status')
+                                            ->label('Send For Review')
+                                            ->required(),
+                                    ]),
+                                Section::make('Featured Image')
+                                    ->schema([
+                                        Forms\Components\FileUpload::make('featured_image')
+                                            ->label('')
+                                            ->image(),
+                                    ]),
+                                Section::make('Category')
+                                    ->schema([
+                                        Forms\Components\Select::make('category')
+                                            ->label('')
+                                            ->relationship('categories', 'name')
+                                            ->multiple()
+                                            ->searchable()
+                                            ->preload(),
+                                    ])
+                                    ->collapsed(),
+                                Section::make('Tag')
+                                    ->schema([
+                                        Forms\Components\Select::make('Tag')
+                                            ->label('')
+                                            ->relationship('tags', 'name')
+                                            ->multiple()
+                                            ->searchable()
+                                            ->preload(),
+                                    ])
+                                    ->collapsed(),
+                            ])->columnSpan(2),
+                    ]),
             ]);
     }
 
@@ -48,16 +81,13 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('author_id')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\ImageColumn::make('featured_image'),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('slug')
-                    ->searchable(),
-                Tables\Columns\ImageColumn::make('featured_image'),
+                Tables\Columns\TextColumn::make('slug'),
+
                 Tables\Columns\TextColumn::make('status')
-                    
+                    ->badge()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -86,6 +116,19 @@ class PostResource extends Resource
         return [
             //
         ];
+    }
+
+    protected function mutateFormDataBeforeCreate (array $data)
+    {
+         $data['status'] = $data['status'] ?  'reviewing' : 'draft';
+         return $data;
+    }
+
+    protected function mutateFormDataBeforeUpdate (array $data)
+    {
+        $data['author_id'] = Auth::id();
+         $data['status'] = $data['status'] ?  'reviewing' : 'draft';
+         return $data;
     }
 
     public static function getPages(): array

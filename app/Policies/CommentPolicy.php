@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\User;
 use App\Models\comment;
-use Illuminate\Auth\Access\Response;
 
 class CommentPolicy
 {
@@ -13,7 +12,7 @@ class CommentPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true; // for developing
     }
 
     /**
@@ -21,7 +20,8 @@ class CommentPolicy
      */
     public function view(User $user, comment $comment): bool
     {
-        return false;
+        return true;
+
     }
 
     /**
@@ -29,7 +29,7 @@ class CommentPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class CommentPolicy
      */
     public function update(User $user, comment $comment): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -45,7 +45,7 @@ class CommentPolicy
      */
     public function delete(User $user, comment $comment): bool
     {
-        return false;
+        return true;
     }
 
     /**

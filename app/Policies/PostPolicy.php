@@ -20,7 +20,7 @@ class PostPolicy
      */
     public function view (User $user, Post $post): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -28,7 +28,8 @@ class PostPolicy
      */
     public function create (User $user): bool
     {
-        return false;
+        return true; // for developing
+        //return $user->role->value === 'author' && $user->id === $post->author_id;
     }
 
     /**
@@ -36,7 +37,8 @@ class PostPolicy
      */
     public function update (User $user, Post $post): bool
     {
-        return $user->role->value === 'author' && $user->id === $post->author_id;
+        return true;
+        //return $user->role->value === 'author' && $user->id === $post->author_id;
     }
 
     /**
@@ -44,22 +46,7 @@ class PostPolicy
      */
     public function delete (User $user, Post $post): bool
     {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore (User $user, Post $post): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete (User $user, Post $post): bool
-    {
-        return false;
+        return true;
+        //return $user->role->value === 'author' && $user->id === $post->author_id;
     }
 }

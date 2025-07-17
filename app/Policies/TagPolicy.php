@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Tag;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class TagPolicy
 {
@@ -13,7 +12,7 @@ class TagPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,7 +20,7 @@ class TagPolicy
      */
     public function view(User $user, Tag $tag): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -29,7 +28,8 @@ class TagPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true; // for developing
+        //return $user->role->value == 'admin' || $user->role->value == 'author';
     }
 
     /**
@@ -37,7 +37,8 @@ class TagPolicy
      */
     public function update(User $user, Tag $tag): bool
     {
-        return false;
+        return true;
+        //return $user->role->value == 'admin';
     }
 
     /**
@@ -45,22 +46,8 @@ class TagPolicy
      */
     public function delete(User $user, Tag $tag): bool
     {
-        return false;
-    }
+        return true;
+        //return $user->role->value == 'admin';
 
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Tag $tag): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Tag $tag): bool
-    {
-        return false;
     }
 }
