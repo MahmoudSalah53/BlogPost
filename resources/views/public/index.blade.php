@@ -90,7 +90,7 @@
             <flux:heading level="2" class="text-3xl font-bold text-gray-800 dark:text-white">
                 {{ __('Preferred Posts') }}
             </flux:heading>
-            @if($popularPosts && $popularPosts->count() > 3)
+            @if($popularPosts)
                 <flux:link
                     wire:navigate
                     href="{{ route('posts.index') }}"

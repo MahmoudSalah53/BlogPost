@@ -10,6 +10,7 @@ class PublicPagesController extends Controller
     public function index()
     {
         $newPosts = Post::withCount(['comments', 'likedByUsers'])
+            ->where('status', 'published')
             ->latest()
             ->limit(6)
             ->get();
@@ -20,6 +21,7 @@ class PublicPagesController extends Controller
             ->get();
 
         $popularPosts = Post::withCount(['comments', 'likedByUsers'])
+            ->where('status', 'published')
             ->orderByDesc('liked_by_users_count')
             ->limit(3)
             ->get();
