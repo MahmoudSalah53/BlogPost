@@ -12,12 +12,12 @@ return new class extends Migration {
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('author_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('author_id')->constrained('users')->cascadeOnDelete();
             $table->string('title');
             $table->string('slug')->unique();
             $table->longText('content');
             $table->string('featured_image')->nullable();
-            $table->enum('status', ['published, pending, draft, rejected, reviewing'])->default('draft');
+            $table->enum('status', ['published', 'pending', 'draft',' rejected', 'reviewing'])->default('draft');
             $table->timestamps();
         });
     }
