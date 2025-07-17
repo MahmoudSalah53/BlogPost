@@ -19,9 +19,6 @@ class Post extends Model
         'status',
         'author_id'
     ];
-    protected $casts = [
-        'status' => PostStatus::class,
-    ];
 
     public function author ()
     {
