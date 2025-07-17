@@ -16,4 +16,19 @@ class EditPost extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeSave (array $data): array
+    {
+        $data['status'] = $data['status'] ?  'reviewing' : 'draft';
+        return $data;
+    }
+
+    protected function mutateFormDataBeforeFill (array $data): array
+    {
+        if($data['status'] == 'draft'){
+            $data['status'] = false;
+            return $data;
+        }
+        return $data;
+    }
 }

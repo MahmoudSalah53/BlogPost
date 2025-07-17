@@ -9,11 +9,11 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Grid;
-use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Section;
 use App\Filament\Author\Resources\PostResource\Pages;
 use App\Filament\Author\Resources\PostResource\RelationManagers;
 use Filament\Forms\Set;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class PostResource extends Resource
@@ -56,12 +56,16 @@ class PostResource extends Resource
                                         Forms\Components\Toggle::make('status')
                                             ->label('Send For Review')
                                             ->required(),
-                                    ]),
+                                    ])
+                                ->hidden(function (string $operation, ?Model $record){
+                                    return $operation == 'edit' && $record?->status != 'draft';
+                                }),
                                 Section::make('Featured Image')
                                     ->schema([
                                         Forms\Components\FileUpload::make('featured_image')
                                             ->label('')
-                                            ->image(),
+                                            ->image()
+                                        ->imageEditor(),
                                     ]),
                                 Section::make('Category')
                                     ->schema([
