@@ -19,7 +19,9 @@ class EditPost extends EditRecord
 
     protected function mutateFormDataBeforeSave (array $data): array
     {
-        $data['status'] = $data['status'] ?  'reviewing' : 'draft';
+        if(array_key_exists('status', $data)) {
+            $data['status'] = $data['status'] ?  'reviewing' : 'draft';
+        }
         return $data;
     }
 
