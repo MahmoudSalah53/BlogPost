@@ -4,7 +4,9 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\PostResource\Pages;
 use App\Filament\Resources\PostResource\RelationManagers;
+use App\Models\Comment;
 use App\Models\Post;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -23,22 +25,58 @@ class PostResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('author_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('slug')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('content')
-                    ->required()
-                    ->columnSpanFull(),
-                Forms\Components\FileUpload::make('featured_image')
-                    ->image(),
-                Forms\Components\TextInput::make('status')
-                    ->required(),
+                Forms\Components\Grid::make(6)
+            ->schema([
+               Forms\Components\Section::make()
+                ->schema([
+                    Forms\Components\Select::make('Author')
+                        ->relationship('author', 'name')
+                        ->required()
+                        ->searchable()
+                        ->preload()
+                        ->createOptionForm([
+                            Forms\Components\TextInput::make('name')
+                                ->required()
+                                ->string()
+                                ->maxLength(255),
+                            Forms\Components\TextInput::make('email')
+                                ->required()
+                                ->email()
+                                ->unique(User::class, 'email'),
+                            Forms\Components\TextInput::make('password')
+                                ->required()
+                                ->password()
+                                ->minLength(8),
+                            Forms\Components\Hidden::make('role')
+                                ->default('Author')
+                        ]),
+                    Forms\Components\TextInput::make('title')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('slug')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\RichEditor::make('content')
+                        ->required()
+                        ->columnSpanFull(),
+                ])->columnSpan(4),
+               Forms\Components\Section::make('')
+                ->schema([
+                    Forms\Components\FileUpload::make('featured_image')
+                        ->image(),
+                    Forms\Components\Select::make('status')
+                        ->options([
+                            'published' => 'published',
+                            'draft' => 'draft',
+                            'rejected' => 'rejected',
+                            'pending' => 'pending',
+                            'reviewing' => 'reviewing',
+                        ])
+                        ->native(false)
+                        ->required(),
+                ])->columnSpan(2),
+            ]),
+
             ]);
     }
 
