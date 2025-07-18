@@ -28,6 +28,7 @@ class ProfileUpdateTest extends TestCase
         $response = Livewire::test(Profile::class)
             ->set('name', 'Test User')
             ->set('email', 'test@example.com')
+            ->set('role', 'reader')
             ->call('updateProfileInformation');
 
         $response->assertHasNoErrors();
@@ -48,6 +49,7 @@ class ProfileUpdateTest extends TestCase
         $response = Livewire::test(Profile::class)
             ->set('name', 'Test User')
             ->set('email', $user->email)
+            ->set('role', 'reader')
             ->call('updateProfileInformation');
 
         $response->assertHasNoErrors();
