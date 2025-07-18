@@ -2,11 +2,10 @@
 
 namespace App\Livewire\Settings;
 
-use App\Enums\UserRole;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Enum;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -15,8 +14,8 @@ class Profile extends Component
     use WithFileUploads;
 
     public $user;
-    public string $name = '';
-    public string $email = '';
+    public $name;
+    public $email;
     public $role;
     public $currentAvatar;
     public $avatar;
@@ -27,7 +26,7 @@ class Profile extends Component
      */
     public function mount (): void
     {
-        $this->user = \Auth::user();
+        $this->user = Auth::user();
         $this->name = $this->user->name;
         $this->email = $this->user->email;
         $this->role = $this->user->role;
@@ -52,7 +51,7 @@ class Profile extends Component
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user->id),
             ],
-            'role' => ['required', new Enum(UserRole::class)],
+            'role' => ['required', 'string', Rule::in(['reader', 'author'])],
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'bio' => 'nullable|string',
         ]);

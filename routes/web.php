@@ -6,9 +6,6 @@ use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PublicPagesController;
 use App\Http\Controllers\UserProfile;
-use App\Livewire\AuthorPosts;
-use App\Livewire\CreatePost;
-use App\Livewire\EditPost;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -57,13 +54,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/password', Password::class)->name('settings.password');
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
 });
-
-// Author Routes
-
-// Route::middleware(['isAuthor'])->group(function () {
-//     Route::get('/author/posts', AuthorPosts::class)->name('author.posts.index');
-//     Route::get('/author/posts/create', CreatePost::class)->name('author.posts.create');
-//     Route::get('/author/posts/edit/{id}', EditPost::class)->name('author.posts.edit');
-// });
 
 require __DIR__ . '/auth.php';

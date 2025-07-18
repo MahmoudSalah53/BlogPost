@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // add author directive
         Blade::if('author', function () {
-            return auth()->check() && auth()->user()->role->value === 'author';
+            return Auth::check() && Auth::user()->role === 'author';
         });
     }
 }

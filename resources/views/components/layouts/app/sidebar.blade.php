@@ -34,27 +34,6 @@
             <flux:navlist.item class="mb-2" badge="Free" icon="membership" :href="route('membership')"
                                :current="request()->routeIs('membership')"
                                wire:navigate>{{ __('Membership') }}</flux:navlist.item>
-
-            {{-- author navlist --}}
-            @author
-            <flux:navlist.group :heading="__('Author')">
-                {{-- posts --}}
-                <flux:navlist.group expandable :heading="__('Posts')" class="hidden lg:grid">
-                    <flux:navlist.item class="mb-2" icon="posts" :href="route('author.posts.index')"
-                               :current="request()->routeIs('author.posts.index')"
-                               wire:navigate>{{ __('All Posts') }}
-                    </flux:navlist.item>
-                    <flux:navlist.item class="mb-2" icon="pencil-square" :href="route('author.posts.create')"
-                               :current="request()->routeIs('author.posts.create')"
-                               wire:navigate>{{ __('New Post') }}
-                    </flux:navlist.item>
-                    <flux:navlist.item class="mb-2" icon="comments" :href="route('profile')"
-                               wire:navigate>{{ __('Comments') }}
-                    </flux:navlist.item>
-                </flux:navlist.group>
-                
-            </flux:navlist.group>
-            @endauthor
         </flux:navlist.group>
     </flux:navlist>
 

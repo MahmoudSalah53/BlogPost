@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Auth;
 
-use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +16,7 @@ class Register extends Component
     public string $name = '';
     public string $email = '';
     public string $password = '';
-    public $role = UserRole::Reader->value;
+    public string $role = 'reader';
     public string $password_confirmation = '';
 
     /**
@@ -25,9 +24,6 @@ class Register extends Component
      */
     public function register (): void
     {
-
-        $isFirstUser = User::count() === 0;
-
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
@@ -35,12 +31,12 @@ class Register extends Component
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
-        $validated['role'] = $isFirstUser ? UserRole::Admin->value : $this->role;
+        $validated['role'] = $this->role;
 
         event(new Registered(($user = User::create($validated))));
 
         Auth::login($user);
 
-        $this->redirect(route('settings.profile', absolute: false), navigate: true);
+        $this->redirect(route('home', absolute: false), navigate: true);
     }
 }
