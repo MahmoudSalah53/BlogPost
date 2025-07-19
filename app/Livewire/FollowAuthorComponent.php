@@ -4,33 +4,94 @@ namespace App\Livewire;
 
 use App\Models\User;
 use Livewire\Component;
+use Illuminate\Database\QueryException;
 
 class FollowAuthorComponent extends Component
 {
     public $author;
     public bool $isFollowing;
+    public $loading = false;
 
-    public function mount (User $author)
+    public function mount(User $author)
     {
         $this->author = $author;
-        $this->isFollowing = auth()->check() && auth()->user()->followings->contains($author->id);
+        $this->checkFollowingStatus();
     }
 
-    public function save ()
+    public function checkFollowingStatus()
     {
-        if (!auth()->check()){
+        $this->isFollowing = auth()->check() && 
+            auth()->user()->followings()->where('followed_id', $this->author->id)->exists();
+    }
+
+    public function save()
+    {
+        if (!auth()->check()) {
             return $this->redirect(route('login'), true);
         }
 
-        $user = auth()->user();
+        if ($this->loading) {
+            return;
+        }
 
-        if($this->isFollowing){
-            $user->followings()->detach($this->author->id); // Unfollow
-            $this->isFollowing = false;
-        } else {
-            $user->followings()->attach($this->author->id); // follow
-            $this->isFollowing = true;
+        $this->loading = true;
+        $user = auth()->user();
+        
+        try {
+            $currentlyFollowing = $user->followings()->where('followed_id', $this->author->id)->exists();
+
+            if ($currentlyFollowing) {
+                $user->followings()->detach($this->author->id);
+                $this->isFollowing = false;
+            } else {
+                $alreadyExists = $user->followings()->where('followed_id', $this->author->id)->exists();
+                
+                if (!$alreadyExists) {
+                    $user->followings()->attach($this->author->id);
+                    $this->isFollowing = true;
+                } else {
+                    $this->isFollowing = true;
+                }
             }
+
+            // تحديث فوري لكل الـ components
+            $this->js("
+                window.dispatchEvent(new CustomEvent('follow-status-changed', {
+                    detail: { 
+                        authorId: {$this->author->id}, 
+                        isFollowing: " . ($this->isFollowing ? 'true' : 'false') . " 
+                    }
+                }));
+            ");
+
+        } catch (QueryException $e) {
+            $this->checkFollowingStatus();
+        }
+        
+        $this->loading = false;
+    }
+
+    public function getListeners()
+    {
+        return [
+            'author-follow-updated' => 'handleFollowUpdate',
+            'instant-follow-update' => 'handleInstantUpdate'
+        ];
+    }
+
+    public function handleFollowUpdate($data)
+    {
+        if ($data['authorId'] == $this->author->id) {
+            $this->isFollowing = $data['isFollowing'];
+        }
+    }
+
+    // معالج فوري للتحديث
+    public function handleInstantUpdate($data)
+    {
+        if ($data['authorId'] == $this->author->id) {
+            $this->isFollowing = $data['isFollowing'];
+        }
     }
 
     public function render()

@@ -54,12 +54,9 @@
         </div>
     </section>
 
-
-
     <!-- Posts Feed -->
     <section class="py-8 bg-white dark:bg-zinc-900 flex-1">
         <div class="max-w-2xl mx-auto px-4 space-y-6">
-
             <div
                 x-data="{
                          loading: false,
@@ -92,7 +89,9 @@
                         </div>
                         @if(auth()->id() !== $post->author->id)
                         <div>
-                            <livewire:follow-author-component :author="$post->author" :key="$post->author->id . '-' . uniqid()" />
+                            <livewire:follow-author-component 
+                                :author="$post->author" 
+                                :key="'follow-' . $post->author->id . '-' . $post->id" />
                         </div>
                         @endif
                     </div>
