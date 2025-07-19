@@ -169,6 +169,10 @@ class PostResource extends Resource
                             default => 'primary',
                         }
                     ),
+                Tables\Columns\TextColumn::make('categories.name')
+                    ->default('-'),
+                Tables\Columns\TextColumn::make('tags.name')
+                    ->default('-'),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -187,7 +191,7 @@ class PostResource extends Resource
             ->actions([
                 ActionGroup::make([
                     Tables\Actions\EditAction::make()
-                    ->color('primary'),
+                        ->color('primary'),
                     Tables\Actions\DeleteAction::make(),
                 ])
             ])

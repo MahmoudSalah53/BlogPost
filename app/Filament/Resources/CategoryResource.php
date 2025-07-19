@@ -2,16 +2,16 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CategoryResource\Pages;
-use App\Filament\Resources\CategoryResource\RelationManagers;
-use App\Models\Category;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Set;
+use App\Models\Category;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Str;
+use Filament\Resources\Resource;
+use App\Filament\Resources\CategoryResource\Pages;
+use Filament\Tables\Actions\ActionGroup;
 
 class CategoryResource extends Resource
 {
@@ -25,9 +25,15 @@ class CategoryResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
+                    ->live(true)
+                    ->afterStateUpdated(function (Set $set, ?string $state) {
+                        $slug = self::generateUniqueSlug($state, Category::class);
+                        $set('slug', $slug);
+                    })
                     ->maxLength(255),
                 Forms\Components\TextInput::make('slug')
                     ->required()
+                    ->unique(Category::class, 'slug', ignoreRecord: true)
                     ->maxLength(255),
             ]);
     }
@@ -37,9 +43,13 @@ class CategoryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->limit(30),
                 Tables\Columns\TextColumn::make('slug')
-                    ->searchable(),
+                ->limit(30),
+                Tables\Columns\TextColumn::make('posts_count')
+                ->label('Posts Count')
+                ->counts('posts'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -53,7 +63,11 @@ class CategoryResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    Tables\Actions\EditAction::make()
+                    ->color('primary'),
+                    Tables\Actions\DeleteAction::make(),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -76,5 +90,16 @@ class CategoryResource extends Resource
             'create' => Pages\CreateCategory::route('/create'),
             'edit' => Pages\EditCategory::route('/{record}/edit'),
         ];
+    }
+
+    protected static function generateUniqueSlug($title, $model): string
+    {
+        $slug = Str::slug($title);
+        $counter = 1;
+        while ($model::where('slug', $slug)->exists()) {
+            $slug = $slug . '-' . $counter;
+            $counter++;
+        }
+        return $slug;
     }
 }
