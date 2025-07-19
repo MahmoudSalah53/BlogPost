@@ -23,7 +23,7 @@ use Illuminate\Validation\Rule;
 class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-newspaper';
     const STATUS_OPTIONS = [
         'published' => 'published',
         'draft' => 'draft',
