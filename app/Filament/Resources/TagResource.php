@@ -2,16 +2,16 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\TagResource\Pages;
-use App\Filament\Resources\TagResource\RelationManagers;
 use App\Models\Tag;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Set;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Str;
+use Filament\Resources\Resource;
+use Filament\Tables\Actions\ActionGroup;
+use App\Filament\Resources\TagResource\Pages;
 
 class TagResource extends Resource
 {
@@ -25,9 +25,15 @@ class TagResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
+                    ->live(true)
+                    ->afterStateUpdated(function (Set $set, ?string $state) {
+                        $slug = self::generateUniqueSlug($state, Tag::class);
+                        $set('slug', $slug);
+                    })
                     ->maxLength(255),
                 Forms\Components\TextInput::make('slug')
                     ->required()
+                    ->unique(Tag::class, 'slug', ignoreRecord: true)
                     ->maxLength(255),
             ]);
     }
@@ -37,9 +43,11 @@ class TagResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                    ->limit(30),
                 Tables\Columns\TextColumn::make('slug')
-                    ->searchable(),
+                    ->limit(30),
+                Tables\Columns\TextColumn::make('posts_count')
+                    ->counts('posts'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -53,7 +61,11 @@ class TagResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    Tables\Actions\EditAction::make()
+                    ->color('primary'),
+                    Tables\Actions\DeleteAction::make(),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -76,5 +88,16 @@ class TagResource extends Resource
             'create' => Pages\CreateTag::route('/create'),
             'edit' => Pages\EditTag::route('/{record}/edit'),
         ];
+    }
+
+    protected static function generateUniqueSlug($title, $model): string
+    {
+        $slug = Str::slug($title);
+        $counter = 1;
+        while ($model::where('slug', $slug)->exists()) {
+            $slug = $slug . '-' . $counter;
+            $counter++;
+        }
+        return $slug;
     }
 }
