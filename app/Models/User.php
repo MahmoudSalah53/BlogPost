@@ -79,24 +79,29 @@ class User extends Authenticatable implements FilamentUser
         return $this->belongsToMany(Post::class, 'like_posts');
     }
 
-    public function followings ()
+    public function followings()
     {
         return $this->belongsToMany(self::class, 'following', 'follower_id', 'followed_id');
     }
 
-    public function followers ()
+    public function followers()
     {
         return $this->belongsToMany(self::class, 'following', 'followed_id', 'follower_id');
     }
 
-    public function comments ()
+    public function comments()
     {
         return $this->hasMany(Comment::class);
     }
 
-
     public function canAccessPanel(Panel $panel): bool
     {
-        return true;
+
+        return match ($panel->getId()) {
+            'admin' => $this->role === 'admin',
+            'author' => $this->role === 'author',
+            default => false,
+        };
     }
+
 }
