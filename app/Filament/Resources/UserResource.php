@@ -7,13 +7,15 @@ use App\Models\User;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Illuminate\Validation\Rule;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\ActionGroup;
+use Illuminate\Support\Facades\Auth;
 use Filament\Tables\Actions\EditAction;
+use Illuminate\Database\Eloquent\Model;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Filters\SelectFilter;
 use App\Filament\Resources\UserResource\Pages;
-
 
 class UserResource extends Resource
 {
@@ -21,28 +23,42 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    const RULES_OPTIONS = [
+        'admin' => 'admin',
+        'author' => 'author',
+        'reader' => 'reader'
+    ];
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
+                    ->string()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
+                    ->unique(User::class, 'email', ignoreRecord: true)
                     ->maxLength(255),
                 Forms\Components\TextInput::make('password')
                     ->password()
+                    ->maxLength(255)
+                    ->minLength(8),
+                Forms\Components\Select::make('role')
+                    ->options(self::RULES_OPTIONS)
+                    ->native(false)
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('role')
-                    ->required(),
-                Forms\Components\Textarea::make('bio')
+                    ->rules([
+                        Rule::in(self::RULES_OPTIONS)
+                    ]),
+                Forms\Components\RichEditor::make('bio')
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('avatar')
-                    ->maxLength(255),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
+                Forms\Components\FileUpload::make('avatar')
+                    ->avatar(),
+                Forms\Components\DateTimePicker::make('email_verified_at')
+                    ->native(false),
             ]);
     }
 
@@ -85,15 +101,21 @@ class UserResource extends Resource
             ])
             ->actions([
                 ActionGroup::make([
-                    EditAction::make(),
-                    DeleteAction::make(),
+                    EditAction::make()
+                    ->color('primary'),
+                    DeleteAction::make()
+                    ->hidden(fn(Model $record) => $record->id === Auth::id()),
                 ])->tooltip('Actions'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->requiresConfirmation(),
+                ])
+            ])
+            ->checkIfRecordIsSelectableUsing(function (Model $record) {
+                return $record->id != Auth::id();
+            });
     }
 
     public static function getRelations(): array

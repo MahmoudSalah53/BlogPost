@@ -17,6 +17,7 @@ use Filament\Forms\Components\Section;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Collection;
 use App\Filament\Resources\PostResource\Pages;
+use Filament\Tables\Actions\ActionGroup;
 use Illuminate\Validation\Rule;
 
 class PostResource extends Resource
@@ -70,7 +71,7 @@ class PostResource extends Resource
                                     ->maxLength(255),
                                 Forms\Components\TextInput::make('slug')
                                     ->required()
-                                    ->unique(Post::class, 'slug')
+                                    ->unique(Post::class, 'slug', ignoreRecord: true)
                                     ->maxLength(255),
                                 Forms\Components\RichEditor::make('content')
                                     ->required()
@@ -184,8 +185,11 @@ class PostResource extends Resource
                     ->native(false)
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                ActionGroup::make([
+                    Tables\Actions\EditAction::make()
+                    ->color('primary'),
+                    Tables\Actions\DeleteAction::make(),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -201,7 +205,9 @@ class PostResource extends Resource
                             foreach ($records as $record) {
                                 $record->update(['status' => $data['status']]);
                             }
-                        }),
+                        })
+                        ->icon('heroicon-o-pencil-square')
+                        ->color('primary'),
                 ])
             ]);
     }
