@@ -129,7 +129,7 @@
                             <flux:text>{{ $post->created_at->diffForHumans() }}</flux:text>
                         </div>
                         <flux:heading level="3" class="text-xl font-semibold text-gray-800 dark:text-white mb-2">
-                            {{ $post->title }}
+                            {{ strlen($post->title) > 35 ? mb_substr($post->title, 0, 25) . '...' : $post->title }}
                         </flux:heading>
                         <flux:text class="text-gray-600 dark:text-gray-300 mb-4">
                             {{ Str::limit($post->content, 25, '...') }}
@@ -165,68 +165,6 @@
         @endif
     </div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 my-10">
-        <hr class="border-2 border-gray-300 dark:border-zinc-600 rounded" />
-    </div>
-
-    <!-- Subscription Area -->
-    <div
-        class="max-w-md mx-auto p-6 mb-10 bg-white dark:bg-zinc-800 rounded-lg shadow-md border border-gray-200 dark:border-zinc-700">
-        <flux:heading level="2" class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">
-            Buy Subscription
-        </flux:heading>
-
-        <form class="space-y-5">
-            <div>
-                <flux:input
-                    type="text"
-                    label="Full Name"
-                    placeholder="Enter your full name"
-                    required />
-            </div>
-
-            <div>
-                <flux:input
-                    type="email"
-                    label="Email Address"
-                    placeholder="your@email.com"
-                    required />
-            </div>
-
-            <div>
-                <flux:select label="Subscription Plan" required>
-                    <option value="" disabled selected>Select a plan</option>
-                    <option value="monthly">Monthly - $10</option>
-                    <option value="yearly">Yearly - $100</option>
-                </flux:select>
-            </div>
-
-            <div>
-                <flux:input
-                    type="text"
-                    label="Card Number"
-                    placeholder="1234 5678 9012 3456"
-                    required />
-            </div>
-
-            <div class="flex gap-4">
-                <flux:input
-                    type="text"
-                    label="Expiry Date"
-                    placeholder="MM/YY"
-                    required />
-                <flux:input
-                    type="text"
-                    label="CVC"
-                    placeholder="123"
-                    required />
-            </div>
-
-            <flux:button type="submit" variant="primary" class="w-full">
-                Buy Now
-            </flux:button>
-        </form>
-    </div>
     @push('carousel')
     @vite('resources/js/carousel.js')
     @endpush
