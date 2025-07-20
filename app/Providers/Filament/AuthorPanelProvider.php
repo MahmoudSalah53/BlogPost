@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Login;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -26,7 +27,7 @@ class AuthorPanelProvider extends PanelProvider
         return $panel
             ->id('author')
             ->path('author')
-            ->login()
+            ->login(Login::class)
             ->userMenuItems([
                 MenuItem::make()
                 ->label('Homepage')
