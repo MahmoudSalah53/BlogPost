@@ -107,6 +107,11 @@ class User extends Authenticatable implements FilamentUser
             exit;
         }
 
+        if ($this->role === 'reader' && ($panel->getId() === 'admin' || $panel->getId() === 'author')) {
+            redirect()->to('/profile')->send();
+            exit;
+        }
+
         return match ($panel->getId()) {
             'admin' => $this->role === 'admin',
             'author' => $this->role === 'author',

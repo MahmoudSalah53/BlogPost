@@ -6,6 +6,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -25,6 +26,13 @@ class AuthorPanelProvider extends PanelProvider
         return $panel
             ->id('author')
             ->path('author')
+            ->login()
+            ->userMenuItems([
+                MenuItem::make()
+                ->label('Homepage')
+                ->icon('heroicon-o-home')
+                ->url('/')
+            ])
             ->colors([
                 'danger' => Color::Rose,
                 'gray' => Color::Gray,

@@ -44,7 +44,7 @@
                 @endif
                 <flux:menu>
                     <flux:menu.group>
-                        <flux:menu.item wire:navigate href="{{ route('profile') }}"
+                        <flux:menu.item href="{{ '/admin' }}"
                                         icon="home">{{ __('Dashboard') }}</flux:menu.item>
                         <flux:menu.item wire:navigate href="{{ route('settings.profile') }}"
                                         icon="cog">{{ __('Settings') }}</flux:menu.item>
