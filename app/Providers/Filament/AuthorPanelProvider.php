@@ -27,7 +27,8 @@ class AuthorPanelProvider extends PanelProvider
         return $panel
             ->id('author')
             ->path('author')
-            ->login(Login::class)
+            // ->login(Login::class)
+            ->login()
             ->userMenuItems([
                 MenuItem::make()
                 ->label('Homepage')

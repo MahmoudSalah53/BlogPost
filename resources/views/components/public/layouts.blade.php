@@ -44,7 +44,7 @@
                         <flux:profile name="{{ Auth::user()->name }}" />
                     @endif
 
-                    @php
+                    <!-- @php
                         $role = auth()->user()?->role;
 
                         $dashboardUrl = match ($role) {
@@ -53,10 +53,10 @@
                             'reader' => '/profile',
                             default => '/',
                         };
-                    @endphp
+                    @endphp -->
                     <flux:menu>
                         <flux:menu.group>
-                            <flux:menu.item href="{{ $dashboardUrl }}" icon="home">{{ __('Dashboard') }}</flux:menu.item>
+                            <flux:menu.item href="{{ '/admin' }}" icon="home">{{ __('Dashboard') }}</flux:menu.item>
                             <flux:menu.item wire:navigate href="{{ route('settings.profile') }}" icon="cog">
                                 {{ __('Settings') }}</flux:menu.item>
                         </flux:menu.group>
