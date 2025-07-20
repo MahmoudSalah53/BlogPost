@@ -57,8 +57,9 @@ Route::middleware(['auth'])->group(function () {
 
 // test stripe
 Route::get('checkout', function(){
-
+    return view('checkout');
 })->name('checkout');
+
 Route::post('/stripe/webhook', function() {
     return;
 })->name('checkout.pay');
