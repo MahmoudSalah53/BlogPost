@@ -45,7 +45,7 @@ class PostResource extends Resource
                                     ->maxLength(255),
                                 Forms\Components\TextInput::make('slug')
                                     ->required()
-                                    ->unique(Post::class, 'slug')
+                                    ->unique(Post::class, 'slug', ignoreRecord: true)
                                     ->maxLength(255),
                                 Forms\Components\RichEditor::make('content')
                                     ->required(),
@@ -146,6 +146,10 @@ class PostResource extends Resource
                             default => 'primary',
                         }
                     ),
+                Tables\Columns\TextColumn::make('categories.name')
+                    ->default('-'),
+                Tables\Columns\TextColumn::make('tags.name')
+                    ->default('-'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -169,7 +173,7 @@ class PostResource extends Resource
             ->actions([
                 ActionGroup::make([
                     Tables\Actions\EditAction::make()
-                    ->color('primary'),
+                        ->color('primary'),
                     Tables\Actions\DeleteAction::make(),
                 ])
             ])
