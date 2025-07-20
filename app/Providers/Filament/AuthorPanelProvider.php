@@ -29,11 +29,14 @@ class AuthorPanelProvider extends PanelProvider
             ->path('author')
             // ->login(Login::class)
             ->login()
+            ->profile(isSimple: false)
+            ->unsavedChangesAlerts()
+            ->spa()
             ->userMenuItems([
                 MenuItem::make()
-                ->label('Homepage')
-                ->icon('heroicon-o-home')
-                ->url('/')
+                    ->label('Home')
+                    ->icon('heroicon-o-home')
+                    ->url(fn() => route('home'))
             ])
             ->colors([
                 'danger' => Color::Rose,
