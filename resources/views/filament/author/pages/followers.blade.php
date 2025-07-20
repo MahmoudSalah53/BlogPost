@@ -1,5 +1,5 @@
 <x-filament-panels::page>
-    @forelse ($followers as $follower)
+    @forelse ($this->followers as $follower)
         {{ $follower->name }}
     @empty
         <div>No Followers Found</div>

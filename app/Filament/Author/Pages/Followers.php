@@ -12,15 +12,10 @@ class Followers extends Page
     protected static string $view = 'filament.author.pages.followers';
 
     protected ?string $subheading = 'Here you can see who is following you';
-    
-    public $followers;
 
-    public function mount()
-    {
-        $this->followers = $this->getFollowers();
-    }
+    protected static ?int $navigationSort = 2;
 
-    public function getFollowers()
+    public function getFollowersProperty()
     {
         return Auth::user()->followers()->get();
     }
