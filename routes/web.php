@@ -55,4 +55,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
 });
 
+// test stripe
+Route::get('checkout', function(){
+
+})->name('checkout');
+Route::post('/stripe/webhook', function() {
+    return;
+})->name('checkout.pay');
+
 require __DIR__ . '/auth.php';
