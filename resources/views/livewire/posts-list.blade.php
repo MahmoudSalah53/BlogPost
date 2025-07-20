@@ -103,8 +103,9 @@
                         @endif
 
                         <h3 class="text-lg font-bold mb-3 text-zinc-800 dark:text-white">
-                            <a wire:navigate href="posts/{{ $post->slug }}">
+                            <a wire:navigate href="posts/{{ $post->slug }}" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 flex items-center gap-2 group">
                                 {{ $post->title }}
+                                <flux:icon name="arrow-top-right-on-square" size="sm" class="opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                             </a>
                         </h3>
 
@@ -128,21 +129,29 @@
                             </flux:text>
                         </div>
 
-                        <!-- Post Stats -->
+                        <!-- Post Stats with Read More Button -->
                         <div class="flex items-center justify-between text-sm text-zinc-500 dark:text-zinc-400 border-t border-zinc-100 dark:border-zinc-700 pt-3">
-                            <div class="flex items-center gap-2">
-                                <flux:icon name="like" size="sm" />
-                                <span>{{ $post->liked_by_users_count }}</span>
-                            </div>
                             <div class="flex items-center gap-4">
-                                <span class="flex items-center gap-1">
+                                <div class="flex items-center gap-2 opacity-60">
+                                    <flux:icon name="like" size="sm" />
+                                    <span>{{ $post->liked_by_users_count }}</span>
+                                </div>
+                                <span class="flex items-center gap-1 opacity-60">
                                     <flux:icon name="chat-bubble-left" size="sm" />
                                     {{ $post->comments_count }} comments
                                 </span>
-                                <span class="flex items-center gap-1">
+                                <span class="flex items-center gap-1 opacity-60">
                                     <flux:icon name="save" size="sm" />
                                     {{ $post->saved_by_users_count }} saves
                                 </span>
+                            </div>
+                            
+                            <!-- Read More Button -->
+                            <div>
+                                <a wire:navigate href="posts/{{ $post->slug }}" class="inline-flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors duration-200">
+                                    Read More
+                                    <flux:icon name="arrow-right" size="sm" />
+                                </a>
                             </div>
                         </div>
                     </div>
