@@ -127,12 +127,11 @@ class PostResource extends Resource
         return $table
             ->modifyQueryUsing(fn(Builder $query) => $query->where('author_id', Auth::id()))
             ->columns([
-                Tables\Columns\ImageColumn::make('featured_image'),
                 Tables\Columns\TextColumn::make('title')
-                ->limit(20)
+                    ->limit(20)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('slug')
-                ->limit(20),
+                    ->limit(20),
 
                 Tables\Columns\TextColumn::make('status')
                     ->badge()

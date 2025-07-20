@@ -149,7 +149,6 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('featured_image'),
                 Tables\Columns\TextColumn::make('author.name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('title')
