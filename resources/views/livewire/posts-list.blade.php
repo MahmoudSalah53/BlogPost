@@ -85,7 +85,7 @@
                             @else
                             <flux:avatar size="sm" name="{{ $post->author->name }}" />
                             @endif
-                            <span class="text-lg">{{ ucfirst($post->author->name) }}</span>
+                            <span class="text-lg {{ $post->author->id == auth()->id() ? 'text-blue-600 dark:text-blue-400 font-medium' : '' }}">{{ $post->author->id == auth()->id() ? 'You' : ucfirst($post->author->name) }}</span>
                         </div>
                         @if(auth()->id() !== $post->author->id)
                         <div>
