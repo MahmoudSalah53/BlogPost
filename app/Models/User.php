@@ -14,7 +14,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Laravel\Cashier\Billable;
 
-class User extends Authenticatable implements FilamentUser, HasAvatar, HasName
+class User extends Authenticatable implements FilamentUser, HasName
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, Billable;
@@ -151,11 +151,6 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasName
         // };
 
         return true;
-    }
-
-    public function getFilamentAvatarUrl(): ?string
-    {
-        return asset('storage/' . $this->avatar);
     }
 
     public function getFilamentName(): string
