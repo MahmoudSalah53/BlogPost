@@ -1,7 +1,3 @@
 <x-filament-panels::page>
-    @forelse ($this->followers as $follower)
-        {{ $follower->name }}
-    @empty
-        <div>No Followers Found</div>
-    @endforelse
+    {{ $this->table }}
 </x-filament-panels::page>

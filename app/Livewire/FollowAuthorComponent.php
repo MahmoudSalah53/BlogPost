@@ -36,7 +36,6 @@ class FollowAuthorComponent extends Component
 
         $this->loading = true;
         $user = auth()->user();
-        
         try {
             $currentlyFollowing = $user->followings()->where('followed_id', $this->author->id)->exists();
 
@@ -45,7 +44,6 @@ class FollowAuthorComponent extends Component
                 $this->isFollowing = false;
             } else {
                 $alreadyExists = $user->followings()->where('followed_id', $this->author->id)->exists();
-                
                 if (!$alreadyExists) {
                     $user->followings()->attach($this->author->id);
                     $this->isFollowing = true;
@@ -54,7 +52,6 @@ class FollowAuthorComponent extends Component
                 }
             }
 
-            // تحديث فوري لكل الـ components
             $this->js("
                 window.dispatchEvent(new CustomEvent('follow-status-changed', {
                     detail: { 
@@ -67,7 +64,6 @@ class FollowAuthorComponent extends Component
         } catch (QueryException $e) {
             $this->checkFollowingStatus();
         }
-        
         $this->loading = false;
     }
 
@@ -86,7 +82,6 @@ class FollowAuthorComponent extends Component
         }
     }
 
-    // معالج فوري للتحديث
     public function handleInstantUpdate($data)
     {
         if ($data['authorId'] == $this->author->id) {

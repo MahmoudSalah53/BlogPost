@@ -19,7 +19,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasName
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, Billable;
 
-    /**
+    /*
      * The attributes that are mass assignable.
      *
      * @var list<string>
@@ -33,7 +33,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasName
         'avatar',
         'email_verified_at',
     ];
-    /**
+    /*
      * The attributes that should be hidden for serialization.
      *
      * @var list<string>
@@ -82,14 +82,59 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasName
         return $this->belongsToMany(Post::class, 'like_posts');
     }
 
+  
     public function followings()
     {
         return $this->belongsToMany(self::class, 'following', 'follower_id', 'followed_id');
     }
 
+    
     public function followers()
     {
         return $this->belongsToMany(self::class, 'following', 'followed_id', 'follower_id');
+    }
+
+ 
+    public function follow(User $user)
+    {
+        if (!$this->isFollowing($user) && $this->id !== $user->id) {
+            $this->followings()->attach($user->id);
+        }
+    }
+
+    
+    public function unfollow(User $user)
+    {
+        $this->followings()->detach($user->id);
+    }
+
+   
+    public function isFollowing(User $user)
+    {
+        return $this->followings()->where('followed_id', $user->id)->exists();
+    }
+
+    
+    public function isFollowedBy(User $user)
+    {
+        return $this->followers()->where('follower_id', $user->id)->exists();
+    }
+
+   
+    public function followersCount()
+    {
+        return $this->followers()->count();
+    }
+
+    public function followingsCount()
+    {
+        return $this->followings()->count();
+    }
+
+ 
+    public function getIsAuthorAttribute()
+    {
+        return $this->role === 'author';
     }
 
     public function comments()
