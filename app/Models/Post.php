@@ -3,13 +3,17 @@
 namespace App\Models;
 
 use App\Enums\PostStatus;
+use CyrildeWit\EloquentViewable\Contracts\Viewable;
+use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class Post extends Model implements Viewable
 {
     /** @use HasFactory<\Database\Factories\PostFactory> */
-    use HasFactory;
+    use HasFactory, InteractsWithViews;
+
+    protected $removeViewsOnDelete = true;
 
     protected $fillable = [
         'title',
