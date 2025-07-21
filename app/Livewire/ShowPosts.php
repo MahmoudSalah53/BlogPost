@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Post;
+use CyrildeWit\EloquentViewable\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -20,6 +21,7 @@ class ShowPosts extends Component
     public function mount(Post $post)
     {
         $this->post = $post;
+        views($this->post)->cooldown(60)->record();
     }
     public function loadMoreComments($postId)
     {
