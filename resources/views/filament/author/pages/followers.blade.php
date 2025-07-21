@@ -78,7 +78,6 @@
         @endforelse
     </div>
 
-    {{-- ✅ Pagination Controls --}}
     <div class="mt-6">
         {{ $this->followers->links() }}
     </div>
