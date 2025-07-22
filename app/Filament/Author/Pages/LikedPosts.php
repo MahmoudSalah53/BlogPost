@@ -16,7 +16,7 @@ class LikedPosts extends Page
     protected ?string $subheading = 'Posts you have liked';
     protected static ?int $navigationSort = 4;
 
-    public $perPage = 12;
+    public $perPage = 9;
 
     public function getLikedPostsProperty()
     {
