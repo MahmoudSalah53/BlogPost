@@ -5,11 +5,16 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PublicPagesController;
+use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UserProfile;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Stripe\Stripe;
+use Stripe\Webhook;
 
 // public routs
 Route::controller(PublicPagesController::class)->group(function () {
@@ -60,8 +65,6 @@ Route::get('checkout', function(){
     return view('checkout');
 })->name('checkout');
 
-Route::post('/stripe/webhook', function() {
-    return;
-})->name('checkout.pay');
+Route::post('/stripe/webhook', [StripeController::class, 'request'])->name('checkout.pay');
 
 require __DIR__ . '/auth.php';
