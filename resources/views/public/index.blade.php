@@ -29,6 +29,7 @@
                         <flux:icon.user-plus />
                         {{ __('Join Now') }}
                     </flux:button>
+                    
                     @endguest
                     @auth
                     <flux:button
