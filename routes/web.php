@@ -15,12 +15,8 @@ use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use App\Livewire\ShowPost;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Stripe\Stripe;
-use Stripe\Webhook;
 
-// public routs
+// Public routes
 Route::controller(PublicPagesController::class)->group(function () {
     Route::get('/', 'index')->name('home');
 });
@@ -28,31 +24,30 @@ Route::controller(PublicPagesController::class)->group(function () {
 Route::get('posts', PostsList::class)->name('posts.index');
 Route::get('posts/{post:slug}', ShowPost::class)->name('posts.show');
 
-// categories routes
+// Categories routes
 Route::get('categories', CategoriesList::class)->name('categories.index');
 
-// authors routes
-
+// Authors routes
 Route::get('authors', AuthorsList::class)->name('authors.index');
 
-
-// membership routes
-Route::controller(MembershipController::class)->group(function () {
-    Route::get('memberships', 'index')->name('membership.index');
-    Route::post('memberships', 'upgrade')->name('membership.upgrade');
+// Membership routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/membership', [MembershipController::class, 'index'])->name('membership.index');
+    Route::post('/membership/upgrade', [MembershipController::class, 'upgrade'])->name('membership.upgrade');
+    Route::get('/checkout', [MembershipController::class, 'checkout'])->name('checkout');
+    Route::post('/membership/process-payment', [MembershipController::class, 'processPayment'])->name('membership.process-payment');
+    Route::get('/payment/success', [MembershipController::class, 'paymentSuccess'])->name('payment.success');
 });
 
-// User profile routs
+// User profile routes
 Route::middleware(['auth'])->group(function () {
     Route::controller(UserProfile::class)->group(function () {
-
         Route::get('/profile', 'index')->name('profile');
         Route::get('saved-posts', 'savedPosts')->name('saved-posts');
         Route::get('liked-posts', 'likedPosts')->name('liked-posts');
         Route::get('my-comments', 'myComments')->name('my-comments');
         Route::get('following', 'following')->name('following');
         Route::get('recently-viewed', 'recentlyViewed')->name('recently-viewed');
-        Route::get('membership', 'membership')->name('membership');
     });
 
     Route::get('settings/profile', Profile::class)->name('settings.profile');
@@ -60,11 +55,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
 });
 
-// test stripe
-Route::get('checkout', function(){
-    return view('checkout');
-})->middleware('auth')->name('checkout');
-
-Route::post('/stripe/webhook', [StripeController::class, 'request'])->name('checkout.pay');
+// Stripe webhook (must be outside auth middleware)
+Route::post('/stripe/webhook', [StripeController::class, 'handleWebhook'])->name('stripe.webhook');
 
 require __DIR__ . '/auth.php';

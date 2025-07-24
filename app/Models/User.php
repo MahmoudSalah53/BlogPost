@@ -82,19 +82,16 @@ class User extends Authenticatable implements FilamentUser, HasName
         return $this->belongsToMany(Post::class, 'like_posts');
     }
 
-  
     public function followings()
     {
         return $this->belongsToMany(self::class, 'following', 'follower_id', 'followed_id');
     }
 
-    
     public function followers()
     {
         return $this->belongsToMany(self::class, 'following', 'followed_id', 'follower_id');
     }
 
- 
     public function follow(User $user)
     {
         if (!$this->isFollowing($user) && $this->id !== $user->id) {
@@ -102,25 +99,21 @@ class User extends Authenticatable implements FilamentUser, HasName
         }
     }
 
-    
     public function unfollow(User $user)
     {
         $this->followings()->detach($user->id);
     }
 
-   
     public function isFollowing(User $user)
     {
         return $this->followings()->where('followed_id', $user->id)->exists();
     }
 
-    
     public function isFollowedBy(User $user)
     {
         return $this->followers()->where('follower_id', $user->id)->exists();
     }
 
-   
     public function followersCount()
     {
         return $this->followers()->count();
@@ -131,10 +124,35 @@ class User extends Authenticatable implements FilamentUser, HasName
         return $this->followings()->count();
     }
 
- 
+    // Subscription-related methods
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
+    }
+
+    public function activeSubscription()
+    {
+        return $this->subscriptions()
+            ->active()
+            ->latest()
+            ->first();
+    }
+
+    public function hasActiveSubscription()
+    {
+        return $this->activeSubscription() !== null;
+    }
+
     public function getIsAuthorAttribute()
     {
-        return $this->role === 'author';
+        return $this->role === 'author' || $this->hasActiveSubscription();
+    }
+
+    public function upgradeToAuthor()
+    {
+        if ($this->hasActiveSubscription()) {
+            $this->update(['role' => 'author']);
+        }
     }
 
     public function comments()
@@ -144,12 +162,6 @@ class User extends Authenticatable implements FilamentUser, HasName
 
     public function canAccessPanel(Panel $panel): bool
     {
-        // return match ($panel->getId()) {
-        //     'admin' => $this->role === 'admin',
-        //     'author' => $this->role === 'author',
-        //     default => false,
-        // };
-
         return true;
     }
 
@@ -157,5 +169,15 @@ class User extends Authenticatable implements FilamentUser, HasName
     {
         return ucfirst($this->name);
     }
+
+    public function checkSubscriptionStatus()
+    {
+        if ($this->subscriptions()->valid()->exists()) {
+            $this->update(['role' => 'author']);
+        } else {
+            $this->update(['role' => 'reader']);
+        }
+    }
+
 
 }

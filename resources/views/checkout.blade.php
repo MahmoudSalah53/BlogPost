@@ -52,14 +52,18 @@
                                 <h3 class="text-lg font-semibold text-zinc-900 dark:text-white mb-4">Payment Method</h3>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div class="relative">
-                                        <input type="radio" id="visa" name="payment-method" class="peer sr-only" checked>
-                                        <label for="visa"
+                                        <input type="radio" id="stripe" name="payment-method" class="peer sr-only"
+                                            checked>
+                                        <label for="stripe"
                                             class="flex items-center justify-center p-4 bg-white dark:bg-zinc-700 border-2 border-zinc-200 dark:border-zinc-600 rounded-xl cursor-pointer peer-checked:border-amber-500 dark:peer-checked:border-fuchsia-500 peer-checked:bg-amber-50 dark:peer-checked:bg-fuchsia-900/20 transition-all hover:shadow-md">
                                             <div class="text-center">
-                                                <div class="w-12 h-8 mx-auto mb-2 bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
-                                                    <span class="text-white text-sm font-bold">VISA</span>
+                                                <div
+                                                    class="w-12 h-8 mx-auto mb-2 bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
+                                                    <span class="text-white text-sm font-bold">CARD</span>
                                                 </div>
-                                                <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Visa Card</span>
+                                                <span
+                                                    class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Credit
+                                                    Card</span>
                                             </div>
                                         </label>
                                     </div>
@@ -68,90 +72,40 @@
                                         <label for="paypal"
                                             class="flex items-center justify-center p-4 bg-white dark:bg-zinc-700 border-2 border-zinc-200 dark:border-zinc-600 rounded-xl cursor-pointer peer-checked:border-amber-500 dark:peer-checked:border-fuchsia-500 peer-checked:bg-amber-50 dark:peer-checked:bg-fuchsia-900/20 transition-all hover:shadow-md">
                                             <div class="text-center">
-                                                <div class="w-12 h-8 mx-auto mb-2 bg-gradient-to-r from-blue-500 to-blue-700 rounded-lg flex items-center justify-center">
+                                                <div
+                                                    class="w-12 h-8 mx-auto mb-2 bg-gradient-to-r from-blue-500 to-blue-700 rounded-lg flex items-center justify-center">
                                                     <span class="text-white text-xs font-bold">PayPal</span>
                                                 </div>
-                                                <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">PayPal</span>
+                                                <span
+                                                    class="text-sm font-medium text-zinc-700 dark:text-zinc-300">PayPal</span>
                                             </div>
                                         </label>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Visa Card Form -->
-                            <div id="visa-form" class="payment-form">
-                                <form class="space-y-6">
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div>
-                                            <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-                                                Card Number
-                                            </label>
-                                            <div class="relative">
-                                                <input type="text" placeholder="1234 5678 9012 3456" maxlength="19"
-                                                    class="w-full px-4 py-3 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-xl focus:ring-2 focus:ring-amber-500 dark:focus:ring-fuchsia-500 focus:border-transparent text-zinc-900 dark:text-white transition-all">
-                                                <div class="absolute right-3 top-3">
-                                                    <div class="w-8 h-5 bg-blue-600 rounded-sm flex items-center justify-center">
-                                                        <span class="text-white text-xs font-bold">VISA</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-                                                Cardholder Name
-                                            </label>
-                                            <input type="text" placeholder="John Doe"
-                                                class="w-full px-4 py-3 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-xl focus:ring-2 focus:ring-amber-500 dark:focus:ring-fuchsia-500 focus:border-transparent text-zinc-900 dark:text-white transition-all">
-                                        </div>
+                            <!-- Stripe Card Form -->
+                            <div id="stripe-form" class="payment-form">
+                                <form id="payment-form" class="space-y-6">
+                                    @csrf
+                                    <div>
+                                        <label
+                                            class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">Email
+                                            Address</label>
+                                        <input type="email" id="email" name="email" placeholder="your.email@example.com"
+                                            required
+                                            class="w-full px-4 py-3 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-xl focus:ring-2 focus:ring-amber-500 dark:focus:ring-fuchsia-500 focus:border-transparent text-zinc-900 dark:text-white transition-all">
                                     </div>
 
-                                    <div class="grid grid-cols-2 gap-6">
-                                        <div>
-                                            <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-                                                Expiry Date
-                                            </label>
-                                            <input type="text" placeholder="MM/YY" maxlength="5"
-                                                class="w-full px-4 py-3 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-xl focus:ring-2 focus:ring-amber-500 dark:focus:ring-fuchsia-500 focus:border-transparent text-zinc-900 dark:text-white transition-all">
+                                    <div>
+                                        <label
+                                            class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">Card
+                                            Information</label>
+                                        <div id="card-element"
+                                            class="w-full px-4 py-3 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-xl focus-within:ring-2 focus-within:ring-amber-500 dark:focus-within:ring-fuchsia-500 focus-within:border-transparent transition-all">
+                                            <!-- Stripe Elements will create form elements here -->
                                         </div>
-                                        <div>
-                                            <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-                                                CVC
-                                            </label>
-                                            <input type="text" placeholder="123" maxlength="4"
-                                                class="w-full px-4 py-3 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-xl focus:ring-2 focus:ring-amber-500 dark:focus:ring-fuchsia-500 focus:border-transparent text-zinc-900 dark:text-white transition-all">
-                                        </div>
-                                    </div>
-
-                                    <!-- Billing Address -->
-                                    <div class="pt-6 border-t border-zinc-200 dark:border-zinc-700">
-                                        <h3 class="text-lg font-semibold text-zinc-900 dark:text-white mb-4">Billing Address</h3>
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                            <div class="md:col-span-2">
-                                                <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-                                                    Email Address
-                                                </label>
-                                                <input type="email" placeholder="john@example.com"
-                                                    class="w-full px-4 py-3 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-xl focus:ring-2 focus:ring-amber-500 dark:focus:ring-fuchsia-500 focus:border-transparent text-zinc-900 dark:text-white transition-all">
-                                            </div>
-                                            <div>
-                                                <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-                                                    Country
-                                                </label>
-                                                <select class="w-full px-4 py-3 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-xl focus:ring-2 focus:ring-amber-500 dark:focus:ring-fuchsia-500 focus:border-transparent text-zinc-900 dark:text-white transition-all">
-                                                    <option>Egypt</option>
-                                                    <option>United States</option>
-                                                    <option>United Kingdom</option>
-                                                    <option>Canada</option>
-                                                </select>
-                                            </div>
-                                            <div>
-                                                <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-                                                    Postal Code
-                                                </label>
-                                                <input type="text" placeholder="12345"
-                                                    class="w-full px-4 py-3 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-xl focus:ring-2 focus:ring-amber-500 dark:focus:ring-fuchsia-500 focus:border-transparent text-zinc-900 dark:text-white transition-all">
-                                            </div>
-                                        </div>
+                                        <div id="card-errors" role="alert" class="text-red-500 text-sm mt-2"></div>
                                     </div>
                                 </form>
                             </div>
@@ -159,29 +113,38 @@
                             <!-- PayPal Form -->
                             <div id="paypal-form" class="payment-form" style="display: none;">
                                 <div class="text-center py-8">
-                                    <div class="w-20 h-20 bg-gradient-to-r from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                                    <div
+                                        class="w-20 h-20 bg-gradient-to-r from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center mx-auto mb-6">
                                         <span class="text-white text-2xl font-bold">PayPal</span>
                                     </div>
-                                    <h3 class="text-xl font-semibold text-zinc-900 dark:text-white mb-2">Pay with PayPal</h3>
-                                    <p class="text-zinc-600 dark:text-zinc-300 mb-6">You'll be redirected to PayPal to complete your payment securely.</p>
-                                    
-                                    <!-- Email for PayPal -->
+                                    <h3 class="text-xl font-semibold text-zinc-900 dark:text-white mb-2">Pay with PayPal
+                                    </h3>
+                                    <p class="text-zinc-600 dark:text-zinc-300 mb-6">You'll be redirected to PayPal to
+                                        complete your payment securely.</p>
+
                                     <div class="max-w-md mx-auto mb-6">
-                                        <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2 text-left">
-                                            Email Address
-                                        </label>
-                                        <input type="email" placeholder="your.email@example.com"
+                                        <label
+                                            class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2 text-left">Email
+                                            Address</label>
+                                        <input type="email" id="paypal-email" placeholder="your.email@example.com"
                                             class="w-full px-4 py-3 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-xl focus:ring-2 focus:ring-amber-500 dark:focus:ring-fuchsia-500 focus:border-transparent text-zinc-900 dark:text-white transition-all">
                                     </div>
 
-                                    <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4 max-w-md mx-auto">
+                                    <div
+                                        class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4 max-w-md mx-auto">
                                         <div class="flex items-start">
-                                            <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                                            <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 mr-3 flex-shrink-0"
+                                                fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                                    clip-rule="evenodd" />
                                             </svg>
                                             <div class="text-left">
-                                                <h4 class="text-sm font-medium text-blue-800 dark:text-blue-300">Secure PayPal Payment</h4>
-                                                <p class="text-xs text-blue-600 dark:text-blue-400 mt-1">Pay with your PayPal account or any major credit card through PayPal's secure checkout.</p>
+                                                <h4 class="text-sm font-medium text-blue-800 dark:text-blue-300">Secure
+                                                    PayPal Payment</h4>
+                                                <p class="text-xs text-blue-600 dark:text-blue-400 mt-1">Pay with your
+                                                    PayPal account or any major credit card through PayPal's secure
+                                                    checkout.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -217,7 +180,8 @@
                                         </div>
                                         <div class="flex-1">
                                             <h4 class="font-semibold text-zinc-900 dark:text-white">
-                                                {{ session('plan.name') }} Plan</h4>
+                                                {{ session('plan.name') }} Plan
+                                            </h4>
                                             <p class="text-sm text-zinc-600 dark:text-zinc-300">30 Days Access</p>
                                         </div>
                                         <div class="text-right">
@@ -285,9 +249,8 @@
                                         </div>
                                         <p class="text-zinc-500 dark:text-zinc-400">No plan selected</p>
                                         <a wire:navigate href="{{ route('membership.index') }}"
-                                            class="mt-4 text-amber-600 dark:text-fuchsia-400 hover:underline text-sm font-medium">
-                                            Select a plan
-                                        </a>
+                                            class="mt-4 text-amber-600 dark:text-fuchsia-400 hover:underline text-sm font-medium">Select
+                                            a plan</a>
                                     </div>
                                 @endif
                             </div>
@@ -304,8 +267,10 @@
                                         clip-rule="evenodd" />
                                 </svg>
                                 <div>
-                                    <h4 class="text-sm font-medium text-green-800 dark:text-green-300">Secure Payment</h4>
-                                    <p class="text-xs text-green-600 dark:text-green-400 mt-1">Your payment information is encrypted and secure</p>
+                                    <h4 class="text-sm font-medium text-green-800 dark:text-green-300">Secure Payment
+                                    </h4>
+                                    <p class="text-xs text-green-600 dark:text-green-400 mt-1">Your payment information
+                                        is encrypted and secure</p>
                                 </div>
                             </div>
                         </div>
@@ -322,9 +287,7 @@
 
                         <!-- Money Back Guarantee -->
                         <div class="mt-4 text-center">
-                            <p class="text-xs text-zinc-500 dark:text-zinc-400">
-                                🔒 14-day money-back guarantee
-                            </p>
+                            <p class="text-xs text-zinc-500 dark:text-zinc-400">🔒 14-day money-back guarantee</p>
                         </div>
                     </div>
                 </div>
@@ -332,98 +295,164 @@
         </div>
     </div>
 
+    <!-- Stripe JS -->
+    <script src="https://js.stripe.com/v3/"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Initialize Stripe
+            const stripe = Stripe('{{ config("services.stripe.key") }}');
+            const elements = stripe.elements();
+
+            // Create card element
+            const cardElement = elements.create('card', {
+                style: {
+                    base: {
+                        fontSize: '16px',
+                        color: '#424770',
+                        '::placeholder': {
+                            color: '#aab7c4',
+                        },
+                    },
+                },
+            });
+            cardElement.mount('#card-element');
+
+            // Handle real-time validation errors from the card Element
+            cardElement.on('change', ({ error }) => {
+                const displayError = document.getElementById('card-errors');
+                if (error) {
+                    displayError.textContent = error.message;
+                } else {
+                    displayError.textContent = '';
+                }
+            });
+
             // Get payment method radio buttons
-            const visaRadio = document.getElementById('visa');
+            const stripeRadio = document.getElementById('stripe');
             const paypalRadio = document.getElementById('paypal');
-            const visaForm = document.getElementById('visa-form');
+            const stripeForm = document.getElementById('stripe-form');
             const paypalForm = document.getElementById('paypal-form');
             const completeBtn = document.getElementById('complete-purchase-btn');
             const buttonText = document.getElementById('button-text');
 
             // Function to switch payment forms
             function switchPaymentMethod() {
-                if (visaRadio.checked) {
-                    visaForm.style.display = 'block';
+                if (stripeRadio.checked) {
+                    stripeForm.style.display = 'block';
                     paypalForm.style.display = 'none';
                     buttonText.textContent = 'Complete Purchase';
                 } else if (paypalRadio.checked) {
-                    visaForm.style.display = 'none';
+                    stripeForm.style.display = 'none';
                     paypalForm.style.display = 'block';
                     buttonText.textContent = 'Pay with PayPal';
                 }
             }
 
             // Add event listeners for radio buttons
-            visaRadio.addEventListener('change', switchPaymentMethod);
+            stripeRadio.addEventListener('change', switchPaymentMethod);
             paypalRadio.addEventListener('change', switchPaymentMethod);
 
-            // Initialize with Visa selected
+            // Initialize with Stripe selected
             switchPaymentMethod();
 
-            // Format card number input for Visa
-            const cardInput = document.querySelector('input[placeholder="1234 5678 9012 3456"]');
-            if (cardInput) {
-                cardInput.addEventListener('input', function (e) {
-                    let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
-                    let formattedInputValue = value.match(/.{1,4}/g)?.join(' ') || value;
-                    if (formattedInputValue.length > 19) {
-                        formattedInputValue = formattedInputValue.substring(0, 19);
-                    }
-                    e.target.value = formattedInputValue;
-                });
-            }
-
-            // Format expiry date
-            const expiryInput = document.querySelector('input[placeholder="MM/YY"]');
-            if (expiryInput) {
-                expiryInput.addEventListener('input', function (e) {
-                    let value = e.target.value.replace(/\D/g, '');
-                    if (value.length >= 2) {
-                        value = value.substring(0, 2) + '/' + value.substring(2, 4);
-                    }
-                    e.target.value = value;
-                });
-            }
-
-            // Format CVC input
-            const cvcInput = document.querySelector('input[placeholder="123"]');
-            if (cvcInput) {
-                cvcInput.addEventListener('input', function (e) {
-                    let value = e.target.value.replace(/[^0-9]/gi, '');
-                    e.target.value = value;
-                });
-            }
-
             // Handle form submission
-            completeBtn.addEventListener('click', function (e) {
+            completeBtn.addEventListener('click', async function (e) {
                 e.preventDefault();
-                
-                // Add loading state to button
-                const originalText = buttonText.textContent;
-                buttonText.textContent = 'Processing...';
+
+                // Add loading state
+                const originalHtml = completeBtn.innerHTML;
                 completeBtn.innerHTML = '<svg class="animate-spin w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>Processing...';
                 completeBtn.disabled = true;
 
-                // Simulate processing
-                setTimeout(() => {
-                    completeBtn.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                    </svg><span>${originalText}</span>`;
-                    completeBtn.disabled = false;
-                    
-                    if (paypalRadio.checked) {
-                        alert('Redirecting to PayPal... (Demo)');
-                        // Here you would redirect to PayPal
-                        // window.location.href = 'paypal_checkout_url';
-                    } else {
-                        alert('Payment processed successfully with Visa! (Demo)');
-                        // Here you would process Stripe payment
+                try {
+                    if (stripeRadio.checked) {
+                        await processStripePayment();
+                    } else if (paypalRadio.checked) {
+                        await processPayPalPayment();
                     }
-                }, 2000);
+                } catch (error) {
+                    console.error('Payment error:', error);
+                    alert('Payment failed. Please try again.');
+                } finally {
+                    completeBtn.innerHTML = originalHtml;
+                    completeBtn.disabled = false;
+                }
             });
+
+            async function processStripePayment() {
+                const email = document.getElementById('email').value;
+
+                if (!email) {
+                    alert('Please enter your email address');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('{{ route("membership.process-payment") }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        },
+                        body: JSON.stringify({
+                            payment_method: 'stripe',
+                            email: email
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (!data.success) {
+                        throw new Error(data.message || 'Payment processing failed');
+                    }
+
+                    const result = await stripe.confirmCardPayment(data.client_secret, {
+                        payment_method: {
+                            card: cardElement,
+                            billing_details: { email: email },
+                        }
+                    });
+
+                    if (result.error) {
+                        throw new Error(result.error.message);
+                    }
+
+                    window.location.href = '{{ route("payment.success") }}?payment_intent=' + data.payment_intent_id;
+                } catch (error) {
+                    console.error('Payment error:', error);
+                    alert('Payment failed: ' + error.message);
+                    throw error;
+                }
+            }
+
+            async function processPayPalPayment() {
+                const email = document.getElementById('paypal-email').value;
+
+                if (!email) {
+                    alert('Please enter your email address');
+                    return;
+                }
+
+                const response = await fetch('{{ route("membership.process-payment") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({
+                        payment_method: 'paypal',
+                        email: email
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    window.location.href = data.redirect;
+                } else {
+                    throw new Error(data.message);
+                }
+            }
         });
     </script>
 </x-public.layouts>
