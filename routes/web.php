@@ -8,9 +8,11 @@ use App\Http\Controllers\PublicPagesController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UserProfile;
 use App\Livewire\CategoriesList;
+use App\Livewire\PostsList;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
+use App\Livewire\ShowPost;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -23,10 +25,13 @@ Route::controller(PublicPagesController::class)->group(function () {
 });
 
 // posts routes
-Route::controller(PostController::class)->group(function () {
-    Route::get('posts', 'index')->name('posts.index');
-    Route::get('posts/{post:slug}', 'show')->name('posts.show');
-});
+// Route::controller(PostController::class)->group(function () {
+//     Route::get('posts', 'index')->name('posts.index');
+//     Route::get('posts/{post:slug}', 'show')->name('posts.show');
+// });
+
+Route::get('posts', PostsList::class)->name('posts.index');
+Route::get('posts/{post:slug}', ShowPost::class)->name('posts.show');
 
 // categories routes
 Route::get('categories', CategoriesList::class)->name('categories.index');

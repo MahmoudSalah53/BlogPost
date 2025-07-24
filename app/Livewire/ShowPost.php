@@ -5,9 +5,11 @@ namespace App\Livewire;
 use App\Models\Post;
 use CyrildeWit\EloquentViewable\View;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-class ShowPosts extends Component
+#[Layout('components.public.layouts')]
+class ShowPost extends Component
 {
     public Post $post;
     public $newCommentContent = [];
@@ -88,6 +90,6 @@ class ShowPosts extends Component
             'savedByUsers' => fn($q) => $q->where('user_id', Auth::id()),
         ])->loadCount(['likedByUsers', 'savedByUsers', 'comments']);
 
-        return view('livewire.show-posts');
+        return view('livewire.show-post')->title($this->post->title);
     }
 }
