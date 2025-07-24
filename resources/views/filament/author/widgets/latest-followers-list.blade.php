@@ -2,6 +2,7 @@
     <x-filament::section>
         @vite(['resources/css/latest-followers-list.css'])
 
+        <h5 style="margin-bottom: 8px;font-weight: bold;">Followers List</h5>
         <div class="followers-container">
             @forelse ($latestFollowers as $follower)
                 <div class="follower-item">

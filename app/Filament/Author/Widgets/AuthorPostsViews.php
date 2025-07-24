@@ -41,17 +41,9 @@ class AuthorPostsViews extends ApexChartWidget
                 'type' => 'bar',
                 'height' => 350,
                 'toolbar' => [
-                    'show' => true,
-                    'tools' => [
-                        'download' => true,
-                        'selection' => false,
-                        'zoom' => true,
-                        'zoomin' => true,
-                        'zoomout' => true,
-                        'pan' => false,
-                        'reset' => true,
-                    ],
+                    'show' => false,
                 ],
+                'fontFamily' => 'inherit',
             ],
             'series' => [
                 [
@@ -62,9 +54,7 @@ class AuthorPostsViews extends ApexChartWidget
             'plotOptions' => [
                 'bar' => [
                     'borderRadius' => 4,
-                    'horizontal' => false,
-                    'columnWidth' => '50%',
-                    'endingShape' => 'rounded',
+                    'columnWidth' => '60%',
                 ],
             ],
             'dataLabels' => [
@@ -110,19 +100,6 @@ class AuthorPostsViews extends ApexChartWidget
             'colors' => ['#f59e0b'],
             'grid' => [
                 'show' => false,
-                'borderColor' => '#f59e0b',
-                'strokeDashArray' => 4,
-                'position' => 'back',
-                'xaxis' => [
-                    'lines' => [
-                        'show' => false,
-                    ],
-                ],
-                'yaxis' => [
-                    'lines' => [
-                        'show' => true,
-                    ],
-                ],
             ],
             'tooltip' => [
                 'enabled' => true,

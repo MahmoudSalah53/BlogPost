@@ -9,8 +9,12 @@ use Illuminate\Support\Facades\Auth;
 class LatestFollowersList extends Widget
 {
     protected static string $view = 'filament.author.widgets.latest-followers-list';
-    
+
     protected static ?int $sort = 4;
+
+    protected static bool $isLazy = false;
+
+    protected static ?string $pollingInterval = null;
 
     public $latestFollowers;
 
@@ -29,9 +33,9 @@ class LatestFollowersList extends Widget
         $follower = User::find($followerId);
         $user = Auth::user();
 
-        if($user->isFollowing($follower)){
+        if ($user->isFollowing($follower)) {
             $user->unfollow($follower);
-        }else{
+        } else {
             $user->follow($follower);
         }
     }
