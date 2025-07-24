@@ -3,9 +3,13 @@
 namespace App\Livewire;
 
 use App\Models\User;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+#[Layout('components.public.layouts')]
+#[Title('Authors')]
 class AuthorsList extends Component
 {
     use WithPagination;

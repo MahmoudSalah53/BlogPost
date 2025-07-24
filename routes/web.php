@@ -7,6 +7,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\PublicPagesController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UserProfile;
+use App\Livewire\AuthorsList;
 use App\Livewire\CategoriesList;
 use App\Livewire\PostsList;
 use App\Livewire\Settings\Appearance;
@@ -24,12 +25,6 @@ Route::controller(PublicPagesController::class)->group(function () {
     Route::get('/', 'index')->name('home');
 });
 
-// posts routes
-// Route::controller(PostController::class)->group(function () {
-//     Route::get('posts', 'index')->name('posts.index');
-//     Route::get('posts/{post:slug}', 'show')->name('posts.show');
-// });
-
 Route::get('posts', PostsList::class)->name('posts.index');
 Route::get('posts/{post:slug}', ShowPost::class)->name('posts.show');
 
@@ -37,9 +32,9 @@ Route::get('posts/{post:slug}', ShowPost::class)->name('posts.show');
 Route::get('categories', CategoriesList::class)->name('categories.index');
 
 // authors routes
-Route::controller(AuthorController::class)->group(function () {
-    Route::get('authors', 'index')->name('authors.index');
-});
+
+Route::get('authors', AuthorsList::class)->name('authors.index');
+
 
 // membership routes
 Route::controller(MembershipController::class)->group(function () {
@@ -65,7 +60,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // test stripe
-Route::get('checkout', function(){
+Route::get('checkout', function () {
     return view('checkout');
 })->name('checkout');
 
