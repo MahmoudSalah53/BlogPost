@@ -131,12 +131,16 @@
                     </div>
 
                     <div class="mt-8 relative">
-                        <flux:button
-                            class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white dark:from-fuchsia-600 dark:to-purple-600 dark:hover:from-fuchsia-700 dark:hover:to-purple-700 shadow-lg hover:shadow-amber-200/50 dark:hover:shadow-fuchsia-200/20 transition-all"
-                            icon="arrow-right"
-                            icon-position="right">
-                            Upgrade Now - Start Publishing
-                        </flux:button>
+                        <form action="{{ route('membership.upgrade') }}"method="POST">
+                            @csrf
+                            <flux:button 
+                                type="submit"
+                                class="cursor-pointer w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white dark:from-fuchsia-600 dark:to-purple-600 dark:hover:from-fuchsia-700 dark:hover:to-purple-700 shadow-lg hover:shadow-amber-200/50 dark:hover:shadow-fuchsia-200/20 transition-all"
+                                icon="arrow-right"
+                                icon-position="right">
+                                Upgrade Now - Start Publishing
+                            </flux:button>
+                        </form>
                     </div>
                 </div>
             </div>

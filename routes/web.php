@@ -44,6 +44,7 @@ Route::controller(AuthorController::class)->group(function () {
 // membership routes
 Route::controller(MembershipController::class)->group(function () {
     Route::get('memberships', 'index')->name('membership.index');
+    Route::post('memberships', 'upgrade')->name('membership.upgrade');
 });
 
 // User profile routs
@@ -64,10 +65,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
 });
 
-// test stripe
-Route::get('checkout', function(){
+
+Route::get('checkout', function () {
     return view('checkout');
-})->name('checkout');
+})->middleware('auth')->name('checkout');
 
 Route::post('/stripe/webhook', [StripeController::class, 'request'])->name('checkout.pay');
 
