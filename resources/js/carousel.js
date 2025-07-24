@@ -32,7 +32,7 @@ function initSwiper() {
             768: { slidesPerView: 2 },
             1024: { slidesPerView: 3 },
         },
-        autoHeight: true,
+        autoHeight: false,
         autoplay: {
             delay: 5000,
         },
