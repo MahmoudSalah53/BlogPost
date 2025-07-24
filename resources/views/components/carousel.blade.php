@@ -19,17 +19,17 @@
     </div>
 
     {{-- Check if posts exist --}}
-    @if($posts && $posts->count() > 0)
+    @if ($posts && $posts->count() > 0)
         {{-- slides --}}
         <div class="swiper-wrapper mb-8">
-            @foreach($posts as $post)
+            @foreach ($posts as $post)
                 <div class="swiper-slide p-2">
                     <div
-                        class="bg-white dark:bg-zinc-800 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-100 dark:border-zinc-700 h-full  flex flex-col">
+                        class="bg-white dark:bg-zinc-800 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-100 dark:border-zinc-700 h-full min-h-[450px]  flex flex-col">
                         {{-- post image --}}
                         <div
                             class="relative h-48 w-full overflow-hidden rounded-t-xl flex items-center justify-center bg-gray-100 dark:bg-zinc-700">
-                            @if($post->featured_image)
+                            @if ($post->featured_image)
                                 <img src="{{ asset('storage/' . $post->featured_image) }}" alt="{{ $post->title }}"
                                     class="absolute inset-0 w-full h-full object-cover" />
                             @else
@@ -44,20 +44,18 @@
                         <div class="p-5 flex flex-col flex-1">
                             {{-- post meta data --}}
                             <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
-                                <flux:text>{{ $post->categories->pluck('name')->join(', ') }}</flux:text>
-                                <span class="mx-2">•</span>
-                                <flux:text>{{ $post->created_at->diffForHumans() }}</flux:text>
+                                <flux:text>{{ $post->created_at->format('F j, Y') }}</flux:text>
                                 <flux:badge color="lime" class="ml-auto">New</flux:badge>
                             </div>
                             {{-- post title --}}
                             <flux:heading level="3"
-                                class="font-semibold text-gray-800 dark:text-white mb-2 text-justify text-xl">
-                                {{ strlen($post->title) > 35 ? mb_substr($post->title, 0, 25) . '...' : $post->title }}
+                                class="line-clamp-2 font-semibold text-gray-800 dark:text-white mb-2 text-justify text-xl">
+                                {{ $post->title }}
                             </flux:heading>
 
                             {{-- post excerpt --}}
-                            <flux:text class="line-clamp-3 text-gray-600 dark:text-gray-300 mb-4 text-justify grow">
-                                {{ Str::limit($post->content, 25, '...') }}
+                            <flux:text class=" text-gray-600 dark:text-gray-300 mb-4 text-justify grow">
+                                {!! str($post->content)->sanitizeHtml()->words(20) !!}
                             </flux:text>
                             {{-- post footer [links , likes, comments] --}}
                             <div class="flex justify-between items-center mt-auto">
