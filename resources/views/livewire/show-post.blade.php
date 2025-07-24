@@ -54,7 +54,7 @@
 
      {{-- post content --}}
      <article class="prose dark:prose-invert max-w-none text-lg">
-         {{ $post->content }}
+         {!! str($post->content)->sanitizeHtml()  !!}
      </article>
      {{-- comments section --}}
      <livewire:add-comment-component :post-id="$post->id" />
