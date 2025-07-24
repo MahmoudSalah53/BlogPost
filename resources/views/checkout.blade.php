@@ -50,24 +50,16 @@
                             <!-- Payment Method Selection -->
                             <div class="mb-8">
                                 <h3 class="text-lg font-semibold text-zinc-900 dark:text-white mb-4">Payment Method</h3>
-                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div class="relative">
-                                        <input type="radio" id="card" name="payment-method" class="peer sr-only"
-                                            checked>
-                                        <label for="card"
+                                        <input type="radio" id="visa" name="payment-method" class="peer sr-only" checked>
+                                        <label for="visa"
                                             class="flex items-center justify-center p-4 bg-white dark:bg-zinc-700 border-2 border-zinc-200 dark:border-zinc-600 rounded-xl cursor-pointer peer-checked:border-amber-500 dark:peer-checked:border-fuchsia-500 peer-checked:bg-amber-50 dark:peer-checked:bg-fuchsia-900/20 transition-all hover:shadow-md">
                                             <div class="text-center">
-                                                <div
-                                                    class="w-8 h-8 mx-auto mb-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
-                                                    <svg class="w-5 h-5 text-white" fill="currentColor"
-                                                        viewBox="0 0 20 20">
-                                                        <path
-                                                            d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm0 2h12v2H4V6zm0 4h4v2H4v-2z" />
-                                                    </svg>
+                                                <div class="w-12 h-8 mx-auto mb-2 bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
+                                                    <span class="text-white text-sm font-bold">VISA</span>
                                                 </div>
-                                                <span
-                                                    class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Credit
-                                                    Card</span>
+                                                <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Visa Card</span>
                                             </div>
                                         </label>
                                     </div>
@@ -76,115 +68,125 @@
                                         <label for="paypal"
                                             class="flex items-center justify-center p-4 bg-white dark:bg-zinc-700 border-2 border-zinc-200 dark:border-zinc-600 rounded-xl cursor-pointer peer-checked:border-amber-500 dark:peer-checked:border-fuchsia-500 peer-checked:bg-amber-50 dark:peer-checked:bg-fuchsia-900/20 transition-all hover:shadow-md">
                                             <div class="text-center">
-                                                <div
-                                                    class="w-8 h-8 mx-auto mb-2 bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
-                                                    <span class="text-white text-xs font-bold">PP</span>
+                                                <div class="w-12 h-8 mx-auto mb-2 bg-gradient-to-r from-blue-500 to-blue-700 rounded-lg flex items-center justify-center">
+                                                    <span class="text-white text-xs font-bold">PayPal</span>
                                                 </div>
-                                                <span
-                                                    class="text-sm font-medium text-zinc-700 dark:text-zinc-300">PayPal</span>
-                                            </div>
-                                        </label>
-                                    </div>
-                                    <div class="relative">
-                                        <input type="radio" id="apple-pay" name="payment-method" class="peer sr-only">
-                                        <label for="apple-pay"
-                                            class="flex items-center justify-center p-4 bg-white dark:bg-zinc-700 border-2 border-zinc-200 dark:border-zinc-600 rounded-xl cursor-pointer peer-checked:border-amber-500 dark:peer-checked:border-fuchsia-500 peer-checked:bg-amber-50 dark:peer-checked:bg-fuchsia-900/20 transition-all hover:shadow-md">
-                                            <div class="text-center">
-                                                <div
-                                                    class="w-8 h-8 mx-auto mb-2 bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg flex items-center justify-center">
-                                                    <svg class="w-5 h-5 text-white" fill="currentColor"
-                                                        viewBox="0 0 24 24">
-                                                        <path
-                                                            d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
-                                                    </svg>
-                                                </div>
-                                                <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">Apple
-                                                    Pay</span>
+                                                <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300">PayPal</span>
                                             </div>
                                         </label>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Credit Card Form -->
-                            <form id="payment-form" class="space-y-6">
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div>
-                                        <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-                                            Card Number
-                                        </label>
-                                        <div class="relative">
-                                            <input type="text" placeholder="1234 5678 9012 3456"
+                            <!-- Visa Card Form -->
+                            <div id="visa-form" class="payment-form">
+                                <form class="space-y-6">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                                                Card Number
+                                            </label>
+                                            <div class="relative">
+                                                <input type="text" placeholder="1234 5678 9012 3456" maxlength="19"
+                                                    class="w-full px-4 py-3 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-xl focus:ring-2 focus:ring-amber-500 dark:focus:ring-fuchsia-500 focus:border-transparent text-zinc-900 dark:text-white transition-all">
+                                                <div class="absolute right-3 top-3">
+                                                    <div class="w-8 h-5 bg-blue-600 rounded-sm flex items-center justify-center">
+                                                        <span class="text-white text-xs font-bold">VISA</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                                                Cardholder Name
+                                            </label>
+                                            <input type="text" placeholder="John Doe"
                                                 class="w-full px-4 py-3 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-xl focus:ring-2 focus:ring-amber-500 dark:focus:ring-fuchsia-500 focus:border-transparent text-zinc-900 dark:text-white transition-all">
-                                            <div class="absolute right-3 top-3 flex space-x-1">
-                                                <div class="w-6 h-4 bg-blue-600 rounded-sm"></div>
-                                                <div class="w-6 h-4 bg-red-600 rounded-sm"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="grid grid-cols-2 gap-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                                                Expiry Date
+                                            </label>
+                                            <input type="text" placeholder="MM/YY" maxlength="5"
+                                                class="w-full px-4 py-3 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-xl focus:ring-2 focus:ring-amber-500 dark:focus:ring-fuchsia-500 focus:border-transparent text-zinc-900 dark:text-white transition-all">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                                                CVC
+                                            </label>
+                                            <input type="text" placeholder="123" maxlength="4"
+                                                class="w-full px-4 py-3 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-xl focus:ring-2 focus:ring-amber-500 dark:focus:ring-fuchsia-500 focus:border-transparent text-zinc-900 dark:text-white transition-all">
+                                        </div>
+                                    </div>
+
+                                    <!-- Billing Address -->
+                                    <div class="pt-6 border-t border-zinc-200 dark:border-zinc-700">
+                                        <h3 class="text-lg font-semibold text-zinc-900 dark:text-white mb-4">Billing Address</h3>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div class="md:col-span-2">
+                                                <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                                                    Email Address
+                                                </label>
+                                                <input type="email" placeholder="john@example.com"
+                                                    class="w-full px-4 py-3 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-xl focus:ring-2 focus:ring-amber-500 dark:focus:ring-fuchsia-500 focus:border-transparent text-zinc-900 dark:text-white transition-all">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                                                    Country
+                                                </label>
+                                                <select class="w-full px-4 py-3 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-xl focus:ring-2 focus:ring-amber-500 dark:focus:ring-fuchsia-500 focus:border-transparent text-zinc-900 dark:text-white transition-all">
+                                                    <option>Egypt</option>
+                                                    <option>United States</option>
+                                                    <option>United Kingdom</option>
+                                                    <option>Canada</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                                                    Postal Code
+                                                </label>
+                                                <input type="text" placeholder="12345"
+                                                    class="w-full px-4 py-3 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-xl focus:ring-2 focus:ring-amber-500 dark:focus:ring-fuchsia-500 focus:border-transparent text-zinc-900 dark:text-white transition-all">
                                             </div>
                                         </div>
                                     </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-                                            Cardholder Name
-                                        </label>
-                                        <input type="text" placeholder="John Doe"
-                                            class="w-full px-4 py-3 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-xl focus:ring-2 focus:ring-amber-500 dark:focus:ring-fuchsia-500 focus:border-transparent text-zinc-900 dark:text-white transition-all">
-                                    </div>
-                                </div>
+                                </form>
+                            </div>
 
-                                <div class="grid grid-cols-2 gap-6">
-                                    <div>
-                                        <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-                                            Expiry Date
+                            <!-- PayPal Form -->
+                            <div id="paypal-form" class="payment-form" style="display: none;">
+                                <div class="text-center py-8">
+                                    <div class="w-20 h-20 bg-gradient-to-r from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                                        <span class="text-white text-2xl font-bold">PayPal</span>
+                                    </div>
+                                    <h3 class="text-xl font-semibold text-zinc-900 dark:text-white mb-2">Pay with PayPal</h3>
+                                    <p class="text-zinc-600 dark:text-zinc-300 mb-6">You'll be redirected to PayPal to complete your payment securely.</p>
+                                    
+                                    <!-- Email for PayPal -->
+                                    <div class="max-w-md mx-auto mb-6">
+                                        <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2 text-left">
+                                            Email Address
                                         </label>
-                                        <input type="text" placeholder="MM/YY"
+                                        <input type="email" placeholder="your.email@example.com"
                                             class="w-full px-4 py-3 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-xl focus:ring-2 focus:ring-amber-500 dark:focus:ring-fuchsia-500 focus:border-transparent text-zinc-900 dark:text-white transition-all">
                                     </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-                                            CVV
-                                        </label>
-                                        <input type="text" placeholder="123"
-                                            class="w-full px-4 py-3 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-xl focus:ring-2 focus:ring-amber-500 dark:focus:ring-fuchsia-500 focus:border-transparent text-zinc-900 dark:text-white transition-all">
-                                    </div>
-                                </div>
 
-                                <!-- Billing Address -->
-                                <div class="pt-6 border-t border-zinc-200 dark:border-zinc-700">
-                                    <h3 class="text-lg font-semibold text-zinc-900 dark:text-white mb-4">Billing Address
-                                    </h3>
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div class="md:col-span-2">
-                                            <label
-                                                class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-                                                Email Address
-                                            </label>
-                                            <input type="email" placeholder="john@example.com"
-                                                class="w-full px-4 py-3 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-xl focus:ring-2 focus:ring-amber-500 dark:focus:ring-fuchsia-500 focus:border-transparent text-zinc-900 dark:text-white transition-all">
-                                        </div>
-                                        <div>
-                                            <label
-                                                class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-                                                Country
-                                            </label>
-                                            <select
-                                                class="w-full px-4 py-3 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-xl focus:ring-2 focus:ring-amber-500 dark:focus:ring-fuchsia-500 focus:border-transparent text-zinc-900 dark:text-white transition-all">
-                                                <option>Egypt</option>
-                                                <option>United States</option>
-                                                <option>United Kingdom</option>
-                                                <option>Canada</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label
-                                                class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-                                                Postal Code
-                                            </label>
-                                            <input type="text" placeholder="12345"
-                                                class="w-full px-4 py-3 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-xl focus:ring-2 focus:ring-amber-500 dark:focus:ring-fuchsia-500 focus:border-transparent text-zinc-900 dark:text-white transition-all">
+                                    <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4 max-w-md mx-auto">
+                                        <div class="flex items-start">
+                                            <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                                            </svg>
+                                            <div class="text-left">
+                                                <h4 class="text-sm font-medium text-blue-800 dark:text-blue-300">Secure PayPal Payment</h4>
+                                                <p class="text-xs text-blue-600 dark:text-blue-400 mt-1">Pay with your PayPal account or any major credit card through PayPal's secure checkout.</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -286,7 +288,6 @@
                                             class="mt-4 text-amber-600 dark:text-fuchsia-400 hover:underline text-sm font-medium">
                                             Select a plan
                                         </a>
-
                                     </div>
                                 @endif
                             </div>
@@ -303,22 +304,20 @@
                                         clip-rule="evenodd" />
                                 </svg>
                                 <div>
-                                    <h4 class="text-sm font-medium text-green-800 dark:text-green-300">Secure Payment
-                                    </h4>
-                                    <p class="text-xs text-green-600 dark:text-green-400 mt-1">Your payment information
-                                        is encrypted and secure</p>
+                                    <h4 class="text-sm font-medium text-green-800 dark:text-green-300">Secure Payment</h4>
+                                    <p class="text-xs text-green-600 dark:text-green-400 mt-1">Your payment information is encrypted and secure</p>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Complete Purchase Button -->
-                        <button type="submit" form="payment-form"
+                        <button type="button" id="complete-purchase-btn"
                             class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 dark:from-fuchsia-600 dark:to-purple-600 dark:hover:from-fuchsia-700 dark:hover:to-purple-700 text-white font-semibold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center space-x-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                             </svg>
-                            <span>Complete Purchase</span>
+                            <span id="button-text">Complete Purchase</span>
                         </button>
 
                         <!-- Money Back Guarantee -->
@@ -334,14 +333,44 @@
     </div>
 
     <script>
-        // Add some basic interactivity
         document.addEventListener('DOMContentLoaded', function () {
-            // Format card number input
+            // Get payment method radio buttons
+            const visaRadio = document.getElementById('visa');
+            const paypalRadio = document.getElementById('paypal');
+            const visaForm = document.getElementById('visa-form');
+            const paypalForm = document.getElementById('paypal-form');
+            const completeBtn = document.getElementById('complete-purchase-btn');
+            const buttonText = document.getElementById('button-text');
+
+            // Function to switch payment forms
+            function switchPaymentMethod() {
+                if (visaRadio.checked) {
+                    visaForm.style.display = 'block';
+                    paypalForm.style.display = 'none';
+                    buttonText.textContent = 'Complete Purchase';
+                } else if (paypalRadio.checked) {
+                    visaForm.style.display = 'none';
+                    paypalForm.style.display = 'block';
+                    buttonText.textContent = 'Pay with PayPal';
+                }
+            }
+
+            // Add event listeners for radio buttons
+            visaRadio.addEventListener('change', switchPaymentMethod);
+            paypalRadio.addEventListener('change', switchPaymentMethod);
+
+            // Initialize with Visa selected
+            switchPaymentMethod();
+
+            // Format card number input for Visa
             const cardInput = document.querySelector('input[placeholder="1234 5678 9012 3456"]');
             if (cardInput) {
                 cardInput.addEventListener('input', function (e) {
                     let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
                     let formattedInputValue = value.match(/.{1,4}/g)?.join(' ') || value;
+                    if (formattedInputValue.length > 19) {
+                        formattedInputValue = formattedInputValue.substring(0, 19);
+                    }
                     e.target.value = formattedInputValue;
                 });
             }
@@ -358,20 +387,41 @@
                 });
             }
 
+            // Format CVC input
+            const cvcInput = document.querySelector('input[placeholder="123"]');
+            if (cvcInput) {
+                cvcInput.addEventListener('input', function (e) {
+                    let value = e.target.value.replace(/[^0-9]/gi, '');
+                    e.target.value = value;
+                });
+            }
+
             // Handle form submission
-            document.getElementById('payment-form')?.addEventListener('submit', function (e) {
+            completeBtn.addEventListener('click', function (e) {
                 e.preventDefault();
+                
                 // Add loading state to button
-                const button = document.querySelector('button[type="submit"]');
-                const originalText = button.innerHTML;
-                button.innerHTML = '<svg class="animate-spin w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>Processing...';
-                button.disabled = true;
+                const originalText = buttonText.textContent;
+                buttonText.textContent = 'Processing...';
+                completeBtn.innerHTML = '<svg class="animate-spin w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>Processing...';
+                completeBtn.disabled = true;
 
                 // Simulate processing
                 setTimeout(() => {
-                    button.innerHTML = originalText;
-                    button.disabled = false;
-                    alert('Payment processed successfully! (Demo)');
+                    completeBtn.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg><span>${originalText}</span>`;
+                    completeBtn.disabled = false;
+                    
+                    if (paypalRadio.checked) {
+                        alert('Redirecting to PayPal... (Demo)');
+                        // Here you would redirect to PayPal
+                        // window.location.href = 'paypal_checkout_url';
+                    } else {
+                        alert('Payment processed successfully with Visa! (Demo)');
+                        // Here you would process Stripe payment
+                    }
                 }, 2000);
             });
         });
