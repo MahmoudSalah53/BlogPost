@@ -3,9 +3,13 @@
 namespace App\Livewire;
 
 use App\Models\Category;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+#[Layout('components.public.layouts')]
+#[Title('Categories')]
 class CategoriesList extends Component
 {
     use WithPagination;

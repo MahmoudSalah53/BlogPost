@@ -7,6 +7,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\PublicPagesController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UserProfile;
+use App\Livewire\CategoriesList;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -28,9 +29,7 @@ Route::controller(PostController::class)->group(function () {
 });
 
 // categories routes
-Route::controller(CategoryController::class)->group(function () {
-    Route::get('categories', 'index')->name('categories.index');
-});
+Route::get('categories', CategoriesList::class)->name('categories.index');
 
 // authors routes
 Route::controller(AuthorController::class)->group(function () {

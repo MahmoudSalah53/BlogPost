@@ -2,9 +2,7 @@
     <!-- Hero Section -->
     <section class="bg-zinc-100 dark:bg-zinc-900 pt-10 pb-8 border-b border-zinc-200 dark:border-zinc-700">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <flux:text as="h1" size="5xl" class="font-bold mb-4 text-zinc-900 dark:text-white">
-                Browse Categories
-            </flux:text>
+            <h1 class="text-2xl font-bold mb-4 text-zinc-900 dark:text-white">Browse Categories</h1>
 
             <flux:text size="lg" class="text-zinc-600 dark:text-zinc-300 mb-8">
                 Explore all available categories to find posts you love
