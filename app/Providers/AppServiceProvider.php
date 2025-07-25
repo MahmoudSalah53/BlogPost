@@ -2,11 +2,9 @@
 
 namespace App\Providers;
 
-use App\Observers\SubscriptionObserver;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-use App\Models\Subscription;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,6 +26,5 @@ class AppServiceProvider extends ServiceProvider
             return Auth::check() && Auth::user()->role === 'author';
         });
 
-        Subscription::observe(SubscriptionObserver::class);
     }
 }

@@ -23,11 +23,9 @@ class MembershipController extends Controller
 
     public function upgrade(Request $request)
     {
-        session([
-            'plan' => [
-                'name' => 'Premium',
-                'price' => '9.99'
-            ]
+        session()->flash('plan', [
+            'name' => 'Premium',
+            'price' => '9.99'
         ]);
 
         return redirect()->route('checkout');
@@ -35,8 +33,9 @@ class MembershipController extends Controller
 
     public function checkout()
     {
-        if (!session('plan')) {
-            return redirect()->route('membership.index')
+        if (!session()->has('plan')) {
+            return redirect()
+                ->route('membership.index')
                 ->with('error', 'Please select a plan first.');
         }
 
@@ -45,8 +44,7 @@ class MembershipController extends Controller
 
     public function processPayment(Request $request)
     {
-
-        if (!session('plan')) {
+        if (!session()->has('plan')) {
             return response()->json([
                 'success' => false,
                 'message' => 'No plan selected. Please go back and select a plan.'
@@ -57,13 +55,6 @@ class MembershipController extends Controller
             'payment_method' => 'required|in:stripe',
             'email' => 'required|email',
         ]);
-
-        if (!session('plan')) {
-            return response()->json([
-                'success' => false,
-                'message' => 'No plan selected'
-            ], 400);
-        }
 
         $plan = session('plan');
         $user = Auth::user();
