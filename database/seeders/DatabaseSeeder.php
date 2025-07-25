@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -17,8 +18,18 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'admin',
             'email' => 'admin@test.com',
-            'password' => \Hash::make('12345678'),
+            'role' => 'admin',
+            'password' => Hash::make('12345678'),
         ]);
+
+        User::create([
+            'name' => 'author',
+            'email' => 'author@test.com',
+            'role' => 'author',
+            'password' => Hash::make('12345678'),
+        ]);
+
+
         $this->call([
             PostSeeder::class,
             CategorySeeder::class,

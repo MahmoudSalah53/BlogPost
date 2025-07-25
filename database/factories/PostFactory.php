@@ -20,8 +20,9 @@ class PostFactory extends Factory
             'title' => $this->faker->sentence(),
             'content' => $this->faker->paragraph(3),
             'slug' => $this->faker->slug(),
+            'status' => 'published',
             'featured_image' => $this->faker->imageUrl(),
-            'author_id' => 1,
+            'author_id' => 2,
         ];
     }
 }
