@@ -31,8 +31,8 @@ Route::get('categories', CategoriesList::class)->name('categories.index');
 Route::get('authors', AuthorsList::class)->name('authors.index');
 
 // Membership routes
+Route::get('/membership', [MembershipController::class, 'index'])->name('membership.index');
 Route::middleware(['auth'])->group(function () {
-    Route::get('/membership', [MembershipController::class, 'index'])->name('membership.index');
     Route::post('/membership/upgrade', [MembershipController::class, 'upgrade'])->name('membership.upgrade');
     Route::get('/checkout', [MembershipController::class, 'checkout'])->name('checkout');
     Route::post('/membership/process-payment', [MembershipController::class, 'processPayment'])->name('membership.process-payment');
