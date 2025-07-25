@@ -308,7 +308,7 @@
                 style: {
                     base: {
                         fontSize: '16px',
-                        color: '#424770',
+                        color: '#f8f8f8ff',
                         '::placeholder': {
                             color: '#aab7c4',
                         },
