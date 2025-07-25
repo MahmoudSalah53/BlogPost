@@ -64,7 +64,7 @@ class Subscription extends Model
     $this->update([
         'status' => 'active',
         'starts_at' => now(),
-        'expires_at' => now()->addSeconds(60), // ← الحل
+        'expires_at' => now()->addSeconds(60),
     ]);
 }
 }

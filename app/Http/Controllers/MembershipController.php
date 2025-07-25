@@ -39,11 +39,15 @@ class MembershipController extends Controller
                 ->with('error', 'Please select a plan first.');
         }
 
+        session()->reflash();
+
         return view('checkout');
     }
 
     public function processPayment(Request $request)
     {
+        session()->reflash();
+
         if (!session()->has('plan')) {
             return response()->json([
                 'success' => false,
@@ -79,7 +83,7 @@ class MembershipController extends Controller
     {
         // Create PaymentIntent
         $paymentIntent = PaymentIntent::create([
-            'amount' => (int) ($plan['price'] * 100), // Convert to cents
+            'amount' => (int) ($plan['price'] * 100),
             'currency' => 'usd',
             'automatic_payment_methods' => [
                 'enabled' => true,
@@ -102,7 +106,7 @@ class MembershipController extends Controller
             'amount' => $plan['price'],
             'currency' => 'usd',
             'starts_at' => now(),
-            'expires_at' => now()->addSeconds(60), // ← الاشتراك ينتهي بعد 60 ثانية
+            'expires_at' => now()->addSeconds(60),
             'metadata' => [
                 'plan_name' => $plan['name'],
                 'email' => $request->email,
