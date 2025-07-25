@@ -26,7 +26,7 @@
                         <img src="{{ asset('storage/' . $author->avatar) }}" alt="{{ $author->name }}"
                             class="mb-4 w-[50px] h-[50px] object-cover rounded-xl ring-2 ring-blue-500" />
                     @else
-                        <flux:avatar :name='$author->name'/>
+                        <flux:avatar :name='$author->name' class="w-[50px] h-[50px] mb-4 rounded-xl" />
                     @endif
 
 
