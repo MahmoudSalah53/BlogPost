@@ -396,8 +396,13 @@
                         },
                         body: JSON.stringify({
                             payment_method: 'stripe',
-                            email: email
+                            email: email,
+                            plan: {
+                                name: '{{ $plan["name"] ?? "" }}',
+                                price: '{{ $plan["price"] ?? "" }}'
+                            }
                         })
+
                     });
 
                     const data = await response.json();

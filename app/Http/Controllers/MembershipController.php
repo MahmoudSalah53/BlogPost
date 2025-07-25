@@ -31,6 +31,7 @@ class MembershipController extends Controller
         return redirect()->route('checkout');
     }
 
+
     public function checkout()
     {
         if (!session()->has('plan')) {
@@ -39,28 +40,22 @@ class MembershipController extends Controller
                 ->with('error', 'Please select a plan first.');
         }
 
-        session()->reflash();
+        $plan = session('plan');
 
-        return view('checkout');
+        return view('checkout', compact('plan'));
     }
+
 
     public function processPayment(Request $request)
     {
-        session()->reflash();
-
-        if (!session()->has('plan')) {
-            return response()->json([
-                'success' => false,
-                'message' => 'No plan selected. Please go back and select a plan.'
-            ], 400);
-        }
-
         $request->validate([
-            'payment_method' => 'required|in:stripe',
+            'payment_method' => 'required|in:stripe,paypal',
             'email' => 'required|email',
+            'plan.name' => 'required|string',
+            'plan.price' => 'required|numeric',
         ]);
 
-        $plan = session('plan');
+        $plan = $request->plan;
         $user = Auth::user();
 
         try {
@@ -81,7 +76,6 @@ class MembershipController extends Controller
 
     private function processStripePayment($user, $plan, $request)
     {
-        // Create PaymentIntent
         $paymentIntent = PaymentIntent::create([
             'amount' => (int) ($plan['price'] * 100),
             'currency' => 'usd',
@@ -98,7 +92,6 @@ class MembershipController extends Controller
             'receipt_email' => $request->email,
         ]);
 
-        // Create pending subscription record
         $subscription = Subscription::create([
             'user_id' => $user->id,
             'stripe_payment_intent_id' => $paymentIntent->id,
@@ -113,7 +106,6 @@ class MembershipController extends Controller
                 'payment_method' => 'stripe',
             ],
         ]);
-
 
         Log::info('Subscription created', [
             'subscription_id' => $subscription->id,
