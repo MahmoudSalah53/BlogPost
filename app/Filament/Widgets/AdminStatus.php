@@ -2,6 +2,7 @@
 
 namespace App\Filament\Widgets;
 
+use App\Models\Post;
 use App\Models\User;
 use CyrildeWit\EloquentViewable\View;
 use Filament\Widgets\StatsOverviewWidget\Stat;
@@ -20,27 +21,24 @@ class AdminStatus extends BaseWidget
 
     protected function getStats(): array
     {
-         // استخدام Post model فقط للـ views
+
         $currentMonth = Period::create(now()->startOfMonth(), now());
         $previousMonth = Period::create(now()->subMonth()->startOfMonth(), now()->subMonth()->endOfMonth());
 
-        // احصائيات Views للـ Post model فقط باستخدام views() helper
-        $totalViews = views(\App\Models\Post::class)->count();
-        $uniqueViews = views(\App\Models\Post::class)->unique()->count();
+        $totalViews = views(Post::class)->count();
+        $uniqueViews = views(Post::class)->unique()->count();
 
-        // Views للشهر الحالي والسابق للـ Posts باستخدام period()
-        $currentMonthViews = views(\App\Models\Post::class)
+        $currentMonthViews = views(Post::class)
             ->period($currentMonth)
             ->count();
 
-        $previousMonthViews = views(\App\Models\Post::class)
+        $previousMonthViews = views(Post::class)
             ->period($previousMonth)
             ->count();
 
         $viewsIncrease = $currentMonthViews - $previousMonthViews;
         $viewsPercentage = $previousMonthViews > 0 ? round((($viewsIncrease / $previousMonthViews) * 100), 1) : 0;
 
-        // احصائيات المؤلفين
         $authorsCount = User::whereBetween('created_at', [now()->startOfMonth(), now()])
             ->where('role', 'author')
             ->count();

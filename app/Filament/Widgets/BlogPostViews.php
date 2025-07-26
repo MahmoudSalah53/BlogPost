@@ -2,6 +2,8 @@
 
 namespace App\Filament\Widgets;
 
+use App\Models\Post;
+use CyrildeWit\EloquentViewable\View;
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
 class BlogPostViews extends ApexChartWidget
@@ -15,6 +17,22 @@ class BlogPostViews extends ApexChartWidget
 
     protected function getOptions(): array
     {
+        $viewsData = [];
+        $daysLabels = [];
+
+        for ($i = 6; $i >= 0; $i--) {
+            $date = now()->subDays($i);
+            $dayStart = (clone $date)->startOfDay();
+            $dayEnd = (clone $date)->endOfDay();
+
+            $viewsCount = View::where('viewable_type', Post::class)
+                ->whereBetween('viewed_at', [$dayStart, $dayEnd])
+                ->count();
+
+            $viewsData[] = $viewsCount;
+            $daysLabels[] = $date->format('D');
+        }
+
         return [
             'chart' => [
                 'type' => 'bar',
@@ -33,17 +51,18 @@ class BlogPostViews extends ApexChartWidget
             'series' => [
                 [
                     'name' => 'Views',
-                    'data' => [7, 4, 6, 10, 14, 7, 5, 9, 10, 15, 13, 2],
+                    'data' => $viewsData,
                 ],
             ],
             'xaxis' => [
-                'categories' => ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                'categories' => $daysLabels,
                 'labels' => [
                     'style' => [
                         'fontFamily' => 'inherit',
-                        'fontSize' => '12px',
+                        'fontSize' => '10px',
                         'colors' => '#6B7280',
                     ],
+                    'rotate' => 0,
                 ],
                 'axisBorder' => [
                     'show' => false,
@@ -73,7 +92,9 @@ class BlogPostViews extends ApexChartWidget
             ],
             'tooltip' => [
                 'enabled' => true,
-
+                'y' => [
+                    'formatter' => 'function(val) { return val + " views" }',
+                ],
             ],
             'legend' => [
                 'show' => false,
