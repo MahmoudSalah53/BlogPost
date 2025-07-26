@@ -31,7 +31,6 @@ class MembershipController extends Controller
         return redirect()->route('checkout');
     }
 
-
     public function checkout()
     {
         if (!session()->has('plan')) {
@@ -41,10 +40,8 @@ class MembershipController extends Controller
         }
 
         $plan = session('plan');
-
         return view('checkout', compact('plan'));
     }
-
 
     public function processPayment(Request $request)
     {
@@ -98,8 +95,8 @@ class MembershipController extends Controller
             'status' => 'pending',
             'amount' => $plan['price'],
             'currency' => 'usd',
-            'starts_at' => now(),
-            'expires_at' => now()->addSeconds(60),
+            'starts_at' => null, 
+            'expires_at' => null, 
             'metadata' => [
                 'plan_name' => $plan['name'],
                 'email' => $request->email,
@@ -138,14 +135,46 @@ class MembershipController extends Controller
                 ->with('error', 'Subscription not found.');
         }
 
-        session()->forget('plan');
+        try {
+            $paymentIntent = PaymentIntent::retrieve($paymentIntentId);
+            
+            if ($paymentIntent->status === 'succeeded') {
 
-        if ($subscription->status === 'active') {
-            return redirect(\Filament\Facades\Filament::getPanel('author')->getUrl())
-                ->with('success', 'Welcome to your Premium membership!');
+                $subscription->update([
+                    'status' => 'active',
+                    'starts_at' => now(),
+                    'expires_at' => now()->addDays(30),
+                ]);
+
+                Auth::user()->update(['role' => 'author']);
+
+                Log::info('Subscription activated', [
+                    'subscription_id' => $subscription->id,
+                    'user_id' => Auth::id(),
+                    'expires_at' => $subscription->expires_at
+                ]);
+
+                session()->forget('plan');
+
+                return redirect(\Filament\Facades\Filament::getPanel('author')->getUrl())
+                    ->with('success', 'Welcome to your Premium membership!');
+            } else {
+                Log::warning('Payment not succeeded', [
+                    'payment_intent_id' => $paymentIntentId,
+                    'status' => $paymentIntent->status
+                ]);
+
+                return redirect()->route('membership.index')
+                    ->with('error', 'Payment was not successful.');
+            }
+        } catch (\Exception $e) {
+            Log::error('Error verifying payment', [
+                'payment_intent_id' => $paymentIntentId,
+                'error' => $e->getMessage()
+            ]);
+
+            return redirect()->route('membership.index')
+                ->with('error', 'Error verifying payment.');
         }
-
-        return redirect(\Filament\Facades\Filament::getPanel('author')->getUrl())
-            ->with('success', 'Welcome to your Premium membership!');
     }
 }
