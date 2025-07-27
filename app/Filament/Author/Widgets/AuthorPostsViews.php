@@ -2,40 +2,55 @@
 
 namespace App\Filament\Author\Widgets;
 
+use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
+use CyrildeWit\EloquentViewable\View;
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
 class AuthorPostsViews extends ApexChartWidget
 {
     /**
      * Chart Id
-     *
-     * @var string
      */
     protected static ?string $chartId = 'authorPostsViews';
 
     /**
      * Widget Title
-     *
-     * @var string|null
      */
     protected static ?string $heading = 'Views';
 
     protected static ?string $loadingIndicator = 'Loading...';
-
     protected static ?int $sort = 2;
-
     protected static bool $isLazy = false;
-
     protected static ?string $pollingInterval = null;
 
     /**
      * Chart options (series, labels, types, size, animations...)
      * https://apexcharts.com/docs/options
-     *
-     * @return array
      */
     protected function getOptions(): array
     {
+
+        $authorPostIds = Post::where('author_id', Auth::id())->pluck('id');
+
+        $viewsData = [];
+        $daysLabels = [];
+
+
+        for ($i = 6; $i >= 0; $i--) {
+            $date = now()->subDays($i);
+            $dayStart = $date->copy()->startOfDay();
+            $dayEnd = $date->copy()->endOfDay();
+
+            $viewsCount = View::where('viewable_type', Post::class)
+                ->whereIn('viewable_id', $authorPostIds)
+                ->whereBetween('viewed_at', [$dayStart, $dayEnd])
+                ->count();
+
+            $viewsData[] = $viewsCount;
+            $daysLabels[] = $date->format('D');
+        }
+
         return [
             'chart' => [
                 'type' => 'bar',
@@ -45,71 +60,66 @@ class AuthorPostsViews extends ApexChartWidget
                 ],
                 'fontFamily' => 'inherit',
             ],
-            'series' => [
-                [
-                    'name' => 'Views',
-                    'data' => [7, 4, 6, 10, 14, 7, 5, 9, 10, 15, 13, 18],
-                ],
-            ],
             'plotOptions' => [
                 'bar' => [
                     'borderRadius' => 4,
                     'columnWidth' => '60%',
+                ]
+            ],
+            'series' => [
+                [
+                    'name' => 'Views',
+                    'data' => $viewsData,
                 ],
             ],
-            'dataLabels' => [
-                'enabled' => false,
-            ],
-            'stroke' => [
-                'show' => true,
-                'width' => 0,
-                'colors' => ['transparent'],
-            ],
             'xaxis' => [
-                'categories' => ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                'categories' => $daysLabels,
+                'labels' => [
+                    'style' => [
+                        'fontFamily' => 'inherit',
+                        'fontSize' => '10px',
+                        'colors' => '#6B7280',
+                    ],
+                    'rotate' => 0,
+                ],
                 'axisBorder' => [
                     'show' => false,
                 ],
                 'axisTicks' => [
                     'show' => false,
                 ],
-                'labels' => [
-                    'style' => [
-                        'fontFamily' => 'inherit',
-                        'colors' => '#f59e0b',
-                    ],
-                ],
-                'tooltip' => [
-                    'enabled' => true,
-                ],
             ],
             'yaxis' => [
-                'show' => true,
                 'labels' => [
                     'style' => [
                         'fontFamily' => 'inherit',
-                        'colors' => '#6b7280',
+                        'fontSize' => '12px',
+                        'colors' => '#6B7280',
                     ],
-
                 ],
             ],
-            'fill' => [
-                'opacity' => 1,
-                'type' => 'solid',
+            'grid' => [
+                'show' => false,
             ],
             'colors' => ['#f59e0b'],
-            'grid' => [
+            'dataLabels' => [
+                'enabled' => false,
+            ],
+            'stroke' => [
                 'show' => false,
             ],
             'tooltip' => [
                 'enabled' => true,
-                'shared' => true,
-                'intersect' => false,
-                'style' => [
-                    'fontFamily' => 'inherit',
+                'y' => [
+                    'formatter' => 'function(val) { return val + " views" }',
                 ],
-
             ],
+            'legend' => [
+                'show' => false,
+            ],
+            'fill' => [
+                'opacity' => 1,
+            ]
         ];
     }
 }
