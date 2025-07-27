@@ -117,36 +117,34 @@
                                         class="w-20 h-20 bg-gradient-to-r from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center mx-auto mb-6">
                                         <span class="text-white text-2xl font-bold">PayPal</span>
                                     </div>
-                                    <h3 class="text-xl font-semibold text-zinc-900 dark:text-white mb-2">Pay with PayPal
+                                    <h3 class="text-xl font-semibold text-zinc-900 dark:text-white mb-2">PayPal Payment
                                     </h3>
-                                    <p class="text-zinc-600 dark:text-zinc-300 mb-6">You'll be redirected to PayPal to
-                                        complete your payment securely.</p>
-
-                                    <div class="max-w-md mx-auto mb-6">
-                                        <label
-                                            class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2 text-left">Email
-                                            Address</label>
-                                        <input type="email" id="paypal-email" placeholder="your.email@example.com"
-                                            class="w-full px-4 py-3 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded-xl focus:ring-2 focus:ring-amber-500 dark:focus:ring-fuchsia-500 focus:border-transparent text-zinc-900 dark:text-white transition-all">
-                                    </div>
 
                                     <div
-                                        class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4 max-w-md mx-auto">
+                                        class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-xl p-6 max-w-md mx-auto mb-6">
                                         <div class="flex items-start">
-                                            <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 mr-3 flex-shrink-0"
-                                                fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd"
-                                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                                                    clip-rule="evenodd" />
+                                            <svg class="w-6 h-6 text-amber-600 dark:text-amber-400 mt-0.5 mr-3 flex-shrink-0"
+                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                                             </svg>
                                             <div class="text-left">
-                                                <h4 class="text-sm font-medium text-blue-800 dark:text-blue-300">Secure
-                                                    PayPal Payment</h4>
-                                                <p class="text-xs text-blue-600 dark:text-blue-400 mt-1">Pay with your
-                                                    PayPal account or any major credit card through PayPal's secure
-                                                    checkout.</p>
+                                                <h4 class="text-lg font-medium text-amber-800 dark:text-amber-300">
+                                                    Coming Soon</h4>
+                                                <p class="text-sm text-amber-600 dark:text-amber-400 mt-2">
+                                                    PayPal payments will be available soon. We're currently working to
+                                                    integrate this payment method.
+                                                    Please use credit card payment for now.
+                                                </p>
                                             </div>
                                         </div>
+                                    </div>
+
+                                    <div class="flex justify-center">
+                                        <button type="button" onclick="document.getElementById('stripe').click()"
+                                            class="px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 dark:from-fuchsia-600 dark:to-purple-600 text-white font-medium rounded-lg hover:shadow-md transition-all">
+                                            Use Credit Card Instead
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -298,166 +296,139 @@
     <!-- Stripe JS -->
     <script src="https://js.stripe.com/v3/"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Initialize Stripe
-            const stripe = Stripe('{{ config("services.stripe.key") }}');
-            const elements = stripe.elements();
+    document.addEventListener('DOMContentLoaded', function () {
+        // Initialize Stripe
+        const stripe = Stripe('{{ config("services.stripe.key") }}');
+        const elements = stripe.elements();
 
-            // Create card element
-            const cardElement = elements.create('card', {
-                style: {
-                    base: {
-                        fontSize: '16px',
-                        color: '#f8f8f8ff',
-                        '::placeholder': {
-                            color: '#aab7c4',
-                        },
+        // Create card element
+        const cardElement = elements.create('card', {
+            style: {
+                base: {
+                    fontSize: '16px',
+                    color: '#f8f8f8ff',
+                    '::placeholder': {
+                        color: '#aab7c4',
                     },
                 },
-            });
-            cardElement.mount('#card-element');
+            },
+        });
+        cardElement.mount('#card-element');
 
-            // Handle real-time validation errors from the card Element
-            cardElement.on('change', ({ error }) => {
-                const displayError = document.getElementById('card-errors');
-                if (error) {
-                    displayError.textContent = error.message;
-                } else {
-                    displayError.textContent = '';
-                }
-            });
+        // Handle real-time validation errors from the card Element
+        cardElement.on('change', ({ error }) => {
+            const displayError = document.getElementById('card-errors');
+            if (error) {
+                displayError.textContent = error.message;
+            } else {
+                displayError.textContent = '';
+            }
+        });
 
-            // Get payment method radio buttons
-            const stripeRadio = document.getElementById('stripe');
-            const paypalRadio = document.getElementById('paypal');
-            const stripeForm = document.getElementById('stripe-form');
-            const paypalForm = document.getElementById('paypal-form');
-            const completeBtn = document.getElementById('complete-purchase-btn');
-            const buttonText = document.getElementById('button-text');
+        // Get payment method radio buttons
+        const stripeRadio = document.getElementById('stripe');
+        const paypalRadio = document.getElementById('paypal');
+        const stripeForm = document.getElementById('stripe-form');
+        const paypalForm = document.getElementById('paypal-form');
+        const completeBtn = document.getElementById('complete-purchase-btn');
+        const buttonText = document.getElementById('button-text');
 
-            // Function to switch payment forms
-            function switchPaymentMethod() {
-                if (stripeRadio.checked) {
-                    stripeForm.style.display = 'block';
-                    paypalForm.style.display = 'none';
-                    buttonText.textContent = 'Complete Purchase';
-                } else if (paypalRadio.checked) {
-                    stripeForm.style.display = 'none';
-                    paypalForm.style.display = 'block';
-                    buttonText.textContent = 'Pay with PayPal';
-                }
+        // Function to switch payment forms
+        function switchPaymentMethod() {
+            if (stripeRadio.checked) {
+                stripeForm.style.display = 'block';
+                paypalForm.style.display = 'none';
+                buttonText.textContent = 'Complete Purchase';
+            } else if (paypalRadio.checked) {
+                stripeForm.style.display = 'none';
+                paypalForm.style.display = 'block';
+                buttonText.textContent = 'Pay with PayPal';
+            }
+        }
+
+        // Add event listeners for radio buttons
+        stripeRadio.addEventListener('change', switchPaymentMethod);
+        paypalRadio.addEventListener('change', switchPaymentMethod);
+
+        // Initialize with Stripe selected
+        switchPaymentMethod();
+
+        // Handle form submission
+        completeBtn.addEventListener('click', async function (e) {
+            e.preventDefault();
+
+            // If PayPal is selected, just show the coming soon message
+            if (paypalRadio.checked) {
+                return;
             }
 
-            // Add event listeners for radio buttons
-            stripeRadio.addEventListener('change', switchPaymentMethod);
-            paypalRadio.addEventListener('change', switchPaymentMethod);
+            // Add loading state for Stripe payment
+            const originalHtml = completeBtn.innerHTML;
+            completeBtn.innerHTML = '<svg class="animate-spin w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>Processing...';
+            completeBtn.disabled = true;
 
-            // Initialize with Stripe selected
-            switchPaymentMethod();
+            try {
+                await processStripePayment();
+            } catch (error) {
+                console.error('Payment error:', error);
+                alert('Payment failed. Please try again.');
+            } finally {
+                completeBtn.innerHTML = originalHtml;
+                completeBtn.disabled = false;
+            }
+        });
 
-            // Handle form submission
-            completeBtn.addEventListener('click', async function (e) {
-                e.preventDefault();
+        async function processStripePayment() {
+            const email = document.getElementById('email').value;
 
-                // Add loading state
-                const originalHtml = completeBtn.innerHTML;
-                completeBtn.innerHTML = '<svg class="animate-spin w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>Processing...';
-                completeBtn.disabled = true;
-
-                try {
-                    if (stripeRadio.checked) {
-                        await processStripePayment();
-                    } else if (paypalRadio.checked) {
-                        await processPayPalPayment();
-                    }
-                } catch (error) {
-                    console.error('Payment error:', error);
-                    alert('Payment failed. Please try again.');
-                } finally {
-                    completeBtn.innerHTML = originalHtml;
-                    completeBtn.disabled = false;
-                }
-            });
-
-            async function processStripePayment() {
-                const email = document.getElementById('email').value;
-
-                if (!email) {
-                    alert('Please enter your email address');
-                    return;
-                }
-
-                try {
-                    const response = await fetch('{{ route("membership.process-payment") }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                        },
-                        body: JSON.stringify({
-                            payment_method: 'stripe',
-                            email: email,
-                            plan: {
-                                name: '{{ $plan["name"] ?? "" }}',
-                                price: '{{ $plan["price"] ?? "" }}'
-                            }
-                        })
-
-                    });
-
-                    const data = await response.json();
-
-                    if (!data.success) {
-                        throw new Error(data.message || 'Payment processing failed');
-                    }
-
-                    const result = await stripe.confirmCardPayment(data.client_secret, {
-                        payment_method: {
-                            card: cardElement,
-                            billing_details: { email: email },
-                        }
-                    });
-
-                    if (result.error) {
-                        throw new Error(result.error.message);
-                    }
-
-                    window.location.href = '{{ route("payment.success") }}?payment_intent=' + data.payment_intent_id;
-                } catch (error) {
-                    console.error('Payment error:', error);
-                    alert('Payment failed: ' + error.message);
-                    throw error;
-                }
+            if (!email) {
+                alert('Please enter your email address');
+                return;
             }
 
-            async function processPayPalPayment() {
-                const email = document.getElementById('paypal-email').value;
-
-                if (!email) {
-                    alert('Please enter your email address');
-                    return;
-                }
-
+            try {
                 const response = await fetch('{{ route("membership.process-payment") }}', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
                     },
                     body: JSON.stringify({
-                        payment_method: 'paypal',
-                        email: email
+                        payment_method: 'stripe',
+                        email: email,
+                        plan: {
+                            name: '{{ $plan["name"] ?? "" }}',
+                            price: '{{ $plan["price"] ?? "" }}'
+                        }
                     })
                 });
 
                 const data = await response.json();
 
-                if (data.success) {
-                    window.location.href = data.redirect;
-                } else {
-                    throw new Error(data.message);
+                if (!data.success) {
+                    throw new Error(data.message || 'Payment processing failed');
                 }
+
+                const result = await stripe.confirmCardPayment(data.client_secret, {
+                    payment_method: {
+                        card: cardElement,
+                        billing_details: { email: email },
+                    }
+                });
+
+                if (result.error) {
+                    throw new Error(result.error.message);
+                }
+
+                window.location.href = '{{ route("payment.success") }}?payment_intent=' + data.payment_intent_id;
+            } catch (error) {
+                console.error('Payment error:', error);
+                alert('Payment failed: ' + error.message);
+                throw error;
             }
-        });
-    </script>
+        }
+
+        // Removed the processPayPalPayment function as it's no longer needed
+    });
+</script>
 </x-public.layouts>
