@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Auth;
 
+use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
@@ -15,26 +16,37 @@ use Livewire\Component;
 #[Layout('components.layouts.auth')]
 class Login extends Component
 {
-    #[Validate('required|string|email')]
+    #[Validate('required|string|email', message: 'Please enter a valid email address')]
     public string $email = '';
-    #[Validate('required|string')]
+
+    #[Validate('required|string', message: 'Password is required')]
     public string $password = '';
+
     public bool $remember = false;
 
     /**
      * Handle an incoming authentication request.
      */
-    public function login (): void
+    public function login(): void
     {
         $this->validate();
 
         $this->ensureIsNotRateLimited();
 
-        if ( !Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember) ) {
-            RateLimiter::hit($this->throttleKey());
+        // Check if email exists first
+        $user = User::where('email', $this->email)->first();
 
+        if (!$user) {
+            RateLimiter::hit($this->throttleKey());
             throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
+                'email' => 'Email address not found.',
+            ]);
+        }
+
+        if (!Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
+            RateLimiter::hit($this->throttleKey());
+            throw ValidationException::withMessages([
+                'password' => 'Incorrect password.',
             ]);
         }
 
@@ -47,9 +59,9 @@ class Login extends Component
     /**
      * Ensure the authentication request is not rate limited.
      */
-    protected function ensureIsNotRateLimited (): void
+    protected function ensureIsNotRateLimited(): void
     {
-        if ( !RateLimiter::tooManyAttempts($this->throttleKey(), 5) ) {
+        if (!RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return;
         }
 
@@ -68,7 +80,7 @@ class Login extends Component
     /**
      * Get the authentication rate limiting throttle key.
      */
-    protected function throttleKey (): string
+    protected function throttleKey(): string
     {
         return Str::transliterate(Str::lower($this->email) . '|' . request()->ip());
     }

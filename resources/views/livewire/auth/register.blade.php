@@ -24,6 +24,10 @@
                     class="w-full rounded-xl border-slate-300 dark:border-zinc-600 focus:ring-purple-500 focus:border-purple-500"
                     placeholder="John Doe"
                 />
+                @error('name')
+    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+@enderror
+
             </div>
 
             <!-- Email -->
@@ -39,6 +43,10 @@
                     class="w-full rounded-xl border-slate-300 dark:border-zinc-600 focus:ring-purple-500 focus:border-purple-500"
                     placeholder="you@example.com"
                 />
+                @error('email')
+    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+@enderror
+
             </div>
 
             <!-- Password -->
@@ -55,6 +63,10 @@
                     placeholder="••••••••"
                     viewable
                 />
+                @error('password')
+    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+@enderror
+
             </div>
 
             <!-- Confirm Password -->
