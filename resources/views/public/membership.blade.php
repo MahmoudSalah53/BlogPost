@@ -60,30 +60,52 @@
                     </div>
 
                     <div class="mt-8 relative">
-                        <flux:button
-                            class="w-full bg-zinc-200 hover:bg-zinc-300 text-zinc-700 dark:bg-zinc-700 dark:hover:bg-zinc-600 dark:text-zinc-200 transition-colors"
-                            disabled>
-                            Current Plan
-                        </flux:button>
+                        @if(auth()->user()->role === 'reader')
+                            <flux:button
+                                class="w-full bg-zinc-200 hover:bg-zinc-300 text-zinc-700 dark:bg-zinc-700 dark:hover:bg-zinc-600 dark:text-zinc-200 transition-colors"
+                                disabled>
+                                Current Plan
+                            </flux:button>
+                        @elseif(auth()->user()->role === 'author')
+                            <flux:button
+                                class="w-full bg-zinc-200 text-zinc-500 dark:bg-zinc-700 dark:text-zinc-400 cursor-not-allowed"
+                                disabled>
+                                You're Premium Author
+                            </flux:button>
+                        @else
+                            <flux:button
+                                class="w-full bg-zinc-200 text-zinc-500 dark:bg-zinc-700 dark:text-zinc-400 cursor-not-allowed"
+                                disabled>
+                                Admin Account
+                            </flux:button>
+                        @endif
                     </div>
                 </div>
 
                 <!-- Premium Plan with Glow Effect -->
                 <div class="relative p-8 bg-white dark:bg-zinc-800 border-2 border-indigo-500 rounded-2xl shadow-xl flex flex-col transform hover:scale-[1.01] transition-transform duration-300">
-                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                        <div class="px-6 py-1 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 dark:from-fuchsia-600 dark:to-purple-600 shadow-md">
-                            <span class="text-sm font-bold text-white uppercase tracking-wide">Most Popular</span>
+                    @if(auth()->user()->role !== 'admin')
+                        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                            <div class="px-6 py-1 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 dark:from-fuchsia-600 dark:to-purple-600 shadow-md">
+                                <span class="text-sm font-bold text-white uppercase tracking-wide">Most Popular</span>
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
                     <div class="absolute -inset-1 bg-gradient-to-r from-amber-400/20 to-orange-500/20 dark:from-fuchsia-500/20 dark:to-purple-600/20 rounded-2xl blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
                     <div class="flex-1 relative">
                         <div class="flex justify-between items-start">
                             <flux:text size="xl" weight="semibold" class="text-zinc-900 dark:text-white">Premium</flux:text>
-                            <div class="px-3 py-1 rounded-full bg-amber-50 dark:bg-fuchsia-900/30 text-amber-600 dark:text-fuchsia-300 text-sm font-medium">
-                                30 Days Access
-                            </div>
+                            @if(auth()->user()->role === 'author' && auth()->user()->hasActiveSubscription())
+                                <div class="px-3 py-1 rounded-full bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-300 text-sm font-medium">
+                                    Active Subscription
+                                </div>
+                            @elseif(auth()->user()->role !== 'admin')
+                                <div class="px-3 py-1 rounded-full bg-amber-50 dark:bg-fuchsia-900/30 text-amber-600 dark:text-fuchsia-300 text-sm font-medium">
+                                    30 Days Access
+                                </div>
+                            @endif
                         </div>
 
                         <div class="mt-4 flex items-baseline text-zinc-900 dark:text-white">
@@ -92,7 +114,11 @@
                         </div>
 
                         <flux:text class="mt-3 text-zinc-500 dark:text-zinc-400">
-                            Full publishing capabilities
+                            @if(auth()->user()->role === 'admin')
+                                Administrative access included
+                            @else
+                                Full publishing capabilities
+                            @endif
                         </flux:text>
 
                         <!-- Enhanced Features List -->
@@ -128,19 +154,57 @@
                                 <span class="ml-3 text-zinc-600 dark:text-zinc-300 font-medium">Exclusive content access</span>
                             </li>
                         </ul>
+
+                        <!-- Subscription Status for Authors -->
+                        @if(auth()->user()->role === 'author' && auth()->user()->hasActiveSubscription())
+                            <div class="mt-6 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                                <div class="flex items-center">
+                                    <flux:icon name="check-circle" size="sm" class="text-green-500 mr-2" />
+                                    <span class="text-sm font-medium text-green-800 dark:text-green-200">
+                                        You're currently subscribed to Premium
+                                    </span>
+                                </div>
+                                @if(auth()->user()->activeSubscription())
+                                    <p class="text-xs text-green-600 dark:text-green-300 mt-1">
+                                        Expires: {{ auth()->user()->activeSubscription()->expires_at->format('M d, Y') }}
+                                    </p>
+                                @endif
+                            </div>
+                        @endif
                     </div>
 
                     <div class="mt-8 relative">
-                        <form action="{{ route('membership.upgrade') }}"method="POST">
-                            @csrf
+                        @if(auth()->user()->role === 'admin')
                             <flux:button 
-                                type="submit"
-                                class="cursor-pointer w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white dark:from-fuchsia-600 dark:to-purple-600 dark:hover:from-fuchsia-700 dark:hover:to-purple-700 shadow-lg hover:shadow-amber-200/50 dark:hover:shadow-fuchsia-200/20 transition-all"
-                                icon="arrow-right"
-                                icon-position="right">
-                                Upgrade Now - Start Publishing
+                                class="w-full bg-gray-400 text-gray-600 dark:bg-gray-600 dark:text-gray-400 cursor-not-allowed"
+                                disabled>
+                                Not Available for Admin Users
                             </flux:button>
-                        </form>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
+                                Admin accounts have full access without subscription
+                            </p>
+                        @elseif(auth()->user()->role === 'author' && auth()->user()->hasActiveSubscription())
+                            <flux:button 
+                                class="w-full bg-green-500 hover:bg-green-600 text-white shadow-lg transition-all"
+                                disabled>
+                                <flux:icon name="check-circle" size="sm" class="mr-2" />
+                                Currently Subscribed
+                            </flux:button>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
+                                You have access to all premium features
+                            </p>
+                        @else
+                            <form action="{{ route('membership.upgrade') }}" method="POST">
+                                @csrf
+                                <flux:button 
+                                    type="submit"
+                                    class="cursor-pointer w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white dark:from-fuchsia-600 dark:to-purple-600 dark:hover:from-fuchsia-700 dark:hover:to-purple-700 shadow-lg hover:shadow-amber-200/50 dark:hover:shadow-fuchsia-200/20 transition-all"
+                                    icon="arrow-right"
+                                    icon-position="right">
+                                    Upgrade Now - Start Publishing
+                                </flux:button>
+                            </form>
+                        @endif
                     </div>
                 </div>
             </div>

@@ -427,8 +427,6 @@
                 throw error;
             }
         }
-
-        // Removed the processPayPalPayment function as it's no longer needed
     });
 </script>
 </x-public.layouts>
