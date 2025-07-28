@@ -15,8 +15,8 @@ return new class extends Migration
             $table->string('status')->default('pending'); // pending, active, expired, cancelled
             $table->decimal('amount', 8, 2);
             $table->string('currency', 3)->default('USD');
-            $table->timestamp('starts_at')->nullable();     // ← التعديل هنا
-            $table->timestamp('expires_at')->nullable();    // ← التعديل هنا
+            $table->timestamp('starts_at')->nullable(); 
+            $table->timestamp('expires_at')->nullable(); 
             $table->json('metadata')->nullable();
             $table->timestamps();
 
