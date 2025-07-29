@@ -1,15 +1,14 @@
 # Laravel TALL Stack Platform
+[![Laravel](https://img.shields.io/badge/Laravel-12.x-ff2d20?logo=laravel&logoColor=white)](https://laravel.com)
+[![Livewire](https://img.shields.io/badge/Livewire-3.x-purple?logo=laravel&logoColor=white)](https://livewire.laravel.com)
+[![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.x-06b6d4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![Alpine.js](https://img.shields.io/badge/Alpine.js-latest-8bc0d0?logo=alpine.js&logoColor=white)](https://alpinejs.dev)
+[![PHP](https://img.shields.io/badge/PHP-8.3%2B-777bb4?logo=php&logoColor=white)](https://www.php.net)
+[![Stripe](https://img.shields.io/badge/Stripe-Integrated-635bff?logo=stripe&logoColor=white)](https://stripe.com)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/MahmoudSalah53/BlogPost?style=social)](https://github.com/MahmoudSalah53/BlogPost/stargazers)
 
 A comprehensive content management platform built with the TALL stack (Tailwind CSS, Alpine.js, Laravel, Livewire) featuring role-based access control, subscription management, and analytics dashboard.
-
-[![GitHub Stars](https://img.shields.io/github/stars/MahmoudSalah53/BlogPost?style=social)](https://github.com/MahmoudSalah53/BlogPost/stargazers)
-[![License](https://img.shields.io/github/license/MahmoudSalah53/BlogPost)](LICENSE)
-[![PHP](https://img.shields.io/badge/PHP-8.3-blue)](https://www.php.net/)
-[![Laravel](https://img.shields.io/badge/Laravel-12-red)](https://laravel.com/)
-[![Livewire](https://img.shields.io/badge/Livewire-3-orange)](https://livewire.laravel.com/)
-[![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.x-blueviolet)](https://tailwindcss.com/)
-[![Filament](https://img.shields.io/badge/Filament-3.0-purple)](https://filamentphp.com/)
-[![Stripe](https://img.shields.io/badge/Stripe-Enabled-lightgrey)](https://stripe.com)
 
 ---
 
@@ -73,76 +72,30 @@ cd BlogPost
 composer install
 npm install
 
-Step 2: Environment Configuration
-bash
-Copy
-Edit
+### Step 2: Environment Configuration
+```bash
 cp .env.example .env
 php artisan key:generate
-Step 3: Database Setup
-bash
-Copy
-Edit
+
+### Step 3: Database Setup
+```bash
 php artisan migrate --seed
 php artisan storage:link
-Step 4: Build & Launch
-bash
-Copy
-Edit
+
+### Step 4: Build & Launch
+```bash
 npm run dev
 php artisan serve
-🔧 Stripe Payment Setup
-Add the following to your .env file:
 
-env
-Copy
-Edit
+### 🔧 Stripe Payment Setup
+Add the following to your .env file:
+```bash
 STRIPE_KEY=pk_test_your_stripe_publishable_key
 STRIPE_SECRET=sk_test_your_stripe_secret_key
 STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret_key
+
+
 💡 Tip: Use test keys for development. Replace with live keys for production.
 
-📱 Platform Usage
-👨‍💼 Admin Dashboard
-📊 Analytics Overview
 
-👥 User Management
 
-📝 Content Moderation
-
-💰 Subscription Monitoring
-
-✍️ Author Panel
-📝 Rich Post Creation
-
-📈 Performance Metrics
-
-👥 Audience Interaction
-
-👥 Reader Interface
-🔍 Content Discovery
-
-💬 Post Interactions (like, save, comment)
-
-👤 Follow Authors
-
-💳 Manage Subscriptions
-
-👥 Contributors
-Developed collaboratively by:
-
-Mahmoud Salah
-
-Khaled Abdalah
-
-🐛 Support & Issues
-Have a bug or feature request?
-
-🐞 Open an Issue
-
-🌟 Star the Repo
-
-🍴 Fork This Project
-
-📄 License
-Licensed under the MIT License.
