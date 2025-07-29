@@ -4,10 +4,10 @@
 [![Livewire](https://img.shields.io/badge/Livewire-3.x-purple?logo=laravel&logoColor=white)](https://livewire.laravel.com)
 [![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.x-06b6d4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 [![Alpine.js](https://img.shields.io/badge/Alpine.js-latest-8bc0d0?logo=alpine.js&logoColor=white)](https://alpinejs.dev)
-[![PHP](https://img.shields.io/badge/PHP-8.2%2B-777bb4?logo=php&logoColor=white)](https://www.php.net)
+[![PHP](https://img.shields.io/badge/PHP-8.3%2B-777bb4?logo=php&logoColor=white)](https://www.php.net)
 [![Stripe](https://img.shields.io/badge/Stripe-Integrated-635bff?logo=stripe&logoColor=white)](https://stripe.com)
 [![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](LICENSE)
-[![GitHub Stars](https://img.shields.io/github/stars/MahmoudSalah53/BlogPost?style=social)](https://github.com/MahmoudSalah53/BlogPost/stargazers)
+[![GitHub Stars](https://img.shields.io/github/stars/MahmoudSalah53/BlogPost?style=social)
 
 A comprehensive content management platform built with the TALL stack (Tailwind CSS, Alpine.js, Laravel, Livewire) featuring role-based access control, subscription management, and analytics dashboard.
 
@@ -15,15 +15,15 @@ A comprehensive content management platform built with the TALL stack (Tailwind 
 
 ## 🛠️ Tech Stack
 
-- **Laravel 12** – Backend framework
-- **Livewire 3.0** – Full-stack framework for Laravel
-- **Alpine.js** – Minimal JavaScript framework
-- **Tailwind CSS** – Utility-first CSS framework
-- **Livewire Starter Kit** – Authentication scaffolding
-- **Flux UI** – Modern UI components
-- **Filament 3.0** – Admin panel framework
-- **Stripe** – Payment processing
-- **Ajax & NPM** – Frontend build tools
+- **Laravel 12** – Backend framework  
+- **Livewire 3.0** – Full-stack framework for Laravel  
+- **Alpine.js** – Minimal JavaScript framework  
+- **Tailwind CSS** – Utility-first CSS framework  
+- **Livewire Starter Kit** – Authentication scaffolding  
+- **Flux UI** – Modern UI components  
+- **Filament 3.0** – Admin panel framework  
+- **Stripe** – Payment processing  
+- **Ajax & NPM** – Frontend build tools  
 
 ---
 
@@ -53,7 +53,7 @@ A comprehensive content management platform built with the TALL stack (Tailwind 
 
 ## 📋 System Requirements
 
-- PHP 8.2+
+- PHP 8.3+
 - Laravel 12
 - Composer
 - NPM
@@ -89,3 +89,46 @@ npm run dev
 
 # 8. Start the development server
 php artisan serve
+
+🔧 Stripe Configuration
+Add these to your .env file:
+
+env
+Copy
+Edit
+STRIPE_KEY=your_stripe_publishable_key
+STRIPE_SECRET=your_stripe_secret_key
+STRIPE_WEBHOOK_SECRET=your_webhook_secret_key
+
+📱 Usage
+Admin Dashboard
+View analytics
+
+Manage users and content
+
+Monitor subscriptions
+
+Author Panel
+Create and manage posts
+
+Monitor user engagement
+
+Reader Interface
+Browse content
+
+Like, save, and comment
+
+Follow authors
+
+Manage subscriptions
+
+🤝 Contributing
+This project was developed collaboratively by:
+
+[Mahmoud Salah](https://github.com/MahmoudSalah53) [Khaled Abdalah](https://github.com/khaledAbdalah)
+
+🐛 Issues & Support
+If you encounter any issues or need support, please open an issue on the GitHub repository.
+
+📄 License
+This project is open-sourced software licensed under the MIT license.
