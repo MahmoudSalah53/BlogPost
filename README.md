@@ -89,6 +89,7 @@ npm run dev
 
 # 8. Start the development server
 php artisan serve
+```
 
 🔧 Stripe Configuration
 Add these to your .env file:
