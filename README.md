@@ -7,7 +7,7 @@
 [![PHP](https://img.shields.io/badge/PHP-8.3%2B-777bb4?logo=php&logoColor=white)](https://www.php.net)
 [![Stripe](https://img.shields.io/badge/Stripe-Integrated-635bff?logo=stripe&logoColor=white)](https://stripe.com)
 [![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](LICENSE)
-[![GitHub Stars](https://img.shields.io/github/stars/MahmoudSalah53/BlogPost?style=social)]
+[![GitHub Stars](https://img.shields.io/github/stars/MahmoudSalah53/BlogPost?style=social)](https://github.com/MahmoudSalah53/BlogPost/stargazers)
 
 A comprehensive content management platform built with the TALL stack (Tailwind CSS, Alpine.js, Laravel, Livewire) featuring role-based access control, subscription management, and analytics dashboard.
 
