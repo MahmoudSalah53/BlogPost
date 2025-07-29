@@ -109,47 +109,45 @@ STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret_key
 💡 Tip: Use test keys for development. Replace with live keys for production.
 
 
-📱 Platform Usage
-👨‍💼 Admin Dashboard
-📊 Analytics Overview
+## 📱 Platform Usage
+###👨‍💼 Admin Dashboard
+- **📊 Analytics Overview
 
-👥 User Management
+- **👥 User Management
 
-📝 Content Moderation
+- **📝 Content Moderation
 
-💰 Subscription Monitoring
+- **💰 Subscription Monitoring
 
-✍️ Author Panel
-📝 Rich Post Creation
+###✍️ Author Panel
+- **📝 Rich Post Creation
 
-📈 Performance Metrics
+- **📈 Performance Metrics
 
-👥 Audience Interaction
+- **👥 Audience Interaction
 
-👥 Reader Interface
-🔍 Content Discovery
+###👥 Reader Interface
+- **🔍 Content Discovery
 
-💬 Post Interactions (like, save, comment)
+- **💬 Post Interactions (like, save, comment)
 
-👤 Follow Authors
+- **👤 Follow Authors
 
-💳 Manage Subscriptions
+- **💳 Manage Subscriptions
 
-👥 Contributors
+##👥 Contributors
 Developed collaboratively by:
 
-Mahmoud Salah
+[Mahmoud Salah](https://github.com/MahmoudSalah53)
 
-Khaled Abdalah
+[Khaled Abdalah](https://github.com/khaledAbdalah)
 
-🐛 Support & Issues
+##🐛 Support & Issues
 Have a bug or feature request?
 
-🐞 Open an Issue
+- **🐞 Open an Issue
 
-🌟 Star the Repo
+- **🌟 Star the Repo
 
-🍴 Fork This Project
+- **🍴 Fork This Project
 
-📄 License
-Licensed under the MIT License.
