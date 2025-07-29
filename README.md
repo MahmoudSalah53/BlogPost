@@ -94,12 +94,11 @@ php artisan serve
 🔧 Stripe Configuration
 Add these to your .env file:
 
-env
-Copy
-Edit
+```
 STRIPE_KEY=your_stripe_publishable_key
 STRIPE_SECRET=your_stripe_secret_key
 STRIPE_WEBHOOK_SECRET=your_webhook_secret_key
+```
 
 📱 Usage
 Admin Dashboard
