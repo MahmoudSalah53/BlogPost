@@ -1,8 +1,8 @@
 # Laravel TALL Stack Platform
 
 <p align="center">
-  <img src="public/assets/images/photo1.png" alt="Banner1" style="height:250px; object-fit:cover;">
-  <img src="public/assets/images/photo2.png" alt="Banner2" style="height:250px; object-fit:cover;">
+  <img src="public/assets/images/photo1.png" alt="Banner1" height="250">
+  <img src="public/assets/images/photo2.png" alt="Banner2" height="250">
 </p>
 
 
