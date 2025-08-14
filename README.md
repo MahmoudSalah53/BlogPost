@@ -1,9 +1,10 @@
 # Laravel TALL Stack Platform
 
 <p align="center">
-  <img src="public/assets/images/photo1.png" alt="Banner1" height="250">
-  <img src="public/assets/images/photo2.png" alt="Banner2" height="250">
+  <img src="public/assets/images/photo1.png" alt="Banner1" style="width:45%; height:250px; object-fit:cover;">
+  <img src="public/assets/images/photo2.png" alt="Banner2" style="width:45%; height:250px; object-fit:cover;">
 </p>
+
 
 
 [![Laravel](https://img.shields.io/badge/Laravel-12.x-ff2d20?logo=laravel&logoColor=white)](https://laravel.com)
