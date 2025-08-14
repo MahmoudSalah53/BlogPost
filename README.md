@@ -1,7 +1,9 @@
 # Laravel TALL Stack Platform
 
-![Banner1](public/assets/images/photo1.png) 
-![Banner2](public/assets/images/photo2.png)
+<p align="center">
+  <img src="public/assets/images/photo1.png" alt="Banner1" width="45%">
+  <img src="public/assets/images/photo2.png" alt="Banner2" width="45%">
+</p>
 
 [![Laravel](https://img.shields.io/badge/Laravel-12.x-ff2d20?logo=laravel&logoColor=white)](https://laravel.com)
 [![Livewire](https://img.shields.io/badge/Livewire-3.x-purple?logo=laravel&logoColor=white)](https://livewire.laravel.com)
