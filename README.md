@@ -1,4 +1,7 @@
 # Laravel TALL Stack Platform
+
+![Project Banner](https://via.placeholder.com/1200x400.png?text=Project+Banner)
+
 [![Laravel](https://img.shields.io/badge/Laravel-12.x-ff2d20?logo=laravel&logoColor=white)](https://laravel.com)
 [![Livewire](https://img.shields.io/badge/Livewire-3.x-purple?logo=laravel&logoColor=white)](https://livewire.laravel.com)
 [![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.x-06b6d4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
