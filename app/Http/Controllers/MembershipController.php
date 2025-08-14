@@ -18,6 +18,10 @@ class MembershipController extends Controller
 
     public function index()
     {
+        if(!auth()->check()){
+            return redirect()->route('login');
+        }
+        
         return view('public.membership');
     }
 
