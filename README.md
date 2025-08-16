@@ -1,4 +1,4 @@
-# Social Blogging Platform (TALL Stack)
+# 📝 Social Blogging Platform (TALL Stack)
 
 <p align="center">
   <img src="public/assets/images/photo1.png" alt="Banner1" style="width:45%; height:220px; object-fit:cover;">
