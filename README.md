@@ -104,10 +104,15 @@ php artisan serve
 
 ### 🔧 Stripe Payment Setup
 Add the following to your .env file:
-```bash
+```env
 STRIPE_KEY=pk_test_your_stripe_publishable_key
 STRIPE_SECRET=sk_test_your_stripe_secret_key
 STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret_key
+```
+### 📂 Storage Setup
+Run the following command to create the storage symlink:
+```bash
+php artisan storage:link
 ```
 
 
