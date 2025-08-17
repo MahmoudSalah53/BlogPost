@@ -99,6 +99,7 @@ php artisan storage:link
 ```bash
 npm run dev
 php artisan serve
+php artisan queue:work
 ```
 
 
